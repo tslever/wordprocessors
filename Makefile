@@ -8,13 +8,14 @@ get_text:
 
 # public
 get_texts:
-	@for text_ID in $(shell cat Text_IDs.csv); do \
-		$(MAKE) get_text text_ID=$$text_ID; \
-		$(MAKE) get_title text_ID=$$text_ID; \
-		$(MAKE) rename_text text_ID=$$text_ID; \
-		echo "Got $$(tail -n 1 Temporary_File.txt)"; \
-		rm Temporary_File.txt; \
-	done
+	#@for text_ID in $(shell cat Text_IDs.csv); do \
+	#	$(MAKE) get_text text_ID=$$text_ID; \
+	#	$(MAKE) get_title text_ID=$$text_ID; \
+	#	$(MAKE) rename_text text_ID=$$text_ID; \
+	#	echo "Got $$(tail -n 1 Temporary_File.txt)"; \
+	#	rm Temporary_File.txt; \
+	#done
+	@bash get_the_books.sh
 
 # private
 get_title:
