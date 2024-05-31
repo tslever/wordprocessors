@@ -5,7 +5,7 @@ get_text:
 	@wget https://www.gutenberg.org/cache/epub/$(text_ID)/pg$(text_ID).txt
 
 get_texts:
-	@for text_ID in $(shell cat Text_IDs.txt); do \
+	@for text_ID in $(shell cat Text_IDs.csv); do \
 		$(MAKE) get_text text_ID=$$text_ID; \
 		$(MAKE) get_title text_ID=$$text_ID; \
 		$(MAKE) rename_text text_ID=$$text_ID; \
@@ -13,9 +13,9 @@ get_texts:
 		rm Temporary_File.txt; \
 	done
 
-get_title:
+get_title: get_text
 	@sed -n '/^Title: /{s/^Title: //;s/\r.*//;p;q;}' pg$(text_ID).txt > Temporary_File.txt
 
-rename_text:
+rename_text: get_title
 	@echo "$$(head -n 1 Temporary_File.txt | tr ' ' '_').txt" >> Temporary_File.txt
 	@mv pg$(text_ID).txt $$(tail -n 1 Temporary_File.txt)
