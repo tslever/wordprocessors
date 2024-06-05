@@ -23,7 +23,12 @@ get_title:
 
 # public
 set_up_virtual_environment_env_upgrade_PIP_and_use_PIP_to_install_Python_packages_specified_in_text_file_requirements:
-	@python3 -m venv env; pip install --upgrade pip; pip install -r requirements.txt
+	@sudo apt install python3.10-venv
+	@python3 -m venv env
+	@. env/bin/activate; \
+	pip install --upgrade pip; \
+	pip install -r requirements.txt; \
+	deactivate
 
 # public
 raven_counts:
