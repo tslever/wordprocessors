@@ -1,4 +1,4 @@
-from tokenizer import clean_text, tokenize
+from tokenizer import clean_text, count_words, tokenize
 import unittest
 
 
@@ -38,6 +38,28 @@ true he had not slept peacefully but probably all the more deeply because of tha
         expected_list_of_words = ["This", "is", "a", "vast", "world", "you", "can't", "traverse", "world", "in", "a", "day"]
 
         self.assertEqual(actual_list_of_words, expected_list_of_words, "Actual list of words is not equal to expected list of words.")
+
+
+    def count_words(self):
+        
+        text_of_which_to_count_words = "This is a vast world you can't traverse world in a day"
+
+        actual_dictionary_of_words_and_counts = count_words(text_of_which_to_count_words)
+
+        expected_dictionary_of_words_and_counts = {
+            'a': 2,
+            'world': 2,
+            "can't": 1,
+            'day': 1,
+            'traverse': 1, 
+            'is': 1,
+            'vast': 1,
+            'in': 1,
+            'you': 1,
+            'This': 1
+        }
+
+        self.assertEqual(actual_dictionary_of_words_and_counts, expected_dictionary_of_words_and_counts, "Actual dictionary of words and counts does not equal expected dictionary of words and counts.")
 
 
 if __name__ == '__main__':
