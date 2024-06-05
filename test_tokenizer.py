@@ -1,7 +1,31 @@
+'''
+Module test_tokenizer, which has functions to test cleaning, tokenizing, and counting words in text 
+'''
+
+
 from tokenizer import clean_text, count_words, tokenize
 
 
 def test_clean_text():
+    '''
+    Tests cleaning text
+
+    Keyword arguments:
+        none
+
+    Return values:
+        none
+
+    Side effects:
+        Compares actual and expected cleaned texts
+
+    Exceptions raised:
+        AssertionError if actual cleaned text does not equal expected cleaned text
+
+    Restrictions on when this method can be called:
+        none
+    '''
+
     text_to_clean = """And he looked over at the alarm clock,
     ticking on the chest of drawers. "God in Heaven!" he thought.
     It was half past six and the hands were quietly moving forwards,
@@ -22,20 +46,75 @@ def test_clean_text():
     yes but was it possible to quietly sleep through that furniturerattling noise
     true he had not slept peacefully but probably all the more deeply because of that"""
 
-    assert actual_cleaned_text == expected_cleaned_text, "Actual cleaned text is not equal to expected cleaned text."
+    assert \
+        actual_cleaned_text == expected_cleaned_text, \
+        "Actual cleaned text is not equal to expected cleaned text."
 
 
 def test_tokenize():
+    '''
+    Tests tokenizing text
+
+    Keyword arguments:
+        none
+
+    Return values:
+        none
+
+    Side effects:
+        Compares actual and expected lists of words from text
+
+    Exceptions raised:
+        AssertionError if actual list of words does not equal expected list of words
+
+    Restrictions on when this method can be called:
+        none
+    '''
+
     text_to_tokenize = "This is a vast world you can't traverse world in a day"
 
     actual_list_of_words = tokenize(text_to_tokenize)
 
-    expected_list_of_words = ["This", "is", "a", "vast", "world", "you", "can't", "traverse", "world", "in", "a", "day"]
+    expected_list_of_words = [
+        "This",
+        "is",
+        "a",
+        "vast",
+        "world",
+        "you",
+        "can't",
+        "traverse",
+        "world",
+        "in",
+        "a",
+        "day"
+    ]
 
-    assert actual_list_of_words == expected_list_of_words, "Actual list of words is not equal to expected list of words."
+    assert \
+        actual_list_of_words == expected_list_of_words, \
+        "Actual list of words is not equal to expected list of words."
 
 
 def test_count_words():
+    '''
+    Tests providing a dictionary of words in text and the counts of those words
+
+    Keyword arguments:
+        none
+
+    Return values:
+        none
+
+    Side effects:
+        Compares actual and expected dictionaries of words and counts
+
+    Exceptions raised:
+        AssertionError if actual dictionary of words and counts does not equal expected dictionary
+
+    Restrictions on when this method can be called:
+        none
+    '''
+
     text_of_which_to_count_words = "This is a vast world you can't traverse world in a day"
 
     actual_dictionary_of_words_and_counts = count_words(text_of_which_to_count_words)
@@ -53,4 +132,6 @@ def test_count_words():
         'This': 1
     }
 
-    assert actual_dictionary_of_words_and_counts == expected_dictionary_of_words_and_counts, "Actual dictionary of words and counts does not equal expected dictionary of words and counts."
+    assert \
+        actual_dictionary_of_words_and_counts == expected_dictionary_of_words_and_counts, \
+        "Actual dictionary of words and counts does not equal expected dictionary."
