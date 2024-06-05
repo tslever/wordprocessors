@@ -22,6 +22,10 @@ get_title:
 	@sed -n '/^Title: /{s/^Title: //;s/\r.*//;p;q;}' pg$(text_ID).txt > Temporary_File.txt
 
 # public
+set_up_virtual_environment_env_upgrade_PIP_and_use_PIP_to_install_Python_packages_specified_in_text_file_requirements:
+	@python3 -m venv env; pip install --upgrade pip; pip install -r requirements.txt
+
+# public
 raven_counts:
 	@grep raven The_Raven.txt | wc --lines
 	@grep Raven The_Raven.txt | wc --lines
