@@ -1,4 +1,4 @@
-from tokenizer import clean_text
+from tokenizer import clean_text, tokenize
 import unittest
 
 
@@ -26,7 +26,18 @@ had been set for four oclock as it should have been it certainly must have rung
 yes but was it possible to quietly sleep through that furniturerattling noise
 true he had not slept peacefully but probably all the more deeply because of that"""
 
-        self.assertEqual(actual_cleaned_text, expected_cleaned_text, "Actual cleaned text is not expected cleaned text.")
+        self.assertEqual(actual_cleaned_text, expected_cleaned_text, "Actual cleaned text is not equal to expected cleaned text.")
+
+
+    def test_tokenize(self):
+
+        text_to_tokenize = "This is a vast world you can't traverse world in a day"
+
+        actual_list_of_words = tokenize(text_to_tokenize)
+
+        expected_list_of_words = ["This", "is", "a", "vast", "world", "you", "can't", "traverse", "world", "in", "a", "day"]
+
+        self.assertEqual(actual_list_of_words, expected_list_of_words, "Actual list of words is not equal to expected list of words.")
 
 
 if __name__ == '__main__':
