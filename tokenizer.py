@@ -8,11 +8,6 @@ from collections import Counter
 import string
 
 
-logging.basicConfig(
-    filename = "tokenizer.log",
-    level = logging.INFO,
-    format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-)
 logger = logging.getLogger(__name__)
 
 
@@ -41,7 +36,7 @@ def clean_text(text: str) -> str:
     translation_table = str.maketrans('', '', string.punctuation)
     cleaned_text = text.lower().translate(translation_table)
 
-    logger.info("Cleaned text: %s", cleaned_text)
+    logger.info(f"Cleaned text: {cleaned_text}")
 
     assert isinstance(cleaned_text, str)
     assert not cleaned_text is None
@@ -73,7 +68,7 @@ def tokenize(text: str) -> list[str]:
 
     list_of_words = text.split()
 
-    logger.info("Tokenized text: %s", list_of_words)
+    logger.info(f"Tokenized text: {list_of_words}")
 
     assert isinstance(list_of_words, list)
     assert not list_of_words is None
@@ -107,7 +102,7 @@ def count_words(text: str) -> dict[str, int]:
     the_counter = Counter(list_of_words)
     dictionary_of_words_and_counts = dict(the_counter)
 
-    logger.info("Counted words: %s", dictionary_of_words_and_counts)
+    logger.info(f"Counted words: {dictionary_of_words_and_counts}")
 
     assert isinstance(dictionary_of_words_and_counts, dict)
     assert not dictionary_of_words_and_counts is None
