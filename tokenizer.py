@@ -38,8 +38,8 @@ def clean_text(text: str) -> str:
 
     logger.info("Cleaned text: %s", cleaned_text)
 
-    assert isinstance(cleaned_text, str)
     assert not cleaned_text is None
+    assert isinstance(cleaned_text, str)
 
     return cleaned_text
 
@@ -70,8 +70,8 @@ def tokenize(text: str) -> list[str]:
 
     logger.info("Tokenized text: %s", list_of_words)
 
-    assert isinstance(list_of_words, list)
     assert not list_of_words is None
+    assert isinstance(list_of_words, list)
 
     return list_of_words
 
@@ -104,7 +104,7 @@ def count_words(text: str) -> dict[str, int]:
 
     logger.info("Counted words: %s", dictionary_of_words_and_counts)
 
-    assert isinstance(dictionary_of_words_and_counts, dict)
     assert not dictionary_of_words_and_counts is None
+    assert isinstance(dictionary_of_words_and_counts, dict)
 
     return dictionary_of_words_and_counts
