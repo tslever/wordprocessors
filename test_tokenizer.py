@@ -3,18 +3,45 @@ Module test_tokenizer, which has functions to test cleaning, tokenizing, and cou
 '''
 
 
-from tokenizer import clean_text
-from tokenizer import count_words
 import logging
 import pytest
-from tokenizer import tokenize
+from tokenizer import clean_text, count_words, tokenize
 
 
 class TestTokenizer:
+    '''
+    Tests the methods of a TestTokenizer object 
 
+    Instance variables:
+        logger
+
+    Public methods:
+        test_clean_text
+        test_tokenize_text
+        test_count_words
+    '''
 
     @pytest.fixture(scope = "class", autouse = True)
     def logger(self):
+        '''
+        Sets up a logger
+
+        Keyword arguments:
+            none
+
+        Return values:
+            logger
+
+        Side effects:
+            none
+
+        Exceptions raised:
+            none
+
+        Restrictions on when this method can be called:
+            pytest only should call this method to set up logger.
+        '''
+
         logger = logging.getLogger(__name__)
         return logger
 
@@ -126,7 +153,7 @@ class TestTokenizer:
             Compares actual and expected dictionaries of words and counts
 
         Exceptions raised:
-            AssertionError if actual dictionary of words and counts does not equal expected dictionary
+            AssertionError if actual dictionary does not equal expected dictionary
 
         Restrictions on when this method can be called:
             none
