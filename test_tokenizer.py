@@ -3,7 +3,16 @@ Module test_tokenizer, which has functions to test cleaning, tokenizing, and cou
 '''
 
 
+import logging
 from tokenizer import clean_text, count_words, tokenize
+
+
+logging.basicConfig(
+    filename = "test_tokenizer.log",
+    level = logging.INFO,
+    format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
 
 
 def test_clean_text():
@@ -45,6 +54,8 @@ def test_clean_text():
     had been set for four oclock as it should have been it certainly must have rung
     yes but was it possible to quietly sleep through that furniturerattling noise
     true he had not slept peacefully but probably all the more deeply because of that"""
+
+    logger.info("Testing clean_text")
 
     assert \
         actual_cleaned_text == expected_cleaned_text, \
@@ -90,6 +101,8 @@ def test_tokenize():
         "day"
     ]
 
+    logger.info("Testing tokenize")
+
     assert \
         actual_list_of_words == expected_list_of_words, \
         "Actual list of words is not equal to expected list of words."
@@ -131,6 +144,8 @@ def test_count_words():
         'you': 1,
         'This': 1
     }
+
+    logger.info("Testing count_words")
 
     assert \
         actual_dictionary_of_words_and_counts == expected_dictionary_of_words_and_counts, \
