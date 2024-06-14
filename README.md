@@ -9,10 +9,10 @@ To get texts from Project Gutenberg, do the following.
 
 3. Run command `make get_texts`.
 
-To test tokenizer, do the following.
+To test word processors, do the following.
 
 1. Run command `make set_up_virtual_environment_env_upgrade_PIP_and_use_PIP_to_install_Python_packages_specified_in_text_file_requirements`.
 
 2. Run command `source env/bin/activate`.
 
-3. Run command `pytest test_tokenizer.py`.
+3. Run command `pytest test_word_processors.py`.

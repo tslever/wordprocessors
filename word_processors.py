@@ -1,5 +1,5 @@
 '''
-Module tokenizer, which has functions to clean, tokenize, and count words in text
+Module word_processors, which has functions to clean, tokenize, and count words in text
 '''
 
 

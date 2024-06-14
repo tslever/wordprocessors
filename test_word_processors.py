@@ -1,11 +1,11 @@
 '''
-Module test_tokenizer, which has functions to test cleaning, tokenizing, and counting words in text 
+Module test_word_processors, which has functions to test cleaning, tokenizing, and counting words in text 
 '''
 
 
 import logging
 import pytest
-from tokenizer import clean_text, count_words, tokenize
+from word_processors import clean_text, count_words, tokenize
 
 
 class TestTokenizer:
@@ -21,7 +21,7 @@ class TestTokenizer:
         test_count_words
     '''
 
-    @pytest.fixture(scope = "class", autouse = True)
+    @pytest.fixture(scope = "class")
     def logger(self):
         '''
         Sets up a logger
