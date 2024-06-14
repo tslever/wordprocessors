@@ -4,7 +4,8 @@ Module test_word_counter, which has a function to test counting words in text
 
 
 from fixtures import logger, quote_from_The_Raven
-from tsl2b_DS5111su24_lab_01.word_processors import clean_text, count_words
+from tsl2b_DS5111su24_lab_01.word_processors import clean_text, count_words, tokenize
+import pytest
 
 
 def test_count_words(logger, quote_from_The_Raven):
@@ -100,3 +101,41 @@ def test_that_there_are_21_unique_words(logger, quote_from_The_Raven):
     actual_dictionary_of_words_and_counts = count_words(text_of_which_to_count_words)
 
     assert len(actual_dictionary_of_words_and_counts) == 21
+
+
+@pytest.mark.xfail
+def test_that_the_number_of_unique_words_is_equal_to_the_number_of_words(logger, quote_from_The_Raven):
+    '''
+    Given a string quote_from_The_Raven
+    that is cleanish according to a restriction on using function count_words,
+    when I pass a cleaned version of quote_from_The_Raven to count_words,
+    I should get a dictionary of those words and their counts.
+    There should be 21 unique words in the dictionary
+    consisting of lowercase characters not in string.punctuation.
+
+    Keyword arguments:
+        none
+
+    Return values:
+        none
+
+    Side effects:
+        Determines whether that the number of unique words
+        in the dictionary produced by count_words
+        given a cleaned version of quote from The Raven
+        is equal to the number of words.
+
+    Exceptions raised:
+        AssertionError if the number of unique words is not equal to the number of words
+
+    Restrictions on when this method can be called:
+        none
+    '''
+
+    logger.info("Testing that the number of unique words is equal to the number of words")
+
+    text_of_which_to_count_words = clean_text(quote_from_The_Raven)
+
+    actual_dictionary_of_words_and_counts = count_words(text_of_which_to_count_words)
+
+    assert len(actual_dictionary_of_words_and_counts) == len(tokenize(text_of_which_to_count_words))
