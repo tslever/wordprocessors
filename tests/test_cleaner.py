@@ -4,17 +4,9 @@ Module test_cleaner, which has functions to test cleaning text
 
 
 from tsl2b_DS5111su24_lab_01.word_processors import clean_text
-from logger import logger
-import pytest
+from fixtures import logger, quote_from_The_Raven
 
 
-@pytest.mark.parametrize(
-    "quote_from_The_Raven",
-    [
-        ("But the Raven, sitting lonely on the placid bust, spoke only That one word, as if his soul in that one word he did outpour."),
-        ("But the Raven-- sitting lonely on the placid bust --spoke only That one word, as if his soul in that one word he did outpour.")
-    ]
-)
 def test_clean_text(logger, quote_from_The_Raven):
     '''
     Given a string text_to_clean of text with words,

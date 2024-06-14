@@ -30,3 +30,13 @@ def logger():
 
     logger = logging.getLogger(__name__)
     return logger
+
+
+@pytest.fixture(
+    params = [
+        "But the Raven, sitting lonely on the placid bust, spoke only That one word, as if his soul in that one word he did outpour.",
+        "But the Raven-- sitting lonely on the placid bust --spoke only That one word, as if his soul in that one word he did outpour."
+    ]
+)
+def quote_from_The_Raven(request):
+    return request.param
