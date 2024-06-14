@@ -64,3 +64,39 @@ def test_count_words(logger, quote_from_The_Raven):
     assert \
         actual_dictionary_of_words_and_counts == expected_dictionary_of_words_and_counts, \
         f"Given text {text_of_which_to_count_words}, actual dictionary of words and counts does not equal expected dictionary."
+
+
+def test_that_there_are_21_unique_words(logger, quote_from_The_Raven):
+    '''
+    Given a string quote_from_The_Raven
+    that is cleanish according to a restriction on using function count_words,
+    when I pass quote_from_The_Raven to count_words,
+    I should get a dictionary of those words and their counts.
+    There should be 21 unique words in the dictionary
+    consisting of lowercase characters not in string.punctuation.
+
+    Keyword arguments:
+        none
+
+    Return values:
+        none
+
+    Side effects:
+        Determines whether there are 21 unique words
+        in the dictionary produced by count_words
+        given a cleaned version of quote from The Raven
+
+    Exceptions raised:
+        AssertionError if there are not 21 unique words in the dictionary
+
+    Restrictions on when this method can be called:
+        none
+    '''
+
+    logger.info("Testing that there are 21 unique words in dictionary")
+
+    text_of_which_to_count_words = clean_text(quote_from_The_Raven)
+
+    actual_dictionary_of_words_and_counts = count_words(text_of_which_to_count_words)
+
+    assert len(actual_dictionary_of_words_and_counts) == 21

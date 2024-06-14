@@ -9,8 +9,8 @@ from fixtures import logger, quote_from_The_Raven
 
 def test_clean_text(logger, quote_from_The_Raven):
     '''
-    Given a string text_to_clean of text with words,
-    when I pass text_to_clean to function clean_text,
+    Given a string quote_from_The_Raven of text with words,
+    when I pass quote_from_The_Raven to function clean_text,
     I should get a string as return
     representing a cleaned version of that text.
     The string should consist of lowercase characters not in string.punctuation.
@@ -39,5 +39,38 @@ def test_clean_text(logger, quote_from_The_Raven):
 
     assert \
         actual_cleaned_text == expected_cleaned_text, \
-        f"Given text {text_to_clean}, actual cleaned text is not equal to expected cleaned text."
+        f"Given text {quote_from_The_Raven}, actual cleaned text is not equal to expected cleaned text."
 
+
+
+def test_that_characters_in_cleaned_text_are_all_lowercase(logger, quote_from_The_Raven):
+    '''
+    Given a string quote_from_The_Raven of text with words,
+    when I pass quote_from_The_Raven to function clean_text,
+    I should get a string as return
+    representing a cleaned version of that text.
+    The string should consist of lowercase characters not in string.punctuation.
+
+    Keyword arguments:
+        none
+
+    Return values:
+        none
+
+    Side effects:
+        Determines whether characters in quote from The Raven are all lowercase
+
+    Exceptions raised:
+        AssertionError if characters in quote from The Raven are not all lowercase
+
+    Restrictions on when this method can be called:
+        none
+    '''
+
+    logger.info("Testing that characters in quote from The Raven are all lowercase")
+
+    actual_cleaned_text = clean_text(quote_from_The_Raven)
+
+    assert \
+        actual_cleaned_text.islower(), \
+        f"Given text {quote_from_The_Raven}, characters in text are not all lowercase."
