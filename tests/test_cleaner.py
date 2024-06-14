@@ -11,7 +11,9 @@ def test_clean_text(logger):
     '''
     Given a string text_to_clean of text with words,
     when I pass text_to_clean to function clean_text,
-    I should get a string as return representing a cleaned version of that text.
+    I should get a string as return
+    representing a cleaned version of that text.
+    The string should consist of lowercase characters not in string.punctuation.
 
     Keyword arguments:
         none
@@ -31,25 +33,11 @@ def test_clean_text(logger):
 
     logger.info("Testing cleaning text")
 
-    text_to_clean = """And he looked over at the alarm clock,
-    ticking on the chest of drawers. "God in Heaven!" he thought.
-    It was half past six and the hands were quietly moving forwards,
-    it was even later than half past, more like quarter to seven.
-    Had the alarm clock not rung? He could see from the bed that it
-    had been set for four o'clock as it should have been; it certainly must have rung.
-    Yes, but was it possible to quietly sleep through that furniture-rattling noise?
-    True, he had not slept peacefully, but probably all the more deeply because of that"""
+    text_to_clean = """But the Raven, sitting lonely on the placid bust, spoke only That one word, as if his soul in that one word he did outpour."""
 
     actual_cleaned_text = clean_text(text_to_clean)
 
-    expected_cleaned_text = """and he looked over at the alarm clock
-    ticking on the chest of drawers god in heaven he thought
-    it was half past six and the hands were quietly moving forwards
-    it was even later than half past more like quarter to seven
-    had the alarm clock not rung he could see from the bed that it
-    had been set for four oclock as it should have been it certainly must have rung
-    yes but was it possible to quietly sleep through that furniturerattling noise
-    true he had not slept peacefully but probably all the more deeply because of that"""
+    expected_cleaned_text = """but the raven sitting lonely on the placid bust spoke only that one word as if his soul in that one word he did outpour"""
 
     assert \
         actual_cleaned_text == expected_cleaned_text, \
