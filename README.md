@@ -1,5 +1,5 @@
 # tsl2b_DS5111su24_lab_01
-Contains Lab 1: Makefiles, Linux, And Bash
+Contains project for Data Engineering
 
 To get texts from Project Gutenberg, do the following.
 
