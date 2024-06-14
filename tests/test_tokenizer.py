@@ -9,7 +9,10 @@ from tsl2b_DS5111su24_lab_01.word_processors import tokenize
 
 def test_tokenize(logger):
     '''
-    Tests tokenizing text
+    Given a string text_to_tokenize of text with words
+    that is cleanish according to a restriction on using function tokenize,
+    when I pass text_to_tokenize to tokenize,
+    I should get a list of those words as return.
 
     Keyword arguments:
         none
@@ -50,4 +53,4 @@ def test_tokenize(logger):
 
     assert \
         actual_list_of_words == expected_list_of_words, \
-        "Actual list of words is not equal to expected list of words."
+        f"Given text {text_to_tokenize}, actual list of words is not equal to expected list of words."

@@ -9,7 +9,10 @@ from tsl2b_DS5111su24_lab_01.word_processors import count_words
 
 def test_count_words(logger):
     '''
-    Tests providing a dictionary of words in text and the counts of those words
+    Given a string text_of_which_to_count_words
+    that is cleanish according to a restriction on using function count_words,
+    when I pass text_of_which_to_count_words to count_words,
+    I should get a dictionary of those words and their counts.
 
     Keyword arguments:
         none
@@ -48,4 +51,4 @@ def test_count_words(logger):
 
     assert \
         actual_dictionary_of_words_and_counts == expected_dictionary_of_words_and_counts, \
-        "Actual dictionary of words and counts does not equal expected dictionary."
+        f"Given text {text_of_which_to_count_words}, actual dictionary of words and counts does not equal expected dictionary."

@@ -9,7 +9,9 @@ from tsl2b_DS5111su24_lab_01.word_processors import clean_text
 
 def test_clean_text(logger):
     '''
-    Tests cleaning text
+    Given a string text_to_clean of text with words,
+    when I pass text_to_clean to function clean_text,
+    I should get a string as return representing a cleaned version of that text.
 
     Keyword arguments:
         none
@@ -51,5 +53,5 @@ def test_clean_text(logger):
 
     assert \
         actual_cleaned_text == expected_cleaned_text, \
-        "Actual cleaned text is not equal to expected cleaned text."
+        f"Given text {text_to_clean}, actual cleaned text is not equal to expected cleaned text."
 
