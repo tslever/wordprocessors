@@ -13,6 +13,7 @@ def test_tokenize(logger, quote_from_The_Raven):
     that is cleanish according to a restriction on using function tokenize,
     when I pass text_to_tokenize to tokenize,
     I should get a list of those words as return.
+    The words should consist of lowercase characters not in string.punctuation.
 
     Keyword arguments:
         none
