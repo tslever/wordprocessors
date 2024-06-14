@@ -1,5 +1,5 @@
 '''
-Module test_clean_text, which has functions to test cleaning text 
+Module test_cleaner, which has functions to test cleaning text 
 '''
 
 

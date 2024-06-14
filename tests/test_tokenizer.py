@@ -1,5 +1,5 @@
 '''
-Module test_tokenize_text, which has a function to test tokenizing text
+Module test_tokenizer, which has a function to test tokenizing text
 '''
 
 

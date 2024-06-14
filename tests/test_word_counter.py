@@ -1,5 +1,5 @@
 '''
-Module test_count_words, which has a function to test counting words in text 
+Module test_word_counter, which has a function to test counting words in text 
 '''
 
 
