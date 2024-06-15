@@ -116,23 +116,26 @@ def test_clean_texts(logger, list_of_paths_to_files_with_English_texts):
 
     logger.info("Testing cleaning texts")
 
-    path_to_file_with_English_text = list_of_paths_to_files_with_English_texts[0]
-    base_name = os.path.basename(path_to_file_with_English_text)
-    text = None
-    with open(base_name, 'r') as file:
-        text = file.read()
+    for path in list_of_paths_to_files_with_English_texts:
 
-    actual_cleaned_text = clean_text(text)
+        logger.info(f"Testing cleaning {path}")
 
-    file_name, extension = os.path.splitext(base_name)
+        base_name = os.path.basename(path)
+        text = None
+        with open(base_name, 'r') as file:
+            text = file.read()
 
-    expected_cleaned_text = None
-    with open(f"{file_name}_Cleaned{extension}", 'r') as file:
-        expected_cleaned_text = file.read()
+        actual_cleaned_text = clean_text(text)
 
-    assert \
-        actual_cleaned_text == expected_cleaned_text, \
-        f"Actual cleaned text is not equal to expected cleaned text."
+        file_name, extension = os.path.splitext(base_name)
+
+        expected_cleaned_text = None
+        with open(f"{file_name}_Cleaned{extension}", 'r') as file:
+            expected_cleaned_text = file.read()
+
+        assert \
+            actual_cleaned_text == expected_cleaned_text, \
+            f"For {path}, actual cleaned text is not equal to expected cleaned text."
 
 
 def test_that_characters_in_cleaned_quote_from_The_Raven_are_all_lowercase(logger, quote_from_The_Raven):
