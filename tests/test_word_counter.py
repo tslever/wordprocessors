@@ -1,30 +1,33 @@
 '''
-Module test_word_counter, which has a function to test counting words in text 
+Module test_word_counter, which has functions to test counting words in text 
 '''
 
 
-from fixtures import logger, quote_from_The_Raven
-from tsl2b_DS5111su24_lab_01.word_processors import clean_text, count_words, tokenize
+from tsl2b_DS5111su24_lab_01.word_processors import clean_text
+from tsl2b_DS5111su24_lab_01.word_processors import count_words
+from fixtures import logger
 import pickle
 import pytest
+from fixtures import quote_from_The_Raven
+from tsl2b_DS5111su24_lab_01.word_processors import tokenize
 
 
 def test_count_words(logger, quote_from_The_Raven):
     '''
-    Given a string text_of_which_to_count_words
-    that is cleanish according to a restriction on using function count_words,
-    when I pass text_of_which_to_count_words to count_words,
-    I should get a dictionary of those words and their counts.
+    Given a string quote_from_The_Raven of words from a quote from The Raven,
+    when I pass a cleaned version of quote_from_The_Raven to count_words,
+    I should get a dictionary of the words in the version and their counts.
     The words should consist of lowercase characters not in string.punctuation.
 
     Keyword arguments:
-        none
+        logger: Logger -- a logger
+        quote_from_The_Raven: str -- a quote from The Raven
 
     Return values:
         none
 
     Side effects:
-        Compares actual and expected dictionaries of words and counts
+        Compares actual and expected dictionaries of words in a cleaned version of a quote from The Raven and their counts
 
     Exceptions raised:
         AssertionError if actual dictionary does not equal expected dictionary
@@ -33,7 +36,7 @@ def test_count_words(logger, quote_from_The_Raven):
         none
     '''
 
-    logger.info("Testing counting words")
+    logger.info("Testing counting words in a cleaned version of a quote from The Raven")
 
     text_of_which_to_count_words = clean_text(quote_from_The_Raven)
 
@@ -65,25 +68,24 @@ def test_count_words(logger, quote_from_The_Raven):
 
     assert \
         actual_dictionary_of_words_and_counts == expected_dictionary_of_words_and_counts, \
-        f"Given text {text_of_which_to_count_words}, actual dictionary of words and counts does not equal expected dictionary."
+        f"Actual dictionary of words in a cleaned version of a quote from The Raven and their counts does not equal expected dictionary."
 
 
 def test_count_words_in_The_Raven(logger):
     '''
-    Given a string text_of_which_to_count_words
-    that is cleanish according to a restriction on using function count_words,
-    when I pass text_of_which_to_count_words to count_words,
-    I should get a dictionary of those words and their counts.
+    Given a string text of words in The Raven,
+    when I pass a cleaned version of text to count_words,
+    I should get a dictionary of the words in the version and their counts.
     The words should consist of lowercase characters not in string.punctuation.
 
     Keyword arguments:
-        none
+        logger: Logger -- a logger
 
     Return values:
         none
 
     Side effects:
-        Compares actual and expected dictionaries of words and counts
+        Compares actual and expected dictionaries of words in a cleaned version of The Raven and their counts
 
     Exceptions raised:
         AssertionError if actual dictionary does not equal expected dictionary
@@ -92,7 +94,7 @@ def test_count_words_in_The_Raven(logger):
         none
     '''
 
-    logger.info("Testing counting words")
+    logger.info("Testing counting words in a cleaned version of The Raven")
 
     text = None
     with open("The_Raven.txt", 'r') as file:
@@ -103,26 +105,26 @@ def test_count_words_in_The_Raven(logger):
     actual_dictionary_of_words_and_counts = count_words(text_of_which_to_count_words)
 
     expected_dictionary_of_words_and_counts = None
-    with open("Dictionary_Of_Words_And_Counts_For_The_Raven.pickle", "rb") as file:
+    with open("Dictionary_Of_Words_And_Counts_For_A_Cleaned_Version_Of_The_Raven.pickle", "rb") as file:
         expected_dictionary_of_words_and_counts = pickle.load(file)
 
     assert \
         actual_dictionary_of_words_and_counts == expected_dictionary_of_words_and_counts, \
-        f"Given text {text_of_which_to_count_words}, actual dictionary of words and counts does not equal expected dictionary."
+        f"Actual dictionary of words in cleaned version of The Raven and their counts does not equal expected dictionary."
 
 
 
-def test_that_there_are_21_unique_words(logger, quote_from_The_Raven):
+def test_that_there_are_21_unique_words_in_cleaned_version_of_quote_from_The_Raven(logger, quote_from_The_Raven):
     '''
-    Given a string quote_from_The_Raven
-    that is cleanish according to a restriction on using function count_words,
-    when I pass quote_from_The_Raven to count_words,
-    I should get a dictionary of those words and their counts.
+    Given a string quote_from_The_Raven of words from a quote from The Raven,
+    when I pass a cleaned version of quote_from_The_Raven to count_words,
+    I should get a dictionary of the words in the version and their counts.
     There should be 21 unique words in the dictionary
     consisting of lowercase characters not in string.punctuation.
 
     Keyword arguments:
-        none
+        logger: Logger -- a logger
+        quote_from_The_Raven: str -- a quote from The Raven
 
     Return values:
         none
@@ -149,26 +151,27 @@ def test_that_there_are_21_unique_words(logger, quote_from_The_Raven):
 
 
 @pytest.mark.xfail
-def test_that_the_number_of_unique_words_is_equal_to_the_number_of_words(logger, quote_from_The_Raven):
+def test_that_number_of_unique_words_in_cleaned_version_of_quote_is_equal_to_number_of_words_in_version(logger, quote_from_The_Raven):
     '''
-    Given a string quote_from_The_Raven
-    that is cleanish according to a restriction on using function count_words,
+    Given a string quote_from_The_Raven of words from a quote from The Raven,
     when I pass a cleaned version of quote_from_The_Raven to count_words,
     I should get a dictionary of those words and their counts.
     There should be 21 unique words in the dictionary
     consisting of lowercase characters not in string.punctuation.
+    The number of instances of words in the version should not be 21.
 
     Keyword arguments:
-        none
+        logger: Logger -- a logger
+        quote_from_The_Raven: str -- a quote from The Raven
 
     Return values:
         none
 
     Side effects:
-        Determines whether that the number of unique words
+        Determines whether the number of unique words
         in the dictionary produced by count_words
         given a cleaned version of quote from The Raven
-        is equal to the number of words.
+        is equal to the number of instances of words in the version.
 
     Exceptions raised:
         AssertionError if the number of unique words is not equal to the number of words
@@ -177,7 +180,7 @@ def test_that_the_number_of_unique_words_is_equal_to_the_number_of_words(logger,
         none
     '''
 
-    logger.info("Testing that the number of unique words is equal to the number of words")
+    logger.info("Testing that the number of unique words in a cleaned version of a quote from The Raven is equal to the number of instances of words")
 
     text_of_which_to_count_words = clean_text(quote_from_The_Raven)
 
