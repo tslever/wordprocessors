@@ -5,7 +5,9 @@ Module test_word_counter, which has functions to test counting words in text
 
 from tsl2b_DS5111su24_lab_01.word_processors import clean_text
 from tsl2b_DS5111su24_lab_01.word_processors import count_words
+from fixtures import list_of_paths_to_files_with_English_texts
 from fixtures import logger
+import os
 import pickle
 import pytest
 from fixtures import quote_from_The_Raven
@@ -105,13 +107,62 @@ def test_count_words_in_The_Raven(logger):
     actual_dictionary_of_words_and_counts = count_words(text_of_which_to_count_words)
 
     expected_dictionary_of_words_and_counts = None
-    with open("Dictionary_Of_Words_And_Counts_For_A_Cleaned_Version_Of_The_Raven.pickle", "rb") as file:
+    with open("Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_The_Raven.pickle", "rb") as file:
         expected_dictionary_of_words_and_counts = pickle.load(file)
 
     assert \
         actual_dictionary_of_words_and_counts == expected_dictionary_of_words_and_counts, \
         f"Actual dictionary of words in cleaned version of The Raven and their counts does not equal expected dictionary."
 
+
+def test_count_words_in_texts(logger, list_of_paths_to_files_with_English_texts):
+    '''
+    Given a string text with words from an English text with a path in a specified list,
+    when I pass a cleaned version of the text to function count_words,
+    I should get a dictionary of the words in the version and their counts.
+    Each word should consist of lowercase characters not in string.punctuation.
+
+    Keyword arguments:
+        logger: Logger -- a logger
+        list_of_paths_to_files_with_English_texts: list[str] -- a list of paths to files with English texts
+
+    Return values:
+        none
+
+    Side effects:
+        Compares actual and expected dictionaries of the words in a cleaned version of a text and their counts
+
+    Exceptions raised:
+        AssertionError if actual and expected dictionaries are not equal
+
+    Restrictions on when this method can be called:
+        none
+    '''
+
+    logger.info("Testing counting words in clean versions of texts")
+
+    for path in list_of_paths_to_files_with_English_texts:
+
+        logger.info(f"Testing counting words in cleaned version of text in file at {path}")
+
+        base_name = os.path.basename(path)
+        text = None
+        with open(base_name, 'r') as file:
+            text = file.read()
+
+        cleaned_text = clean_text(text)
+
+        actual_dictionary_of_words_and_counts = count_words(cleaned_text)
+
+        file_name, extension = os.path.splitext(base_name)
+
+        expected_dictionary_of_words_and_counts = None
+        with open(f"Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_{file_name}.pickle", 'rb') as file:
+            expected_dictionary_of_words_and_counts = pickle.load(file)
+
+        assert \
+            actual_dictionary_of_words_and_counts == expected_dictionary_of_words_and_counts, \
+            f"For {path}, actual and expected dictionaries of words in cleaned version of text are not equal."
 
 
 def test_that_there_are_21_unique_words_in_cleaned_version_of_quote_from_The_Raven(logger, quote_from_The_Raven):
