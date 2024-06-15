@@ -38,5 +38,26 @@ def logger():
         "But the Raven-- sitting lonely on the placid bust --spoke only That one word, as if his soul in that one word he did outpour."
     ]
 )
-def quote_from_The_Raven(request):
-    return request.param
+def quote_from_The_Raven(request: pytest.FixtureRequest) -> str:
+    '''
+    Provides a quote from The Raven
+
+    Keyword arguments:
+        request: FixtureRequest -- a fixture request with a parameter specified in the above decorator
+
+    Return values:
+        quote_from_The_Raven: str -- a quote from The Raven
+
+    Side effects:
+        none
+
+    Exceptions raised:
+        none
+
+    Restrictions on when this method can be called:
+        pytest only should call this method to provide a quote from The Raven.
+    '''
+
+    quote_from_The_Raven = request.param
+    return quote_from_The_Raven
+

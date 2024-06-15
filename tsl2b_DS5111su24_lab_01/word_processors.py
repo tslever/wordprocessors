@@ -3,8 +3,8 @@ Module word_processors, which has functions to clean, tokenize, and count words 
 '''
 
 
-import logging
 from collections import Counter
+import logging
 import string
 
 

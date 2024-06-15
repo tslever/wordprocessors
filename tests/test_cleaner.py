@@ -4,29 +4,31 @@ Module test_cleaner, which has functions to test cleaning text
 
 
 from tsl2b_DS5111su24_lab_01.word_processors import clean_text
-from fixtures import logger, quote_from_The_Raven
+from fixtures import logger
 import pytest
+from fixtures import quote_from_The_Raven
 
 
-def test_clean_quote(logger, quote_from_The_Raven):
+def test_clean_quote_from_The_Raven(logger, quote_from_The_Raven):
     '''
-    Given a string quote_from_The_Raven of text with words,
+    Given a string quote_from_The_Raven of text with words from The Raven,
     when I pass quote_from_The_Raven to function clean_text,
     I should get a string as return
     representing a cleaned version of that text.
     The string should consist of lowercase characters not in string.punctuation.
 
     Keyword arguments:
-        none
+        logger: Logger -- a logger
+        quote_from_The_Raven: str -- a quote from The Raven to clean
 
     Return values:
         none
 
     Side effects:
-        Compares actual and expected cleaned texts
+        Compares actual and expected cleaned quotes from The Raven
 
     Exceptions raised:
-        AssertionError if actual cleaned text does not equal expected cleaned text
+        AssertionError if actual cleaned quote does not equal expected cleaned quote
 
     Restrictions on when this method can be called:
         none
@@ -40,19 +42,19 @@ def test_clean_quote(logger, quote_from_The_Raven):
 
     assert \
         actual_cleaned_text == expected_cleaned_text, \
-        f"Given text {quote_from_The_Raven}, actual cleaned text is not equal to expected cleaned text."
+        f"Actual cleaned quote from The Raven is not equal to expected cleaned quote from The Raven."
 
 
 def test_clean_The_Raven(logger):
     '''
-    Given a string of text with words,
-    when I pass the text to function clean_text,
+    Given a string text with words from The Raven,
+    when I pass text to function clean_text,
     I should get a string as return
     representing a cleaned version of that text.
     The string should consist of lowercase characters not in string.punctuation.
 
     Keyword arguments:
-        none
+        logger: Logger - a logger
 
     Return values:
         none
@@ -81,20 +83,21 @@ def test_clean_The_Raven(logger):
 
     assert \
         actual_cleaned_text == expected_cleaned_text, \
-        f"Given text, actual cleaned text is not equal to expected cleaned text."
+        f"Actual cleaned text is not equal to expected cleaned text."
 
 
 
-def test_that_characters_in_cleaned_text_are_all_lowercase(logger, quote_from_The_Raven):
+def test_that_characters_in_cleaned_quote_from_The_Raven_are_all_lowercase(logger, quote_from_The_Raven):
     '''
-    Given a string quote_from_The_Raven of text with words,
+    Given a string quote_from_The_Raven of text with words from The Raven,
     when I pass quote_from_The_Raven to function clean_text,
     I should get a string as return
-    representing a cleaned version of that text.
+    representing a cleaned version of that quote.
     The string should consist of lowercase characters not in string.punctuation.
 
     Keyword arguments:
-        none
+        logger: Logger -- a logger
+        quote_from_The_Raven: str -- a quote from The Raven
 
     Return values:
         none
@@ -115,29 +118,31 @@ def test_that_characters_in_cleaned_text_are_all_lowercase(logger, quote_from_Th
 
     assert \
         actual_cleaned_text.islower(), \
-        f"Given text {quote_from_The_Raven}, characters in text are not all lowercase."
+        f"Characters in quote from The Raven are not all lowercase."
 
 
 @pytest.mark.xfail
-def test_that_quote_has_capital_letters(logger, quote_from_The_Raven):
+def test_that_there_is_a_capital_letter_in_cleaned_quote_from_The_Raven(logger, quote_from_The_Raven):
     '''
-    Given a string quote_from_The_Raven of text with words,
+    Given a string quote_from_The_Raven of text with words from The Raven,
     when I pass quote_from_The_Raven to function clean_text,
     I should get a string as return
-    representing a cleaned version of that text.
+    representing a cleaned version of that quote.
     The string should consist of lowercase characters not in string.punctuation.
+    A test that there is a capital letter in the quote should fail.
 
     Keyword arguments:
-        none
+        logger: Logger -- a logger
+        quote_from_The_Raven: str -- a quote from The Raven
 
     Return values:
         none
 
     Side effects:
-        Compares actual and expected cleaned texts
+        Determines whether there is a capital letter in cleaned quote from The Raven
 
     Exceptions raised:
-        AssertionError if actual cleaned text does not equal expected cleaned text
+        AssertionError if there is not a capital letter in cleaned quote from The Raven
 
     Restrictions on when this method can be called:
         none
@@ -147,8 +152,6 @@ def test_that_quote_has_capital_letters(logger, quote_from_The_Raven):
 
     actual_cleaned_text = clean_text(quote_from_The_Raven)
 
-    expected_cleaned_text = """But the Raven sitting lonely on the placid bust spoke only That one word as if his soul in that one word he did outpour"""
-
     assert \
-        actual_cleaned_text == expected_cleaned_text, \
-        f"Given text {quote_from_The_Raven}, actual cleaned text is not equal to expected cleaned text."
+        not actual_cleaned_text.islower(), \
+        f"Characters in quote from The Raven are not all lowercase; there is at least one capital letter."
