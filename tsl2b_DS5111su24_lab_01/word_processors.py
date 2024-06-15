@@ -141,12 +141,14 @@ if __name__ == "__main__":
         with open(f"{file_name}_Cleaned{extension}", 'w') as file:
             file.write(cleaned_text)
     elif name_of_function == "tokenize":
-        list_of_words = tokenize(text)
-        with open(f"List_Of_Words_In_{file_name}.pickle", "wb") as file:
+        cleaned_text = clean_text(text)
+        list_of_words = tokenize(cleaned_text)
+        with open(f"List_Of_Words_In_Cleaned_Version_Of_{file_name}.pickle", "wb") as file:
             pickle.dump(list_of_words, file)
     elif name_of_function == "count_words":
-        dictionary_of_words_and_counts = count_words(text)
-        with open(f"Dictionary_Of_Words_And_Counts_For_{file_name}.pickle", "wb") as file:
+        cleaned_text = clean_text(text)
+        dictionary_of_words_and_counts = count_words(cleaned_text)
+        with open(f"Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_{file_name}.pickle", "wb") as file:
             pickle.dump(dictionary_of_words_and_counts, file)
     else:
         raise ValueError(f"Name of function \"{name_of_function}\" is invalid.")
