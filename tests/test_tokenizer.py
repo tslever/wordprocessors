@@ -71,6 +71,51 @@ def test_tokenize(logger, quote_from_The_Raven):
         f"Given text {text_to_tokenize}, actual list of words is not equal to expected list of words."
 
 
+import pickle
+
+def test_tokenize_The_Raven(logger):
+    '''
+    Given a string of text with words
+    that is cleanish according to a restriction on using function tokenize,
+    when I pass a cleaned version of the text to tokenize,
+    I should get a list of the words in the version as return.
+    The words should consist of lowercase characters not in string.punctuation.
+
+    Keyword arguments:
+        none
+
+    Return values:
+        none
+
+    Side effects:
+        Compares actual and expected lists of words from text
+
+    Exceptions raised:
+        AssertionError if actual list of words does not equal expected list of words
+
+    Restrictions on when this method can be called:
+        none
+    '''
+
+    logger.info("Testing tokenizing The Raven")
+
+    text = None
+    with open("The_Raven.txt", 'r') as file:
+        text = file.read()
+
+    text_to_tokenize = clean_text(text)
+
+    actual_list_of_words = tokenize(text_to_tokenize)
+
+    with open("List_Of_Words_In_The_Raven.pickle", "rb") as file:
+        expected_list_of_words = pickle.load(file)
+    
+    assert \
+        actual_list_of_words == expected_list_of_words, \
+        f"Given text, actual list of words is not equal to expected list of words."
+
+
+
 def test_that_there_are_no_hyphens(logger, quote_from_The_Raven):
     '''
     Given a string quote_from_The_Raven of text with words
