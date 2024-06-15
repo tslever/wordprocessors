@@ -39,7 +39,7 @@ def clean_text(text: str) -> str:
     translation_table = str.maketrans('', '', string.punctuation)
     cleaned_text = text.lower().translate(translation_table)
 
-    logger.info("Cleaned text: %s", cleaned_text)
+    #logger.info("Cleaned text: %s", cleaned_text)
 
     assert not cleaned_text is None
     assert isinstance(cleaned_text, str)
@@ -71,7 +71,7 @@ def tokenize(text: str) -> list[str]:
 
     list_of_words = text.split()
 
-    logger.info("Tokenized text: %s", list_of_words)
+    #logger.info("Tokenized text: %s", list_of_words)
 
     assert not list_of_words is None
     assert isinstance(list_of_words, list)
@@ -105,7 +105,7 @@ def count_words(text: str) -> dict[str, int]:
     the_counter = Counter(list_of_words)
     dictionary_of_words_and_counts = dict(the_counter)
 
-    logger.info("Counted words: %s", dictionary_of_words_and_counts)
+    #logger.info("Counted words: %s", dictionary_of_words_and_counts)
 
     assert not dictionary_of_words_and_counts is None
     assert isinstance(dictionary_of_words_and_counts, dict)
