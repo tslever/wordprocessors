@@ -4,7 +4,7 @@ Module test_cleaner, which has functions to test cleaning text
 
 
 from tsl2b_DS5111su24_lab_01.word_processors import clean_text
-from fixtures import list_of_file_names_of_English_texts
+from fixtures import list_of_paths_to_files_with_English_texts
 from fixtures import logger
 import os
 import pytest
@@ -89,9 +89,9 @@ def test_clean_The_Raven(logger):
 
 
 
-def test_clean_texts(logger, list_of_file_names_of_English_texts):
+def test_clean_texts(logger, list_of_paths_to_files_with_English_texts):
     '''
-    Given a string text with words from an English text with a file name in a specified list,
+    Given a string text with words from an English text with a path in a specified list,
     when I pass text to function clean_text,
     I should get a string as return
     representing a cleaned version of that text.
@@ -99,7 +99,7 @@ def test_clean_texts(logger, list_of_file_names_of_English_texts):
 
     Keyword arguments:
         logger: Logger -- a logger
-        list_of_file_names_of_English_texts: list[str] -- list of file names of English texts
+        list_of_paths_to_files_with_English_texts: list[str] -- a list of paths to files with English texts
 
     Return values:
         none
@@ -116,20 +116,18 @@ def test_clean_texts(logger, list_of_file_names_of_English_texts):
 
     logger.info("Testing cleaning texts")
 
-    file_name = list_of_file_names_of_English_texts[0]
-
-    base_name = os.path.basename(file_name)
-
+    path_to_file_with_English_text = list_of_paths_to_files_with_English_texts[0]
+    base_name = os.path.basename(path_to_file_with_English_text)
     text = None
     with open(base_name, 'r') as file:
         text = file.read()
 
     actual_cleaned_text = clean_text(text)
 
-    prefix, extension = os.path.splitext(base_name)
+    file_name, extension = os.path.splitext(base_name)
 
     expected_cleaned_text = None
-    with open(f"{prefix}_Cleaned{extension}", 'r') as file:
+    with open(f"{file_name}_Cleaned{extension}", 'r') as file:
         expected_cleaned_text = file.read()
 
     assert \

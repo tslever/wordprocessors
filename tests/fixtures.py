@@ -73,15 +73,15 @@ def quote_from_The_Raven(request: pytest.FixtureRequest) -> str:
     ]
 )
 
-def list_of_file_names_of_English_texts(request: pytest.FixtureRequest) -> list[str]:
+def list_of_paths_to_files_with_English_texts(request: pytest.FixtureRequest) -> list[str]:
     '''
-    Provides a list of file names of English texts
+    Provides a list of paths to files with English texts
 
     Keyword arguments:
         request: FixtureRequest -- a fixture request with a parameter specified in the above decorator
 
     Return values:
-        list_of_file_names_of_English_texts: list[str] -- a list of file names of English texts
+        list_of_paths_to_files_with_English_texts: list[str] -- a list of paths to files with English texts
 
     Side effects:
         none
@@ -93,5 +93,5 @@ def list_of_file_names_of_English_texts(request: pytest.FixtureRequest) -> list[
         pytest only should call this method to provide a list of file names of English texts.
     '''
 
-    list_of_file_names_of_English_texts = request.param
-    return list_of_file_names_of_English_texts
+    list_of_paths_to_files_with_English_texts = request.param
+    return list_of_paths_to_files_with_English_texts
