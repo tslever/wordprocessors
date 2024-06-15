@@ -3,8 +3,11 @@ Module word_processors, which has functions to clean, tokenize, and count words 
 '''
 
 
+import argparse
 from collections import Counter
 import logging
+import os
+import pickle
 import string
 
 
@@ -108,3 +111,42 @@ def count_words(text: str) -> dict[str, int]:
     assert isinstance(dictionary_of_words_and_counts, dict)
 
     return dictionary_of_words_and_counts
+
+
+def parse_arguments():
+    dictionary_of_arguments = {}
+    parser = argparse.ArgumentParser(prog = "Word Processors", description = "This program processes text.")
+    parser.add_argument("name_of_function", help = "name of function")
+    parser.add_argument("path_to_file_of_text", help = "path to file of text")
+    args = parser.parse_args()
+    name_of_function = args.name_of_function
+    path_to_file_of_text = args.path_to_file_of_text
+    print(f"name of function: {name_of_function}")
+    print(f"path to file of text: {path_to_file_of_text}")
+    dictionary_of_arguments["name_of_function"] = name_of_function
+    dictionary_of_arguments["path_to_file_of_text"] = path_to_file_of_text
+    return dictionary_of_arguments
+
+if __name__ == "__main__":
+    dictionary_of_arguments = parse_arguments()
+    name_of_function = dictionary_of_arguments["name_of_function"]
+    path_to_file_of_text = dictionary_of_arguments["path_to_file_of_text"]
+    text = None
+    with open(path_to_file_of_text, 'r') as file:
+        text = file.read()
+    base_name = os.path.basename(path_to_file_of_text)
+    file_name, extension = os.path.splitext(base_name)
+    if name_of_function == "clean_text":
+        cleaned_text = clean_text(text)
+        with open(f"{file_name}_Cleaned{extension}", 'w') as file:
+            file.write(cleaned_text)
+    elif name_of_function == "tokenize":
+        list_of_words = tokenize(text)
+        with open(f"List_Of_Words_In_{file_name}.pickle", "wb") as file:
+            pickle.dump(list_of_words, file)
+    elif name_of_function == "count_words":
+        dictionary_of_words_and_counts = count_words(text)
+        with open(f"Dictionary_Of_Words_And_Counts_For_{file_name}.pickle", "wb") as file:
+            pickle.dump(dictionary_of_words_and_counts, file)
+    else:
+        raise ValueError(f"Name of function \"{name_of_function}\" is invalid.")
