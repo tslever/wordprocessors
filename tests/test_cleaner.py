@@ -154,22 +154,22 @@ def test_that_characters_in_cleaned_quote_from_The_Raven_are_all_lowercase(logge
         none
 
     Side effects:
-        Determines whether characters in quote from The Raven are all lowercase
+        Determines whether characters in cleaned version of quote from The Raven are all lowercase
 
     Exceptions raised:
-        AssertionError if characters in quote from The Raven are not all lowercase
+        AssertionError if characters in cleaned version of quote from The Raven are not all lowercase
 
     Restrictions on when this method can be called:
         none
     '''
 
-    logger.info("Testing that characters in quote from The Raven are all lowercase")
+    logger.info("Testing that characters in cleaned version of quote from The Raven are all lowercase")
 
     actual_cleaned_text = clean_text(quote_from_The_Raven)
 
     assert \
         actual_cleaned_text.islower(), \
-        f"Characters in quote from The Raven are not all lowercase."
+        f"Characters in cleaned version of quote from The Raven are not all lowercase."
 
 
 @pytest.mark.xfail
@@ -199,10 +199,10 @@ def test_that_there_is_a_capital_letter_in_cleaned_quote_from_The_Raven(logger, 
         none
     '''
 
-    logger.info("Testing cleaning text")
+    logger.info("Testing that there is a capital letter in cleaned quote from The Raven")
 
     actual_cleaned_text = clean_text(quote_from_The_Raven)
 
     assert \
         not actual_cleaned_text.islower(), \
-        f"Characters in quote from The Raven are not all lowercase; there is at least one capital letter."
+        f"Characters in cleaned version of quote from The Raven are all lowercase."
