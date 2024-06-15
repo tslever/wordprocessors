@@ -4,7 +4,9 @@ Module test_cleaner, which has functions to test cleaning text
 
 
 from tsl2b_DS5111su24_lab_01.word_processors import clean_text
+from fixtures import list_of_file_names_of_English_texts
 from fixtures import logger
+import os
 import pytest
 from fixtures import quote_from_The_Raven
 
@@ -54,7 +56,7 @@ def test_clean_The_Raven(logger):
     The string should consist of lowercase characters not in string.punctuation.
 
     Keyword arguments:
-        logger: Logger - a logger
+        logger: Logger -- a logger
 
     Return values:
         none
@@ -85,6 +87,54 @@ def test_clean_The_Raven(logger):
         actual_cleaned_text == expected_cleaned_text, \
         f"Actual cleaned text is not equal to expected cleaned text."
 
+
+
+def test_clean_texts(logger, list_of_file_names_of_English_texts):
+    '''
+    Given a string text with words from an English text with a file name in a specified list,
+    when I pass text to function clean_text,
+    I should get a string as return
+    representing a cleaned version of that text.
+    The string should consist of lowercase characters not in string.punctuation.
+
+    Keyword arguments:
+        logger: Logger -- a logger
+        list_of_file_names_of_English_texts: list[str] -- list of file names of English texts
+
+    Return values:
+        none
+
+    Side effects:
+        Compares actual and expected cleaned texts
+
+    Exceptions raised:
+        AssertionError if an actual cleaned text does not equal an expected cleaned text
+
+    Restrictions on when this method can be called:
+        none
+    '''
+
+    logger.info("Testing cleaning texts")
+
+    file_name = list_of_file_names_of_English_texts[0]
+
+    base_name = os.path.basename(file_name)
+
+    text = None
+    with open(base_name, 'r') as file:
+        text = file.read()
+
+    actual_cleaned_text = clean_text(text)
+
+    prefix, extension = os.path.splitext(base_name)
+
+    expected_cleaned_text = None
+    with open(f"{prefix}_Cleaned{extension}", 'r') as file:
+        expected_cleaned_text = file.read()
+
+    assert \
+        actual_cleaned_text == expected_cleaned_text, \
+        f"Actual cleaned text is not equal to expected cleaned text."
 
 
 def test_that_characters_in_cleaned_quote_from_The_Raven_are_all_lowercase(logger, quote_from_The_Raven):

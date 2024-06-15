@@ -61,3 +61,37 @@ def quote_from_The_Raven(request: pytest.FixtureRequest) -> str:
     quote_from_The_Raven = request.param
     return quote_from_The_Raven
 
+
+@pytest.fixture(
+    params = [
+        [
+            "The_Raven.txt",
+            "Fall_Of_The_House_Of_Usher.txt",
+            "Cask_Of_Amontillado.txt",
+            "The_Poems.txt"
+        ]
+    ]
+)
+
+def list_of_file_names_of_English_texts(request: pytest.FixtureRequest) -> list[str]:
+    '''
+    Provides a list of file names of English texts
+
+    Keyword arguments:
+        request: FixtureRequest -- a fixture request with a parameter specified in the above decorator
+
+    Return values:
+        list_of_file_names_of_English_texts: list[str] -- a list of file names of English texts
+
+    Side effects:
+        none
+
+    Exceptions raised:
+        none
+
+    Restrictions on when this method can be called:
+        pytest only should call this method to provide a list of file names of English texts.
+    '''
+
+    list_of_file_names_of_English_texts = request.param
+    return list_of_file_names_of_English_texts
