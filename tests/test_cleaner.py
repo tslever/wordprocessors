@@ -13,7 +13,7 @@ from fixtures import quote_from_The_Raven
 
 def test_cleaning_all_English_texts_together(logger, list_of_paths_to_files_with_English_texts):
     '''
-    Given a string text with words from 4 English texts with paths in a specified list,
+    Given a string text with words from English texts with paths in a specified list,
     when I pass text to function clean_text,
     I should get a string as return
     representing a cleaned version of that text.
