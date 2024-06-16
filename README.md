@@ -5,7 +5,7 @@ To get texts from Project Gutenberg, do the following.
 
 1. Navigate to one or more text files (e.g., https://www.gutenberg.org/cache/epub/17192/pg17192.txt).
 
-2. Add text IDs (e.g., 17192) to file Text_IDs.csv.
+2. Add text IDs (e.g., 17192 corresponding to The Raven) to file Text_IDs.csv.
 
 3. Run command `make get_texts`.
 
@@ -15,4 +15,7 @@ To test word processors, do the following.
 
 2. Run command `source env/bin/activate`.
 
-3. Run command `pytest test_word_processors.py`.
+3. Run command `pytest tests/test_cleaner.py` or `pytest tests/test_tokenizer.py` or `pytest tests/test_word_counter.py`.
+
+Functions in `tests/test_cleaner.py` clean an anthology, individual texts, and quotes from texts. Functions in `tests/test_tokenizer.py` clean an anthology, individual texts, and quotes from texts. Functions in `tests/test_word_counter.py` clean an anthology, individual texts, and quotes from texts. Consider cleaning an anthology by running `pytest tests/test_cleaner.py::test_cleaning_all_English_text
+s_together`.
