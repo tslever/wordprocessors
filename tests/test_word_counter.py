@@ -166,7 +166,103 @@ def test_counting_words_for_quote_from_The_Raven(logger, quote_from_The_Raven):
         f"Actual dictionary of words in a cleaned version of a quote from The Raven and their counts does not equal expected dictionary."
 
 
-def test_count_words_in_The_Raven(logger):
+def test_counting_words_in_quote_from_Le_Corbeau(logger):
+    '''
+    Given a string quote_from_Le_Corbeau of text with words from Le Corbeau,
+    when I pass a cleaned version of quote_from_Le_Corbeau to function count_words,
+    I should get a dictionary of words in the version and their counts as return.
+    Each word should consist of lowercase characters not in augmentation of string.punctuation.
+
+    Keyword arguments:
+        logger: Logger -- a logger
+
+    Return values:
+        none
+
+    Side effects:
+        Compares actual and expected dictionaries of words in cleaned version of Le Corbeau and their counts
+
+    Exceptions raised:
+        AssertionError if actual and expected dictionaries are not equal
+
+    Restrictions on when this method can be called:
+        none
+    '''
+
+    logger.info("Testing counting words in cleaned version of quote from Le Corbeau")
+
+    quote_from_Le_Corbeau = """_Mais le Corbeau, perché solitairement sur ce buste placide, parla
+    ce seul mot comme si, son âme, en ce seul mot, il la répandait. Je ne
+    proférai donc rien de plus: il n'agita donc pas de plume--jusqu'à ce
+    que je fis à peine davantage que marmotter «D'autres amis déjà ont
+    pris leur vol--demain il me laissera comme mes Espérances déjà ont
+    pris leur vol.» Alors l'oiseau dit: «Jamais plus.»_"""
+
+    cleaned_text = clean_text(quote_from_Le_Corbeau)
+
+    actual_dictionary_of_words_and_counts = count_words(cleaned_text)
+
+    expected_dictionary_of_words_and_counts = {
+        "mais": 1,
+        "le": 1,
+        "corbeau": 1,
+        "perché": 1,
+        "solitairement": 1,
+        "sur": 1,
+        "ce": 4,
+        "buste": 1,
+        "placide": 1,
+        "parla": 1,
+        "seul": 2,
+        "mot": 2,
+        "comme": 2,
+        "si": 1,
+        "son": 1,
+        "âme": 1,
+        "en": 1,
+        "il": 3,
+        "la": 1,
+        "répandait": 1,
+        "je": 2,
+        "ne": 1,
+        "proférai": 1,
+        "donc": 2,
+        "rien": 1,
+        "de": 2,
+        "plus": 2,
+        "nagita": 1,
+        "pas": 1,
+        "plumejusquà": 1,
+        "que": 2,
+        "fis": 1,
+        "à": 1,
+        "peine": 1,
+        "davantage": 1,
+        "marmotter": 1,
+        "dautres": 1,
+        "amis": 1,
+        "déjà": 2,
+        "ont": 2,
+        "pris": 2,
+        "leur": 2,
+        "voldemain": 1,
+        "me": 1,
+        "laissera": 1,
+        "mes": 1,
+        "espérances": 1,
+        "vol": 1,
+        "alors": 1,
+        "loiseau": 1,
+        "dit": 1,
+        "jamais": 1
+    }
+
+    assert \
+        actual_dictionary_of_words_and_counts == expected_dictionary_of_words_and_counts, \
+        "Actual and expected dictionaries of words and counts in cleaned version of Le Corbeau are not equal."
+
+
+def test_counting_words_in_The_Raven(logger):
     '''
     Given a string text of words in The Raven,
     when I pass a cleaned version of text to count_words,
