@@ -17,7 +17,7 @@ def test_cleaning_all_English_texts_together(logger, list_of_paths_to_files_with
     when I pass text to function clean_text,
     I should get a string as return
     representing a cleaned version of that text.
-    The string should consist of lowercase characters not in string.punctuation.
+    The string should consist of lowercase characters not in augmentation of string.punctuation.
 
     Keyword arguments:
         logger: Logger -- a logger
@@ -59,7 +59,7 @@ def test_cleaning_each_English_text(logger, list_of_paths_to_files_with_English_
     when I pass text to function clean_text,
     I should get a string as return
     representing a cleaned version of that text.
-    The string should consist of lowercase characters not in string.punctuation.
+    The string should consist of lowercase characters not in augmentation of string.punctuation.
 
     Keyword arguments:
         logger: Logger -- a logger
@@ -102,13 +102,62 @@ def test_cleaning_each_English_text(logger, list_of_paths_to_files_with_English_
             f"For {path}, actual cleaned text is not equal to expected cleaned text."
 
 
+def test_cleaning_quote_from_Le_Corbeau(logger):
+    '''
+    Given a string quote_from_Le_Corbeau of text with words from Le Corbeau,
+    when I pass quote_from_Le_Corbeau to function clean_text,
+    I should get a string as return
+    representing a cleaned version of that quote.
+    The string should consist of lowercase characters not in augmentation of string.punctuation.
+
+    Keyword arguments:
+        logger: Logger -- a logger
+
+    Return values:
+        none
+
+    Side effects:
+        Compares actual and expected cleaned quotes from Le Corbeau
+
+    Exceptions raised:
+        AssertionError if actual and expected cleaned quotes are not equal
+
+    Restrictions on when this method can be called:
+        none
+    '''
+
+    logger.info("Testing cleaning quote from Le Corbeau")
+
+    quote_from_Le_Corbeau = """_Mais le Corbeau, perché solitairement sur ce buste placide, parla
+    ce seul mot comme si, son âme, en ce seul mot, il la répandait. Je ne
+    proférai donc rien de plus: il n'agita donc pas de plume--jusqu'à ce
+    que je fis à peine davantage que marmotter «D'autres amis déjà ont
+    pris leur vol--demain il me laissera comme mes Espérances déjà ont
+    pris leur vol.» Alors l'oiseau dit: «Jamais plus.»_"""
+
+    actual_cleaned_text = clean_text(quote_from_Le_Corbeau)
+
+    print(actual_cleaned_text)
+
+    expected_cleaned_text = """mais le corbeau perché solitairement sur ce buste placide parla
+    ce seul mot comme si son âme en ce seul mot il la répandait je ne
+    proférai donc rien de plus il nagita donc pas de plumejusquà ce
+    que je fis à peine davantage que marmotter dautres amis déjà ont
+    pris leur voldemain il me laissera comme mes espérances déjà ont
+    pris leur vol alors loiseau dit jamais plus"""
+
+    assert \
+        actual_cleaned_text == expected_cleaned_text, \
+        f"Actual cleaned quote from Le Corbeau is not equal to expected cleaned quote from Le Corbeau."
+
+
 def test_cleaning_quote_from_The_Raven(logger, quote_from_The_Raven):
     '''
     Given a string quote_from_The_Raven of text with words from The Raven,
     when I pass quote_from_The_Raven to function clean_text,
     I should get a string as return
     representing a cleaned version of that text.
-    The string should consist of lowercase characters not in string.punctuation.
+    The string should consist of lowercase characters not in augmentation of string.punctuation.
 
     Keyword arguments:
         logger: Logger -- a logger
@@ -127,7 +176,7 @@ def test_cleaning_quote_from_The_Raven(logger, quote_from_The_Raven):
         none
     '''
 
-    logger.info("Testing cleaning text")
+    logger.info("Testing cleaning quote from The Raven")
 
     actual_cleaned_text = clean_text(quote_from_The_Raven)
 
@@ -144,7 +193,7 @@ def test_cleaning_The_Raven(logger):
     when I pass text to function clean_text,
     I should get a string as return
     representing a cleaned version of that text.
-    The string should consist of lowercase characters not in string.punctuation.
+    The string should consist of lowercase characters not in augmentation of string.punctuation.
 
     Keyword arguments:
         logger: Logger -- a logger
@@ -185,7 +234,7 @@ def test_that_characters_in_cleaned_quote_from_The_Raven_are_all_lowercase(logge
     when I pass quote_from_The_Raven to function clean_text,
     I should get a string as return
     representing a cleaned version of that quote.
-    The string should consist of lowercase characters not in string.punctuation.
+    The string should consist of lowercase characters not in augmentation of string.punctuation.
 
     Keyword arguments:
         logger: Logger -- a logger
@@ -220,7 +269,7 @@ def test_that_there_is_a_capital_letter_in_cleaned_quote_from_The_Raven(logger, 
     when I pass quote_from_The_Raven to function clean_text,
     I should get a string as return
     representing a cleaned version of that quote.
-    The string should consist of lowercase characters not in string.punctuation.
+    The string should consist of lowercase characters not in augmentation of string.punctuation.
     A test that there is a capital letter in the quote should fail.
 
     Keyword arguments:

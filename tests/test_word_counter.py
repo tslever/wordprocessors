@@ -19,7 +19,7 @@ def test_counting_words_for_all_English_texts_together(logger, list_of_paths_to_
     Given a string text with words from English texts with paths in a specified list,
     when I pass a cleaned version of text to function count_words,
     I should get a lists of words in the version as return.
-    Each word should consist of lowercase characters not in string.punctuation.
+    Each word should consist of lowercase characters not in augmentation of string.punctuation.
 
     Keyword arguments:
         logger: Logger -- a logger
@@ -62,7 +62,7 @@ def test_count_words(logger, quote_from_The_Raven):
     Given a string quote_from_The_Raven of words from a quote from The Raven,
     when I pass a cleaned version of quote_from_The_Raven to count_words,
     I should get a dictionary of the words in the version and their counts.
-    The words should consist of lowercase characters not in string.punctuation.
+    The words should consist of lowercase characters not in augmentation of string.punctuation.
 
     Keyword arguments:
         logger: Logger -- a logger
@@ -121,7 +121,7 @@ def test_count_words_in_The_Raven(logger):
     Given a string text of words in The Raven,
     when I pass a cleaned version of text to count_words,
     I should get a dictionary of the words in the version and their counts.
-    The words should consist of lowercase characters not in string.punctuation.
+    The words should consist of lowercase characters not in augmentation of string.punctuation.
 
     Keyword arguments:
         logger: Logger -- a logger
@@ -163,7 +163,7 @@ def test_count_words_in_texts(logger, list_of_paths_to_files_with_English_texts)
     Given a string text with words from an English text with a path in a specified list,
     when I pass a cleaned version of the text to function count_words,
     I should get a dictionary of the words in the version and their counts.
-    Each word should consist of lowercase characters not in string.punctuation.
+    Each word should consist of lowercase characters not in augmentation of string.punctuation.
 
     Keyword arguments:
         logger: Logger -- a logger
@@ -214,7 +214,7 @@ def test_that_there_are_21_unique_words_in_cleaned_version_of_quote_from_The_Rav
     when I pass a cleaned version of quote_from_The_Raven to count_words,
     I should get a dictionary of the words in the version and their counts.
     There should be 21 unique words in the dictionary
-    consisting of lowercase characters not in string.punctuation.
+    consisting of lowercase characters not in augmentation of string.punctuation.
 
     Keyword arguments:
         logger: Logger -- a logger
@@ -251,7 +251,7 @@ def test_that_number_of_unique_words_in_cleaned_version_of_quote_is_equal_to_num
     when I pass a cleaned version of quote_from_The_Raven to count_words,
     I should get a dictionary of those words and their counts.
     There should be 21 unique words in the dictionary
-    consisting of lowercase characters not in string.punctuation.
+    consisting of lowercase characters not in augmentation of string.punctuation.
     The number of instances of words in the version should not be 21.
 
     Keyword arguments:

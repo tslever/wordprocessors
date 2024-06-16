@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 def clean_text(text: str) -> str:
     '''
-    Cleans text by lowercasing and removing characters in string.punctuation
+    Cleans text by lowercasing and removing characters in an augmentation of string.punctuation
         
     Keyword arguments:
         text: str -- text
@@ -36,7 +36,7 @@ def clean_text(text: str) -> str:
 
     assert isinstance(text, str)
 
-    translation_table = str.maketrans('', '', string.punctuation)
+    translation_table = str.maketrans('', '', string.punctuation + "«»")
     cleaned_text = text.lower().translate(translation_table)
 
     #logger.info("Cleaned text: %s", cleaned_text)

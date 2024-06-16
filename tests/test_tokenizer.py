@@ -18,7 +18,7 @@ def test_tokenizing_all_English_texts_together(logger, list_of_paths_to_files_wi
     Given a string text with words from English texts with paths in a specified list,
     when I pass a cleaned version of text to function tokenize,
     I should get a lists of words in the version as return.
-    Each word should consist of lowercase characters not in string.punctuation.
+    Each word should consist of lowercase characters not in augmentation of string.punctuation.
 
     Keyword arguments:
         logger: Logger -- a logger
@@ -61,7 +61,7 @@ def test_tokenize_quote_from_The_Raven(logger, quote_from_The_Raven):
     Given a string quote_from_The_Raven of text with words from The Raven,
     when I pass a cleaned version of quote_from_The_Raven to tokenize,
     I should get a list of the words in the version as return.
-    The words should consist of lowercase characters not in string.punctuation.
+    The words should consist of lowercase characters not in augmentation of string.punctuation.
 
     Keyword arguments:
         logger: Logger -- a logger
@@ -124,7 +124,7 @@ def test_tokenize_The_Raven(logger):
     Given a string of text with words from The Raven,
     when I pass a cleaned version of the text to tokenize,
     I should get a list of the words in the version as return.
-    The words should consist of lowercase characters not in string.punctuation.
+    The words should consist of lowercase characters not in augmentation of string.punctuation.
 
     Keyword arguments:
         logger: Logger -- a logger
@@ -165,7 +165,7 @@ def test_tokenize_texts(logger, list_of_paths_to_files_with_English_texts):
     Given a string text with words from an English text with a path in a specified list,
     when I pass a cleaned version of the text to function tokenize,
     I should get a list of words in the version.
-    Each word should consist of lowercase characters not in string.punctuation.
+    Each word should consist of lowercase characters not in augmentation of string.punctuation.
 
     Keyword arguments:
         logger: Logger -- a logger
@@ -215,7 +215,7 @@ def test_that_there_are_no_hyphens_in_words_in_cleaned_version_of_quote_from_The
     Given a string quote_from_The_Raven of text with words from The Raven,
     when I pass a cleaned version of quote_from_The_Raven to tokenize,
     I should get a list of the words in the version as return.
-    The words should consist of lowercase characters not in string.punctuation.
+    The words should consist of lowercase characters not in augmentation of string.punctuation.
     The words should not have hyphens.
 
     Keyword arguments:
@@ -257,7 +257,7 @@ def test_that_a_word_in_cleaned_version_of_quote_from_The_Raven_has_a_hyphen(log
     Given a string quote_from_The_Raven of text with words from The Raven,
     when I pass a cleaned version of quote_from_The_Raven to tokenize,
     I should get a list of the words in the version as return.
-    The words should consist of lowercase characters not in string.punctuation.
+    The words should consist of lowercase characters not in augmentation of string.punctuation.
     The words should not have hyphens; a test that a word has a hyphen should fail.
 
     Keyword arguments:
