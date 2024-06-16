@@ -229,7 +229,7 @@ def test_cleaning_The_Raven(logger):
         f"Actual cleaned text is not equal to expected cleaned text."
 
 
-def test_cleaning_The_Raven_only_on_Windows(logger):
+def test_cleaning_The_Raven_only_on_Linux(logger):
     '''
     Given a string text with words from The Raven,
     when I pass text to function clean_text,
@@ -257,7 +257,7 @@ def test_cleaning_The_Raven_only_on_Windows(logger):
     logger.info("Testing cleaning text")
 
     current_os = platform.system()
-    if current_os != "Windows":
+    if current_os != "Linux":
         pytest.fail("This test is only supported on Linux but is being run on {current_os}")
 
     text = None
