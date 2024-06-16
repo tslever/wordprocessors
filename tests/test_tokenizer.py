@@ -106,6 +106,119 @@ def test_tokenizing_each_English_text(logger, list_of_paths_to_files_with_Englis
             f"For {path}, actual list of words in cleaned version of text is not equal to expected list of words in cleaned version of text."
 
 
+def test_tokenizing_quote_from_Le_Corbeau(logger):
+    '''
+    Given a string quote_from_Le_Corbeau of text with words from Le Corbeau,
+    when I pass a cleaned version of quote_from_Le_Corbeau to function tokenize,
+    I should get a list of the words in the version as return
+    Each word should consist of lowercase characters not in augmentation of string.punctuation.
+
+    Keyword arguments:
+        logger: Logger -- a logger
+
+    Return values:
+        none
+
+    Side effects:
+        Compares actual and expected lists of words from cleaned version of Le Corbeau
+
+    Exceptions raised:
+        AssertionError if actual and expected lists are not equal
+
+    Restrictions on when this method can be called:
+        none
+    '''
+
+    logger.info("Testing tokenizing cleaned version of quote from Le Corbeau")
+
+    quote_from_Le_Corbeau = """_Mais le Corbeau, perché solitairement sur ce buste placide, parla
+    ce seul mot comme si, son âme, en ce seul mot, il la répandait. Je ne
+    proférai donc rien de plus: il n'agita donc pas de plume--jusqu'à ce
+    que je fis à peine davantage que marmotter «D'autres amis déjà ont
+    pris leur vol--demain il me laissera comme mes Espérances déjà ont
+    pris leur vol.» Alors l'oiseau dit: «Jamais plus.»_"""
+
+    cleaned_text = clean_text(quote_from_Le_Corbeau)
+
+    actual_list_of_words = tokenize(cleaned_text)
+
+    expected_list_of_words = [
+        "mais",
+        "le",
+        "corbeau",
+        "perché",
+        "solitairement",
+        "sur",
+        "ce",
+        "buste",
+        "placide",
+        "parla",
+        "ce",
+        "seul",
+        "mot",
+        "comme",
+        "si",
+        "son",
+        "âme",
+        "en",
+        "ce",
+        "seul",
+        "mot",
+        "il",
+        "la",
+        "répandait",
+        "je",
+        "ne",
+        "proférai",
+        "donc",
+        "rien",
+        "de",
+        "plus",
+        "il",
+        "nagita",
+        "donc",
+        "pas",
+        "de",
+        "plumejusquà",
+        "ce",
+        "que",
+        "je",
+        "fis",
+        "à",
+        "peine",
+        "davantage",
+        "que",
+        "marmotter",
+        "dautres",
+        "amis",
+        "déjà",
+        "ont",
+        "pris",
+        "leur",
+        "voldemain",
+        "il",
+        "me",
+        "laissera",
+        "comme",
+        "mes",
+        "espérances",
+        "déjà",
+        "ont",
+        "pris",
+        "leur",
+        "vol",
+        "alors",
+        "loiseau",
+        "dit",
+        "jamais",
+        "plus"
+    ]
+
+    assert \
+        actual_list_of_words == expected_list_of_words, \
+        "Actual and expected list of words in cleaned version of Le Corbeau are not equal."
+
+
 def test_tokenizing_quote_from_The_Raven(logger, quote_from_The_Raven):
     '''
     Given a string quote_from_The_Raven of text with words from The Raven,
