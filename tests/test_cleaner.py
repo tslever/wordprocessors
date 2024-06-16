@@ -228,6 +228,44 @@ def test_cleaning_The_Raven(logger):
         f"Actual cleaned text is not equal to expected cleaned text."
 
 
+@pytest.mark.skip(reason = "clean_text does not clean Japanese characters.")
+def test_cleaning_quote_from_The_Great_Raven(logger):
+    '''
+    Given a string quote_from_The_Great_Raven with words from 「大鴉」(Japanese for The Great Raven),
+    when I pass quote_from_The_Great_Raven to function clean_text,
+    I should get a string as return
+    representing a cleaned version of that quote.
+    The string should consist of lowercase characters not in augmentation of string.punctuation.
+
+    Keyword arguments:
+        logger: Logger -- a logger
+
+    Return values:
+        none
+
+    Side effects:
+        Compares actual and expected cleaned texts
+
+    Exceptions raised:
+        AssertionError if actual cleaned text does not equal expected cleaned text
+
+    Restrictions on when this method can be called:
+        none
+    '''
+
+    logger.info("Testing cleaning quote from The Great Raven")
+
+    text = "しかし、大鴉は、穏やかな胸像の上に一人座って、その一言だけを話した。まるでその一言に彼の魂を注ぎ込んだかのように。"
+
+    actual_cleaned_text = clean_text(text)
+
+    expected_cleaned_text = "しかし、大鴉は、穏やかな胸像の上に一人座って、その一言だけを話した。まるでその一言に彼の魂を注ぎ込んだかのように。"
+
+    assert \
+        actual_cleaned_text == expected_cleaned_text, \
+        f"Actual cleaned text is not equal to expected cleaned text."
+
+
 def test_that_characters_in_cleaned_quote_from_The_Raven_are_all_lowercase(logger, quote_from_The_Raven):
     '''
     Given a string quote_from_The_Raven of text with words from The Raven,
