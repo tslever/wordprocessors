@@ -56,7 +56,57 @@ def test_tokenizing_all_English_texts_together(logger, list_of_paths_to_files_wi
         "Actual and expected lists of words in cleaned version of anthology of English texts are not equal."
 
 
-def test_tokenize_quote_from_The_Raven(logger, quote_from_The_Raven):
+def test_tokenizing_each_English_text(logger, list_of_paths_to_files_with_English_texts):
+    '''
+    Given a string text with words from an English text with a path in a specified list,
+    when I pass a cleaned version of the text to function tokenize,
+    I should get a list of words in the version.
+    Each word should consist of lowercase characters not in augmentation of string.punctuation.
+
+    Keyword arguments:
+        logger: Logger -- a logger
+        list_of_paths_to_files_with_English_texts: list[str] -- a list of paths to files with English texts
+
+    Return values:
+        none
+
+    Side effects:
+        Compares an actual list of words in a cleaned version of a text to an expected list of words in a cleaned version of a text
+
+    Exceptions raised:
+        AssertionError if an actual list of words in a cleaned version of a text does not equal an expected list of words in a cleaned version of a text
+
+    Restrictions on when this method can be called:
+        none
+    '''
+
+    logger.info("Testing tokenizing clean versions of texts")
+
+    for path in list_of_paths_to_files_with_English_texts:
+
+        logger.info(f"Testing tokenizing cleaned version of text in file at {path}")
+
+        base_name = os.path.basename(path)
+        text = None
+        with open(base_name, 'r') as file:
+            text = file.read()
+
+        cleaned_text = clean_text(text)
+
+        actual_list_of_words = tokenize(cleaned_text)
+
+        file_name, extension = os.path.splitext(base_name)
+
+        expected_list_of_words = None
+        with open(f"List_Of_Words_In_Cleaned_Version_Of_{file_name}.pickle", 'rb') as file:
+            expected_list_of_words = pickle.load(file)
+
+        assert \
+            actual_list_of_words == expected_list_of_words, \
+            f"For {path}, actual list of words in cleaned version of text is not equal to expected list of words in cleaned version of text."
+
+
+def test_tokenizing_quote_from_The_Raven(logger, quote_from_The_Raven):
     '''
     Given a string quote_from_The_Raven of text with words from The Raven,
     when I pass a cleaned version of quote_from_The_Raven to tokenize,
@@ -119,7 +169,7 @@ def test_tokenize_quote_from_The_Raven(logger, quote_from_The_Raven):
         f"Actual list of words in cleaned version of a quote from The Raven is not equal to expected list of words in a cleaned version of a quote from The Raven."
 
 
-def test_tokenize_The_Raven(logger):
+def test_tokenizing_The_Raven(logger):
     '''
     Given a string of text with words from The Raven,
     when I pass a cleaned version of the text to tokenize,
@@ -158,97 +208,6 @@ def test_tokenize_The_Raven(logger):
     assert \
         actual_list_of_words == expected_list_of_words, \
         f"Actual list of words from a cleaned version of The Raven is not equal to expected list of words from a cleaned version of The Raven."
-
-
-def test_tokenize_texts(logger, list_of_paths_to_files_with_English_texts):
-    '''
-    Given a string text with words from an English text with a path in a specified list,
-    when I pass a cleaned version of the text to function tokenize,
-    I should get a list of words in the version.
-    Each word should consist of lowercase characters not in augmentation of string.punctuation.
-
-    Keyword arguments:
-        logger: Logger -- a logger
-        list_of_paths_to_files_with_English_texts: list[str] -- a list of paths to files with English texts
-
-    Return values:
-        none
-
-    Side effects:
-        Compares an actual list of words in a cleaned version of a text to an expected list of words in a cleaned version of a text
-
-    Exceptions raised:
-        AssertionError if an actual list of words in a cleaned version of a text does not equal an expected list of words in a cleaned version of a text
-
-    Restrictions on when this method can be called:
-        none
-    '''
-
-    logger.info("Testing tokenizing clean versions of texts")
-
-    for path in list_of_paths_to_files_with_English_texts:
-
-        logger.info(f"Testing tokenizing cleaned version of text in file at {path}")
-
-        base_name = os.path.basename(path)
-        text = None
-        with open(base_name, 'r') as file:
-            text = file.read()
-
-        cleaned_text = clean_text(text)
-
-        actual_list_of_words = tokenize(cleaned_text)
-
-        file_name, extension = os.path.splitext(base_name)
-
-        expected_list_of_words = None
-        with open(f"List_Of_Words_In_Cleaned_Version_Of_{file_name}.pickle", 'rb') as file:
-            expected_list_of_words = pickle.load(file)
-
-        assert \
-            actual_list_of_words == expected_list_of_words, \
-            f"For {path}, actual list of words in cleaned version of text is not equal to expected list of words in cleaned version of text."
-
-
-def test_that_there_are_no_hyphens_in_words_in_cleaned_version_of_quote_from_The_Raven(logger, quote_from_The_Raven):
-    '''
-    Given a string quote_from_The_Raven of text with words from The Raven,
-    when I pass a cleaned version of quote_from_The_Raven to tokenize,
-    I should get a list of the words in the version as return.
-    The words should consist of lowercase characters not in augmentation of string.punctuation.
-    The words should not have hyphens.
-
-    Keyword arguments:
-        logger: Logger -- a logger
-        quote_from_The_Raven: str -- a quote from The Raven
-
-    Return values:
-        none
-
-    Side effects:
-        Determines whether there are no hyphens in words in a cleaned version of quote_from_The_Raven
-
-    Exceptions raised:
-        AssertionError if there is a hyphen in a word
-
-    Restrictions on when this method can be called:
-        none
-    '''
-
-    logger.info("Testing that there are no hyphens in words in cleaned version of quote from The Raven")
-
-    text_to_tokenize = clean_text(quote_from_The_Raven)
-
-    actual_list_of_words = tokenize(text_to_tokenize)
-
-    there_are_no_hyphens = True
-    for word in actual_list_of_words:
-        if '-' in word:
-            there_are_no_hyphens = False
-
-    assert \
-        there_are_no_hyphens, \
-        f"There is a hyphen in a word in a cleaned version of a quote from The Raven."
 
 
 @pytest.mark.xfail
@@ -292,3 +251,43 @@ def test_that_a_word_in_cleaned_version_of_quote_from_The_Raven_has_a_hyphen(log
         not there_are_no_hyphens, \
         f"There are no hyphens in the words in a cleaned version of a quote from The Raven."
 
+
+def test_that_there_are_no_hyphens_in_words_in_cleaned_version_of_quote_from_The_Raven(logger, quote_from_The_Raven):
+    '''
+    Given a string quote_from_The_Raven of text with words from The Raven,
+    when I pass a cleaned version of quote_from_The_Raven to tokenize,
+    I should get a list of the words in the version as return.
+    The words should consist of lowercase characters not in augmentation of string.punctuation.
+    The words should not have hyphens.
+
+    Keyword arguments:
+        logger: Logger -- a logger
+        quote_from_The_Raven: str -- a quote from The Raven
+
+    Return values:
+        none
+
+    Side effects:
+        Determines whether there are no hyphens in words in a cleaned version of quote_from_The_Raven
+
+    Exceptions raised:
+        AssertionError if there is a hyphen in a word
+
+    Restrictions on when this method can be called:
+        none
+    '''
+
+    logger.info("Testing that there are no hyphens in words in cleaned version of quote from The Raven")
+
+    text_to_tokenize = clean_text(quote_from_The_Raven)
+
+    actual_list_of_words = tokenize(text_to_tokenize)
+
+    there_are_no_hyphens = True
+    for word in actual_list_of_words:
+        if '-' in word:
+            there_are_no_hyphens = False
+
+    assert \
+        there_are_no_hyphens, \
+        f"There is a hyphen in a word in a cleaned version of a quote from The Raven."
