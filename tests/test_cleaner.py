@@ -10,6 +10,7 @@ import os
 import platform
 import pytest
 from fixtures import quote_from_The_Raven
+import sys
 
 
 def test_cleaning_all_English_texts_together(logger, list_of_paths_to_files_with_English_texts):
@@ -258,7 +259,55 @@ def test_cleaning_The_Raven_only_on_Linux(logger):
 
     current_os = platform.system()
     if current_os != "Linux":
-        pytest.fail("This test is only supported on Linux but is being run on {current_os}")
+        pytest.fail("You have not tested cleaning The Raven on {current_os}.")
+
+    text = None
+    with open("The_Raven.txt", 'r') as file:
+        text = file.read()
+
+    actual_cleaned_text = clean_text(text)
+
+    expected_cleaned_text = None
+    with open("The_Raven_Cleaned.txt", 'r') as file:
+        expected_cleaned_text = file.read()
+
+    assert \
+        actual_cleaned_text == expected_cleaned_text, \
+        f"Actual cleaned text is not equal to expected cleaned text."
+
+
+def test_cleaning_The_Raven_only_for_Python_3_10_12(logger):
+    '''
+    Given a string text with words from The Raven,
+    when I pass text to function clean_text,
+    I should get a string as return
+    representing a cleaned version of that text.
+    The string should consist of lowercase characters not in augmentation of string.punctuation.
+    This test should only pass on for Python 3.10.12.
+
+    Keyword arguments:
+        logger: Logger -- a logger
+
+    Return values:
+        none
+
+    Side effects:
+        Compares actual and expected cleaned texts
+
+    Exceptions raised:
+        AssertionError if actual cleaned text does not equal expected cleaned text
+
+    Restrictions on when this method can be called:
+        none
+    '''
+
+    logger.info("Testing cleaning text")
+
+    version_tuple = sys.version_info[:3]
+    current_version_of_Python = str(version_tuple[0]) + "." + str(version_tuple[1]) + "." + str(version_tuple[2])
+    print(current_version_of_Python)
+    if current_version_of_Python != "3.10.12":
+        pytest.fail("You have not tested cleaning The Raven for Python version {current_version_of_Python}.")
 
     text = None
     with open("The_Raven.txt", 'r') as file:
