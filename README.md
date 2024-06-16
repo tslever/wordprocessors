@@ -17,5 +17,4 @@ To test word processors, do the following.
 
 3. Run command `pytest tests/test_cleaner.py` or `pytest tests/test_tokenizer.py` or `pytest tests/test_word_counter.py`.
 
-Functions in `tests/test_cleaner.py` clean an anthology, individual texts, and quotes from texts. Functions in `tests/test_tokenizer.py` clean an anthology, individual texts, and quotes from texts. Functions in `tests/test_word_counter.py` clean an anthology, individual texts, and quotes from texts. Consider cleaning an anthology by running `pytest tests/test_cleaner.py::test_cleaning_all_English_text
-s_together`.
+Functions in `tests/test_cleaner.py` clean an anthology, individual texts, and quotes from texts. Functions in `tests/test_tokenizer.py` clean an anthology, individual texts, and quotes from texts. Functions in `tests/test_word_counter.py` clean an anthology, individual texts, and quotes from texts. Consider cleaning an anthology by running `pytest tests/test_cleaner.py::test_cleaning_all_English_texts_together`.
