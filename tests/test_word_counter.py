@@ -14,6 +14,49 @@ from fixtures import quote_from_The_Raven
 from tsl2b_DS5111su24_lab_01.word_processors import tokenize
 
 
+def test_counting_words_for_all_English_texts_together(logger, list_of_paths_to_files_with_English_texts):
+    '''
+    Given a string text with words from English texts with paths in a specified list,
+    when I pass a cleaned version of text to function count_words,
+    I should get a lists of words in the version as return.
+    Each word should consist of lowercase characters not in string.punctuation.
+
+    Keyword arguments:
+        logger: Logger -- a logger
+        list_of_paths_to_files_with_English_texts: list[str] -- a list of paths to files with English texts
+
+    Return values:
+        none
+
+    Side effects:
+        Compares actual and expected dictionaries of words in a cleaned version of text and their counts
+
+    Exceptions raised:
+        AssertionError if actual and expected dictionaries are not equal
+
+    Restrictions on when this method can be called:
+        none
+    '''
+
+    list_of_texts = []
+    for path in list_of_paths_to_files_with_English_texts:
+        with open(path, 'r') as file:
+            text = file.read()
+            list_of_texts.append(text)
+    anthology_of_English_texts = '\n'.join(list_of_texts)
+    cleaned_anthology_of_English_texts = clean_text(anthology_of_English_texts)
+
+    actual_dictionary_of_words_and_counts = count_words(cleaned_anthology_of_English_texts)
+
+    expected_dictionary_of_words_and_counts = None
+    with open("Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_Anthology_Of_English_Texts.pickle", 'rb') as file:
+        expected_dictionary_of_words_and_counts = pickle.load(file)
+
+    assert \
+        actual_dictionary_of_words_and_counts == expected_dictionary_of_words_and_counts, \
+        "Actual and expected dictionaries of words in cleaned version of anthology of English texts and their counts are not equal."
+
+
 def test_count_words(logger, quote_from_The_Raven):
     '''
     Given a string quote_from_The_Raven of words from a quote from The Raven,

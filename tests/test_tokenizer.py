@@ -31,7 +31,7 @@ def test_tokenizing_all_English_texts_together(logger, list_of_paths_to_files_wi
         Compares actual and expected lists of words in a cleaned version of text
 
     Exceptions raised:
-        AssertionError if actual and expected lists of words in a cleaned version of text are not equall
+        AssertionError if actual and expected lists of words in a cleaned version of text are not equal
 
     Restrictions on when this method can be called:
         none
