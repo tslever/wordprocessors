@@ -7,6 +7,7 @@ from tsl2b_DS5111su24_lab_01.word_processors import clean_text
 from fixtures import list_of_paths_to_files_with_English_texts
 from fixtures import logger
 import os
+import platform
 import pytest
 from fixtures import quote_from_The_Raven
 
@@ -212,6 +213,52 @@ def test_cleaning_The_Raven(logger):
     '''
 
     logger.info("Testing cleaning text")
+
+    text = None
+    with open("The_Raven.txt", 'r') as file:
+        text = file.read()
+
+    actual_cleaned_text = clean_text(text)
+
+    expected_cleaned_text = None
+    with open("The_Raven_Cleaned.txt", 'r') as file:
+        expected_cleaned_text = file.read()
+
+    assert \
+        actual_cleaned_text == expected_cleaned_text, \
+        f"Actual cleaned text is not equal to expected cleaned text."
+
+
+def test_cleaning_The_Raven_only_on_Windows(logger):
+    '''
+    Given a string text with words from The Raven,
+    when I pass text to function clean_text,
+    I should get a string as return
+    representing a cleaned version of that text.
+    The string should consist of lowercase characters not in augmentation of string.punctuation.
+    This test should only pass on Linux.
+
+    Keyword arguments:
+        logger: Logger -- a logger
+
+    Return values:
+        none
+
+    Side effects:
+        Compares actual and expected cleaned texts
+
+    Exceptions raised:
+        AssertionError if actual cleaned text does not equal expected cleaned text
+
+    Restrictions on when this method can be called:
+        none
+    '''
+
+    logger.info("Testing cleaning text")
+
+    current_os = platform.system()
+    if current_os != "Windows":
+        pytest.fail("This test is only supported on Linux but is being run on {current_os}")
 
     text = None
     with open("The_Raven.txt", 'r') as file:
