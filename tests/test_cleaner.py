@@ -10,6 +10,7 @@ import os
 import platform
 import pytest
 from fixtures import quote_from_The_Raven
+import subprocess
 import sys
 
 
@@ -151,6 +152,45 @@ def test_cleaning_quote_from_Le_Corbeau(logger):
     assert \
         actual_cleaned_text == expected_cleaned_text, \
         f"Actual cleaned quote from Le Corbeau is not equal to expected cleaned quote from Le Corbeau."
+
+
+
+@pytest.mark.skip(reason = "clean_text does not clean Japanese characters.")
+def test_cleaning_quote_from_The_Great_Raven(logger):
+    '''
+    Given a string quote_from_The_Great_Raven with words from 「大鴉」(Japanese for The Great Raven),
+    when I pass quote_from_The_Great_Raven to function clean_text,
+    I should get a string as return
+    representing a cleaned version of that quote.
+    The string should consist of lowercase characters not in augmentation of string.punctuation.
+
+    Keyword arguments:
+        logger: Logger -- a logger
+
+    Return values:
+        none
+
+    Side effects:
+        Compares actual and expected cleaned texts
+
+    Exceptions raised:
+        AssertionError if actual cleaned text does not equal expected cleaned text
+
+    Restrictions on when this method can be called:
+        none
+    '''
+
+    logger.info("Testing cleaning quote from The Great Raven")
+
+    text = "しかし、大鴉は、穏やかな胸像の上に一人座って、その一言だけを話した。まるでその一言に彼の魂を注ぎ込んだかのように。"
+
+    actual_cleaned_text = clean_text(text)
+
+    expected_cleaned_text = "しかし、大鴉は、穏やかな胸像の上に一人座って、その一言だけを話した。まるでその一言に彼の魂を注ぎ込んだかのように。"
+
+    assert \
+        actual_cleaned_text == expected_cleaned_text, \
+        f"Actual cleaned text is not equal to expected cleaned text."
 
 
 def test_cleaning_quote_from_The_Raven(logger, quote_from_The_Raven):
@@ -324,13 +364,12 @@ def test_cleaning_The_Raven_only_for_Python_3_10_12(logger):
         f"Actual cleaned text is not equal to expected cleaned text."
 
 
-@pytest.mark.skip(reason = "clean_text does not clean Japanese characters.")
-def test_cleaning_quote_from_The_Great_Raven(logger):
+def test_cleaning_The_Raven_using_command_and_function(logger):
     '''
-    Given a string quote_from_The_Great_Raven with words from 「大鴉」(Japanese for The Great Raven),
-    when I pass quote_from_The_Great_Raven to function clean_text,
+    Given a file with text or a string text with words from The Raven,
+    when I pass text to function a command or clean_text,
     I should get a string as return
-    representing a cleaned version of that quote.
+    representing a cleaned version of that text.
     The string should consist of lowercase characters not in augmentation of string.punctuation.
 
     Keyword arguments:
@@ -340,26 +379,32 @@ def test_cleaning_quote_from_The_Great_Raven(logger):
         none
 
     Side effects:
-        Compares actual and expected cleaned texts
+        Compares actual cleaned texts
 
     Exceptions raised:
-        AssertionError if actual cleaned text does not equal expected cleaned text
+        AssertionError if actual cleaned text are not equal
 
     Restrictions on when this method can be called:
         none
     '''
 
-    logger.info("Testing cleaning quote from The Great Raven")
+    logger.info("Testing cleaning text")
 
-    text = "しかし、大鴉は、穏やかな胸像の上に一人座って、その一言だけを話した。まるでその一言に彼の魂を注ぎ込んだかのように。"
+    # Command to run in bash: cat The_Raven.txt | gawk '{print tolower($0)}' | tr -d "\!\"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~«»"
+    command = "cat The_Raven.txt | gawk '{print tolower($0)}' | tr -d \"!\\\"#$%&'()*+,-./:;<=>?@[\\\\]^_\\`{|}~\""
+    # TODO: Address https://stackoverflow.com/questions/78630470/how-do-i-use-subprocess-to-run-a-version-of-a-command-that-works-in-bash
 
-    actual_cleaned_text = clean_text(text)
+    actual_cleaned_text_from_command = subprocess.run(command, shell = True, capture_output = True, text = True, encoding = 'utf-8').stdout
 
-    expected_cleaned_text = "しかし、大鴉は、穏やかな胸像の上に一人座って、その一言だけを話した。まるでその一言に彼の魂を注ぎ込んだかのように。"
+    text = None
+    with open("The_Raven.txt", 'r') as file:
+        text = file.read()
+
+    actual_cleaned_text_from_function = clean_text(text)
 
     assert \
-        actual_cleaned_text == expected_cleaned_text, \
-        f"Actual cleaned text is not equal to expected cleaned text."
+        actual_cleaned_text_from_command == actual_cleaned_text_from_function, \
+        f"Actual cleaned texts are not equal."
 
 
 def test_that_characters_in_cleaned_quote_from_The_Raven_are_all_lowercase(logger, quote_from_The_Raven):
