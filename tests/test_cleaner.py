@@ -11,45 +11,9 @@ import pytest
 from fixtures import quote_from_The_Raven
 
 
-def test_clean_quote_from_The_Raven(logger, quote_from_The_Raven):
+def test_cleaning_all_English_texts_together(logger, list_of_paths_to_files_with_English_texts):
     '''
-    Given a string quote_from_The_Raven of text with words from The Raven,
-    when I pass quote_from_The_Raven to function clean_text,
-    I should get a string as return
-    representing a cleaned version of that text.
-    The string should consist of lowercase characters not in string.punctuation.
-
-    Keyword arguments:
-        logger: Logger -- a logger
-        quote_from_The_Raven: str -- a quote from The Raven to clean
-
-    Return values:
-        none
-
-    Side effects:
-        Compares actual and expected cleaned quotes from The Raven
-
-    Exceptions raised:
-        AssertionError if actual cleaned quote does not equal expected cleaned quote
-
-    Restrictions on when this method can be called:
-        none
-    '''
-
-    logger.info("Testing cleaning text")
-
-    actual_cleaned_text = clean_text(quote_from_The_Raven)
-
-    expected_cleaned_text = """but the raven sitting lonely on the placid bust spoke only that one word as if his soul in that one word he did outpour"""
-
-    assert \
-        actual_cleaned_text == expected_cleaned_text, \
-        f"Actual cleaned quote from The Raven is not equal to expected cleaned quote from The Raven."
-
-
-def test_clean_The_Raven(logger):
-    '''
-    Given a string text with words from The Raven,
+    Given a string text with words from 4 English texts with paths in a specified list,
     when I pass text to function clean_text,
     I should get a string as return
     representing a cleaned version of that text.
@@ -57,12 +21,13 @@ def test_clean_The_Raven(logger):
 
     Keyword arguments:
         logger: Logger -- a logger
+        list_of_paths_to_files_with_English_texts: list[str] -- a list of paths to files with English texts
 
     Return values:
         none
 
     Side effects:
-        Compares actual and expected cleaned texts
+        Compares actual and expected cleaned text
 
     Exceptions raised:
         AssertionError if actual cleaned text does not equal expected cleaned text
@@ -71,25 +36,24 @@ def test_clean_The_Raven(logger):
         none
     '''
 
-    logger.info("Testing cleaning text")
+    list_of_texts = []
+    for path in list_of_paths_to_files_with_English_texts:
+        with open(path, 'r') as file:
+            text = file.read()
+            list_of_texts.append(text)
+    anthology_of_English_texts = '\n'.join(list_of_texts)
+    actual_cleaned_anthology_of_English_texts = clean_text(anthology_of_English_texts)
 
-    text = None
-    with open("The_Raven.txt", 'r') as file:
-        text = file.read()
-
-    actual_cleaned_text = clean_text(text)
-
-    expected_cleaned_text = None
-    with open("The_Raven_Cleaned.txt", 'r') as file:
-        expected_cleaned_text = file.read()
+    expected_cleaned_anthology_of_English_texts = None
+    with open("Cleaned_Anthology_Of_English_Texts.txt", 'r') as file:
+        expected_cleaned_anthology_of_English_texts = file.read()
 
     assert \
-        actual_cleaned_text == expected_cleaned_text, \
-        f"Actual cleaned text is not equal to expected cleaned text."
+        actual_cleaned_anthology_of_English_texts == expected_cleaned_anthology_of_English_texts, \
+        "Actual and cleaned anthologies of English texts are not equal."
+    
 
-
-
-def test_clean_texts(logger, list_of_paths_to_files_with_English_texts):
+def test_cleaning_each_English_text(logger, list_of_paths_to_files_with_English_texts):
     '''
     Given a string text with words from an English text with a path in a specified list,
     when I pass text to function clean_text,
@@ -136,6 +100,83 @@ def test_clean_texts(logger, list_of_paths_to_files_with_English_texts):
         assert \
             actual_cleaned_text == expected_cleaned_text, \
             f"For {path}, actual cleaned text is not equal to expected cleaned text."
+
+
+def test_cleaning_quote_from_The_Raven(logger, quote_from_The_Raven):
+    '''
+    Given a string quote_from_The_Raven of text with words from The Raven,
+    when I pass quote_from_The_Raven to function clean_text,
+    I should get a string as return
+    representing a cleaned version of that text.
+    The string should consist of lowercase characters not in string.punctuation.
+
+    Keyword arguments:
+        logger: Logger -- a logger
+        quote_from_The_Raven: str -- a quote from The Raven to clean
+
+    Return values:
+        none
+
+    Side effects:
+        Compares actual and expected cleaned quotes from The Raven
+
+    Exceptions raised:
+        AssertionError if actual cleaned quote does not equal expected cleaned quote
+
+    Restrictions on when this method can be called:
+        none
+    '''
+
+    logger.info("Testing cleaning text")
+
+    actual_cleaned_text = clean_text(quote_from_The_Raven)
+
+    expected_cleaned_text = """but the raven sitting lonely on the placid bust spoke only that one word as if his soul in that one word he did outpour"""
+
+    assert \
+        actual_cleaned_text == expected_cleaned_text, \
+        f"Actual cleaned quote from The Raven is not equal to expected cleaned quote from The Raven."
+
+
+def test_cleaning_The_Raven(logger):
+    '''
+    Given a string text with words from The Raven,
+    when I pass text to function clean_text,
+    I should get a string as return
+    representing a cleaned version of that text.
+    The string should consist of lowercase characters not in string.punctuation.
+
+    Keyword arguments:
+        logger: Logger -- a logger
+
+    Return values:
+        none
+
+    Side effects:
+        Compares actual and expected cleaned texts
+
+    Exceptions raised:
+        AssertionError if actual cleaned text does not equal expected cleaned text
+
+    Restrictions on when this method can be called:
+        none
+    '''
+
+    logger.info("Testing cleaning text")
+
+    text = None
+    with open("The_Raven.txt", 'r') as file:
+        text = file.read()
+
+    actual_cleaned_text = clean_text(text)
+
+    expected_cleaned_text = None
+    with open("The_Raven_Cleaned.txt", 'r') as file:
+        expected_cleaned_text = file.read()
+
+    assert \
+        actual_cleaned_text == expected_cleaned_text, \
+        f"Actual cleaned text is not equal to expected cleaned text."
 
 
 def test_that_characters_in_cleaned_quote_from_The_Raven_are_all_lowercase(logger, quote_from_The_Raven):
