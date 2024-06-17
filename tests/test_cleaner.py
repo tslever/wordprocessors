@@ -390,11 +390,13 @@ def test_cleaning_The_Raven_using_command_and_function(logger):
 
     logger.info("Testing cleaning text")
 
-    # Command to run in bash: cat The_Raven.txt | gawk '{print tolower($0)}' | tr -d "\!\"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~«»"
+    # Command to run in bash: cat The_Raven.txt | gawk '{print tolower($0)}' | tr -d "\!\"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~"
     command = "cat The_Raven.txt | gawk '{print tolower($0)}' | tr -d \"!\\\"#$%&'()*+,-./:;<=>?@[\\\\]^_\\`{|}~\""
-    # TODO: Address https://stackoverflow.com/questions/78630470/how-do-i-use-subprocess-to-run-a-version-of-a-command-that-works-in-bash
+    # TODO: Address https://stackoverflow.com/questions/78630470/how-do-i-remove-characters-in-a-list
 
-    actual_cleaned_text_from_command = subprocess.run(command, shell = True, capture_output = True, text = True, encoding = 'utf-8').stdout
+    actual_cleaned_text_from_command = subprocess.run(command, shell = True, capture_output = True, text = True).stdout
+    with open("The_Raven_Cleaned_By_Command.txt", 'r') as file:
+        actual_cleaned_text_from_command = file.read()
 
     text = None
     with open("The_Raven.txt", 'r') as file:
