@@ -367,7 +367,7 @@ def test_cleaning_The_Raven_only_for_Python_3_10_12(logger):
 def test_cleaning_The_Raven_using_command_and_function(logger):
     '''
     Given a file with text or a string text with words from The Raven,
-    when I pass text to function a command or clean_text,
+    when I pass text to a command or clean_text,
     I should get a string as return
     representing a cleaned version of that text.
     The string should consist of lowercase characters not in augmentation of string.punctuation.
@@ -379,10 +379,10 @@ def test_cleaning_The_Raven_using_command_and_function(logger):
         none
 
     Side effects:
-        Compares actual cleaned texts
+        Compares cleaned texts
 
     Exceptions raised:
-        AssertionError if actual cleaned text are not equal
+        AssertionError if cleaned texts are not equal
 
     Restrictions on when this method can be called:
         none

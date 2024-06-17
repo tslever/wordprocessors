@@ -328,9 +328,8 @@ def test_tokenizing_The_Raven(logger):
 def test_tokenizing_The_Raven_using_command_and_function(logger):
     '''
     Given a file with text or a string text with words from The Raven,
-    when I pass text to a command or clean_text,
-    I should get a string as return
-    representing a cleaned version of that text.
+    when I pass a cleaned version of text to a command or tokenize,
+    I should get a list of words in the version as return
     The string should consist of lowercase characters not in augmentation of string.punctuation.
 
     Keyword arguments:
@@ -340,10 +339,10 @@ def test_tokenizing_The_Raven_using_command_and_function(logger):
         none
 
     Side effects:
-        Compares actual cleaned texts
+        Compares lists of words
 
     Exceptions raised:
-        AssertionError if actual cleaned texts are not equal
+        AssertionError if lists of words are not equal
 
     Restrictions on when this method can be called:
         none
