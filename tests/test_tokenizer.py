@@ -4,12 +4,14 @@ Module test_tokenizer, which has functions to test tokenizing text
 
 
 from tsl2b_DS5111su24_lab_01.word_processors import clean_text
+import json
 from fixtures import list_of_paths_to_files_with_English_texts
 from fixtures import logger
 import os
 import pickle
 import pytest
 from fixtures import quote_from_The_Raven
+import subprocess
 from tsl2b_DS5111su24_lab_01.word_processors import tokenize
 
 
@@ -321,6 +323,49 @@ def test_tokenizing_The_Raven(logger):
     assert \
         actual_list_of_words == expected_list_of_words, \
         f"Actual list of words from a cleaned version of The Raven is not equal to expected list of words from a cleaned version of The Raven."
+
+
+def test_tokenizing_The_Raven_using_command_and_function(logger):
+    '''
+    Given a file with text or a string text with words from The Raven,
+    when I pass text to a command or clean_text,
+    I should get a string as return
+    representing a cleaned version of that text.
+    The string should consist of lowercase characters not in augmentation of string.punctuation.
+
+    Keyword arguments:
+        logger: Logger -- a logger
+
+    Return values:
+        none
+
+    Side effects:
+        Compares actual cleaned texts
+
+    Exceptions raised:
+        AssertionError if actual cleaned texts are not equal
+
+    Restrictions on when this method can be called:
+        none
+    '''
+
+    logger.info("Testing tokenizing text")
+
+    # Command to run in bash: cat The_Raven.txt | gawk '{print tolower($0)}' | tr -d "\!\"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~" | jq -R 'split(" ")'
+    command = "cat The_Raven.txt | gawk '{print tolower($0)}' | tr -d \"!\\\"#$%&'()*+,-./:;<=>?@[\\\\]^_\\`{|}~\" | tr '\n\r' ' ' | sed 's/  */ /g' | sed 's/[[:space:]]*$//' | jq -R 'split(\" \")'"
+    # TODO: Address https://stackoverflow.com/questions/78630470/how-do-i-remove-characters-in-a-list
+
+    serialized_list_of_words_from_command = subprocess.run(command, shell = True, capture_output = True, text = True).stdout
+    list_of_words_from_command = json.loads(serialized_list_of_words_from_command)
+
+    text = None
+    with open("The_Raven_Cleaned.txt", 'r') as file:
+        text = file.read()
+    list_of_words_from_function = tokenize(text)
+
+    assert \
+        list_of_words_from_command == list_of_words_from_function, \
+        f"Actual cleaned texts are not equal."
 
 
 @pytest.mark.xfail
