@@ -351,7 +351,6 @@ def test_tokenizing_The_Raven_using_command_and_function(logger):
 
     logger.info("Testing tokenizing text")
 
-    # Command to run in bash: cat The_Raven.txt | gawk '{print tolower($0)}' | tr -d "\!\"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~" | jq -R 'split(" ")'
     command = "cat The_Raven.txt | gawk '{print tolower($0)}' | tr -d \"!\\\"#$%&'()*+,-./:;<=>?@[\\\\]^_\\`{|}~\" | tr '\n\r' ' ' | sed 's/  */ /g' | sed 's/[[:space:]]*$//' | jq -R 'split(\" \")'"
     # TODO: Address https://stackoverflow.com/questions/78630470/how-do-i-remove-characters-in-a-list
 

@@ -5,12 +5,14 @@ Module test_word_counter, which has functions to test counting words in text
 
 from tsl2b_DS5111su24_lab_01.word_processors import clean_text
 from tsl2b_DS5111su24_lab_01.word_processors import count_words
+import json
 from fixtures import list_of_paths_to_files_with_English_texts
 from fixtures import logger
 import os
 import pickle
 import pytest
 from fixtures import quote_from_The_Raven
+import subprocess
 from tsl2b_DS5111su24_lab_01.word_processors import tokenize
 
 
@@ -302,6 +304,47 @@ def test_counting_words_in_The_Raven(logger):
     assert \
         actual_dictionary_of_words_and_counts == expected_dictionary_of_words_and_counts, \
         f"Actual dictionary of words in cleaned version of The Raven and their counts does not equal expected dictionary."
+
+
+def test_counting_words_in_The_Raven_using_command_and_function(logger):
+    '''
+    Given a file with text or a string text with words from The Raven,
+    when I pass a cleaned version of text to a command or count_words,
+    I should get a dictionary of words in the version.
+    The string should consist of lowercase characters not in augmentation of string.punctuation.
+
+    Keyword arguments:
+        logger: Logger -- a logger
+
+    Return values:
+        none
+
+    Side effects:
+        Compares dictionaries of words in cleaned version of text
+
+    Exceptions raised:
+        AssertionError if dictionaries are not equal
+
+    Restrictions on when this method can be called:
+        none
+    '''
+
+    logger.info("Testing tokenizing text")
+
+    command = "cat The_Raven.txt | gawk '{print tolower($0)}' | tr -d \"!\\\"#$%&'()*+,-./:;<=>?@[\\\\]^_\\`{|}~\" | tr '\n\r' ' ' | sed 's/  */ /g' | sed 's/[[:space:]]*$//' | jq -R 'split(\" \")' | jq -c 'reduce .[] as $word ({}; .[$word] += 1)'"
+    # TODO: Address https://stackoverflow.com/questions/78630470/how-do-i-remove-characters-in-a-list
+
+    serialized_dictionary_of_words_and_counts = subprocess.run(command, shell = True, capture_output = True, text = True).stdout
+    dictionary_of_words_and_counts_from_command = json.loads(serialized_dictionary_of_words_and_counts)
+
+    text = None
+    with open("The_Raven_Cleaned.txt", 'r') as file:
+        text = file.read()
+    dictionary_of_words_and_counts_from_function = count_words(text)
+
+    assert \
+        dictionary_of_words_and_counts_from_command == dictionary_of_words_and_counts_from_command, \
+        f"Dictionaries of words and counts are not equal."
 
 
 @pytest.mark.xfail
