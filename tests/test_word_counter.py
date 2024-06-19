@@ -331,8 +331,7 @@ def test_counting_words_in_The_Raven_using_command_and_function(logger):
 
     logger.info("Testing tokenizing text")
 
-    command = "cat The_Raven.txt | gawk '{print tolower($0)}' | tr -d \"!\\\"#$%&'()*+,-./:;<=>?@[\\\\]^_\\`{|}~\" | tr '\n\r' ' ' | sed 's/  */ /g' | sed 's/[[:space:]]*$//' | jq -R 'split(\" \")' | jq -c 'reduce .[] as $word ({}; .[$word] += 1)'"
-    # TODO: Address https://stackoverflow.com/questions/78630470/how-do-i-remove-characters-in-a-list
+    command = "cat The_Raven.txt | gawk '{print tolower($0)}' | tr -d \"!\\\"#$%&'()*+,-./:;<=>?@[\\\\]^_\\`{|}~\" | sed 's/«//g' | sed 's/»//g' | tr '\n\r' ' ' | sed 's/  */ /g' | sed 's/[[:space:]]*$//' | jq -R 'split(\" \")' | jq -c 'reduce .[] as $word ({}; .[$word] += 1)'"
 
     serialized_dictionary_of_words_and_counts = subprocess.run(command, shell = True, capture_output = True, text = True).stdout
     dictionary_of_words_and_counts_from_command = json.loads(serialized_dictionary_of_words_and_counts)
