@@ -2,6 +2,10 @@
 output_contents_of_Makefile:
 	@cat Makefile
 
+# public
+env:
+	python3 -m venv env; . env/bin/activate; pip install --upgrade pip
+
 # private
 get_text:
 	@wget https://www.gutenberg.org/cache/epub/$(text_ID)/pg$(text_ID).txt
