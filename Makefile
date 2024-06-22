@@ -14,6 +14,10 @@ clean_The_Raven_by_command:
 	@bash clean_text.sh The_Raven.txt > The_Raven_Cleaned_By_Command.txt
 
 # public
+count_words_in_texts:
+	@python wordprocessors/word_processors.py count_words Anthology_Of_English_Texts.txt
+
+# public
 create_cleaned_anthology_of_English_texts:
 	@cat The_Raven.txt > Anthology_Of_English_Texts.txt
 	@printf "\n" >> Anthology_Of_English_Texts.txt
