@@ -1,1 +1,2 @@
-cat "$1" | gawk '{print tolower($0)}' | tr -d "\!\"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~" > "${$1%.*}_Cleaned_By_Command.txt"
+file_name="$1"
+cat "$file_name" | gawk '{print tolower($0)}' | tr -d "\!\"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~" > "${file_name%.*}_Cleaned_By_Command.txt"
