@@ -3,7 +3,7 @@ output_contents_of_Makefile:
 	@cat Makefile
 
 # public
-create_anthology_of_English_texts:
+create_cleaned_anthology_of_English_texts:
 	@cat The_Raven.txt > Anthology_Of_English_Texts.txt
 	@printf "\n" >> Anthology_Of_English_Texts.txt
 	@cat The_Fall_of_the_House_of_Usher.txt >> Anthology_Of_English_Texts.txt
@@ -11,6 +11,7 @@ create_anthology_of_English_texts:
 	@cat The_Cask_of_Amontillado.txt >> Anthology_Of_English_Texts.txt
 	@printf "\n" >> Anthology_Of_English_Texts.txt
 	@cat The_Complete_Poetical_Works_of_Edgar_Allan_Poe.txt >> Anthology_Of_English_Texts.txt
+	@cat Anthology_Of_English_Texts.txt | gawk '{print tolower($0)}' | tr -d "\!\"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~" | sed 's/«//g' | sed 's/»//g' > Cleaned_Anthology_Of_English_Texts.txt
 
 # public
 env:
