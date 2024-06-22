@@ -4,6 +4,7 @@ output_contents_of_Makefile:
 
 # public
 create_anthology_of_English_texts:
+	@ls -al
 	@cat The_Raven.txt > Anthology_Of_English_Texts.txt
 	@printf "\n" >> Anthology_Of_English_Texts.txt
 	@The_Fall_of_the_House_of_Usher.txt >> Anthology_Of_English_Texts.txt
