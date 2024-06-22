@@ -9,6 +9,7 @@ import logging
 import os
 import pickle
 import string
+from typing import List
 
 
 logger = logging.getLogger(__name__)
@@ -47,7 +48,7 @@ def clean_text(text: str) -> str:
     return cleaned_text
 
 
-def tokenize(text: str) -> list[str]:
+def tokenize(text: str) -> List[str]:
     '''
     Tokenizes text of words separated by spaces into a list of those words
 
@@ -55,7 +56,7 @@ def tokenize(text: str) -> list[str]:
         text: str -- text
 
     Return values:
-        list_of_words: list[str] -- list of words
+        list_of_words: List[str] -- list of words
 
     Side effects:
         none
