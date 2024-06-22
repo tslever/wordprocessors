@@ -23,7 +23,7 @@ create_cleaned_anthology_of_English_texts:
 	@printf "\n" >> Anthology_Of_English_Texts.txt
 	@cat The_Complete_Poetical_Works_of_Edgar_Allan_Poe.txt >> Anthology_Of_English_Texts.txt
 	#@python wordprocessors/word_processors.py clean_text Anthology_Of_English_Texts.txt
-	@cat Anthology_Of_English_Texts.txt | gawk '{print tolower($$0)}' | tr -d "\!\"#$$%&'()*+,-./:;<=>?@[\\]^_\`{|}~" > The_Raven_Cleaned_By_Command.txt
+	@cat Anthology_Of_English_Texts.txt | gawk '{print tolower($$0)}' | tr -d "\!\"#$$%&'()*+,-./:;<=>?@[\\]^_\`{|}~" > The_Raven_Cleaned_By_Command.txt >> Anthology_Of_English_Texts_Cleaned.txt
 
 # public
 env:
