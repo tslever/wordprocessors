@@ -67,9 +67,9 @@ def quote_from_The_Raven(request: pytest.FixtureRequest) -> str:
     params = [
         [
             "The_Raven.txt",
-            "The_Fall_Of_The_House_Of_Usher.txt",
-            "The_Cask_Of_Amontillado.txt",
-            "The_Complete_Poetical_Works_Of_Edgar_Allan_Poe.txt"
+            "The_Fall_of_the_House_of_Usher.txt",
+            "The_Cask_of_Amontillado.txt",
+            "The_Complete_Poetical_Works_of_Edgar_Allan_Poe.txt"
         ]
     ]
 )
