@@ -81,6 +81,7 @@ tokenize_texts:
 	@python wordprocessors/word_processors.py tokenize Anthology_Of_English_Texts.txt
 	@python wordprocessors/word_processors.py tokenize The_Raven.txt
 	@python wordprocessors/word_processors.py tokenize The_Fall_of_the_House_of_Usher.txt
+	@python wordprocessors/word_processors.py tokenize The_Cask_of_Amontillado.txt
 
 # public
 total_lines:
