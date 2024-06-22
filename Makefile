@@ -4,14 +4,13 @@ output_contents_of_Makefile:
 
 # public
 create_anthology_of_English_texts:
-	@ls -al
 	@cat The_Raven.txt > Anthology_Of_English_Texts.txt
 	@printf "\n" >> Anthology_Of_English_Texts.txt
-	@The_Fall_of_the_House_of_Usher.txt >> Anthology_Of_English_Texts.txt
+	@cat The_Fall_of_the_House_of_Usher.txt >> Anthology_Of_English_Texts.txt
 	@printf "\n" >> Anthology_Of_English_Texts.txt
-	@The_Cask_of_Amontillado.txt >> Anthology_Of_English_Texts.txt
+	@cat The_Cask_of_Amontillado.txt >> Anthology_Of_English_Texts.txt
 	@printf "\n" >> Anthology_Of_English_Texts.txt
-	@The_Complete_Poetical_Works_of_Edgar_Allan_Poe.txt >> Anthology_Of_English_Texts.txt
+	@cat The_Complete_Poetical_Works_of_Edgar_Allan_Poe.txt >> Anthology_Of_English_Texts.txt
 
 # public
 env:
