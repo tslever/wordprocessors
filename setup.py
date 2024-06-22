@@ -1,11 +1,11 @@
 from setuptools import setup
 
 setup(
-    name='tsl2b_DS5111su24_lab_01',
+    name='wordprocessors',
     version='0.1.0',
     author='Tom Lever',
     author_email='thomas.lever.business@gmail.com',
-    packages=['tsl2b_DS5111su24_lab_01'],
+    packages=['wordprocessors'],
     url='https://github.com/tslever/tsl2b_DS5111su24_lab_01',
     license='MIT License',
     description='Contains project for Data Engineering',

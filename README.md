@@ -1,4 +1,4 @@
-# tsl2b_DS5111su24_lab_01
+# wordprocessors
 Contains project for Data Engineering
 
 To get texts from Project Gutenberg, do the following.

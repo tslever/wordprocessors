@@ -3,7 +3,7 @@ Module test_cleaner, which has functions to test cleaning text
 '''
 
 
-from tsl2b_DS5111su24_lab_01.word_processors import clean_text
+from wordprocessors.word_processors import clean_text
 from fixtures import list_of_paths_to_files_with_English_texts
 from fixtures import logger
 import os

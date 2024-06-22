@@ -3,8 +3,8 @@ Module test_word_counter, which has functions to test counting words in text
 '''
 
 
-from tsl2b_DS5111su24_lab_01.word_processors import clean_text
-from tsl2b_DS5111su24_lab_01.word_processors import count_words
+from wordprocessors.word_processors import clean_text
+from wordprocessors.word_processors import count_words
 import json
 from fixtures import list_of_paths_to_files_with_English_texts
 from fixtures import logger
@@ -13,7 +13,7 @@ import pickle
 import pytest
 from fixtures import quote_from_The_Raven
 import subprocess
-from tsl2b_DS5111su24_lab_01.word_processors import tokenize
+from wordprocessors.word_processors import tokenize
 
 
 def test_counting_words_for_all_English_texts_together(logger, list_of_paths_to_files_with_English_texts):
