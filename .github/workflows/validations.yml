@@ -24,4 +24,4 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Test with pytest
         run: |
-          . env/bin/activate; pytest -vvx tests/
+          pip list; . env/bin/activate; pip list; pytest -vvx tests/
