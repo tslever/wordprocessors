@@ -5,6 +5,7 @@ output_contents_of_Makefile:
 # public
 clean_texts:
 	@python wordprocessors/word_processors.py clean_text The_Raven.txt
+	@python wordprocessors/word_processors.py clean_text The_Fall_of_the_House_of_Usher.txt
 
 # public
 create_cleaned_anthology_of_English_texts:
