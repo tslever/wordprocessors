@@ -3,6 +3,10 @@ output_contents_of_Makefile:
 	@cat Makefile
 
 # public
+clean_texts:
+	@python wordprocessors/word_processors.py clean_text The_Raven.txt
+
+# public
 create_cleaned_anthology_of_English_texts:
 	@cat The_Raven.txt > Anthology_Of_English_Texts.txt
 	@printf "\n" >> Anthology_Of_English_Texts.txt
