@@ -11,7 +11,7 @@ clean_texts:
 
 # public
 clean_The_Raven_by_command:
-	@bash clean_text.sh The_Raven.txt
+	@bash clean_text.sh The_Raven.txt > "The_Raven_Cleaned_By_Command.txt"
 
 # public
 create_cleaned_anthology_of_English_texts:
@@ -23,7 +23,7 @@ create_cleaned_anthology_of_English_texts:
 	@printf "\n" >> Anthology_Of_English_Texts.txt
 	@cat The_Complete_Poetical_Works_of_Edgar_Allan_Poe.txt >> Anthology_Of_English_Texts.txt
 	#@python wordprocessors/word_processors.py clean_text Anthology_Of_English_Texts.txt
-	@bash clean_text.sh Anthology_Of_English_Texts.txt
+	@bash clean_text.sh Anthology_Of_English_Texts.txt > Anthology_Of_English_Texts_Cleaned.txt"
 
 # public
 env:
