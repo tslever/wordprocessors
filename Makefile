@@ -12,6 +12,7 @@ clean_texts:
 # public
 clean_The_Raven_by_command:
 	@bash clean_text.sh The_Raven.txt
+	@ls -al
 
 # public
 create_cleaned_anthology_of_English_texts:
