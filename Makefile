@@ -92,10 +92,9 @@ run_tests:
 	@make create_cleaned_anthology_of_English_texts
 	@make tokenize_texts
 	@make count_words_in_texts
-	@. env/bin/activate
-	#python -c "import site; print(site.getsitepackages())"
-	@export PYTHONPATH=$PYTHONPATH:/home/runner/work/wordprocessors/wordprocessors/env/lib/python3.7/site-packages
-	@pytest -vvx tests/
+	@. env/bin/activate; \
+	export PYTHONPATH=$$PYTHONPATH:/home/runner/work/wordprocessors/wordprocessors/env/lib/python3.7/site-packages; \
+	pytest -vvx tests/
 
 # public
 tokenize_texts:
