@@ -79,6 +79,7 @@ rename_text:
 # public
 tokenize_texts:
 	@python wordprocessors/word_processors.py tokenize Anthology_Of_English_Texts.txt
+	@python wordprocessors/word_processors.py tokenize The_Raven.txt
 
 # public
 total_lines:
