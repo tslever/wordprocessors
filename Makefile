@@ -85,7 +85,7 @@ rename_text:
 	@mv pg$(text_ID).txt $$(tail -n 1 Temporary_File.txt)
 
 # public
-tests:
+run_tests:
 	@make get_texts
 	@make clean_texts
 	@make clean_The_Raven_by_command
