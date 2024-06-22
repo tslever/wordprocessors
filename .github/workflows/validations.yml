@@ -24,4 +24,4 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Test with pytest
         run: |
-          make get_texts; make create_cleaned_anthology_of_English_texts; source env/bin/activate; python -c "import site; print(site.getsitepackages())"; export PYTHONPATH=$PYTHONPATH:/home/runner/work/wordprocessors/wordprocessors/env/lib/python3.7/site-packages; pytest -vvx tests/
+          make get_texts; make clean_texts; make create_cleaned_anthology_of_English_texts; source env/bin/activate; python -c "import site; print(site.getsitepackages())"; export PYTHONPATH=$PYTHONPATH:/home/runner/work/wordprocessors/wordprocessors/env/lib/python3.7/site-packages; pytest -vvx tests/
