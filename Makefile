@@ -11,6 +11,7 @@ clean_texts:
 
 # public
 clean_The_Raven_by_command:
+	@chmod +x clean_text.sh
 	@./clean_text.sh The_Raven.txt
 
 # public
