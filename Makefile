@@ -80,6 +80,7 @@ rename_text:
 tokenize_texts:
 	@python wordprocessors/word_processors.py tokenize Anthology_Of_English_Texts.txt
 	@python wordprocessors/word_processors.py tokenize The_Raven.txt
+	@python wordprocessors/word_processors.py tokenize The_Fall_of_the_House_of_Usher.txt
 
 # public
 total_lines:
