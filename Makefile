@@ -85,6 +85,19 @@ rename_text:
 	@mv pg$(text_ID).txt $$(tail -n 1 Temporary_File.txt)
 
 # public
+tests:
+	@make get_texts
+	@make clean_texts
+	@make clean_The_Raven_by_command
+	@make create_cleaned_anthology_of_English_texts
+	@make tokenize_texts
+	@make count_words_in_texts
+	@source env/bin/activate
+	#python -c "import site; print(site.getsitepackages())"
+	@export PYTHONPATH=$PYTHONPATH:/home/runner/work/wordprocessors/wordprocessors/env/lib/python3.7/site-packages
+	@pytest -vvx tests/
+
+# public
 tokenize_texts:
 	@python wordprocessors/word_processors.py tokenize Anthology_Of_English_Texts.txt
 	@python wordprocessors/word_processors.py tokenize The_Raven.txt
