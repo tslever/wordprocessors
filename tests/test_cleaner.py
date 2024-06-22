@@ -48,7 +48,7 @@ def test_cleaning_all_English_texts_together(logger, list_of_paths_to_files_with
     actual_cleaned_anthology_of_English_texts = clean_text(anthology_of_English_texts)
 
     expected_cleaned_anthology_of_English_texts = None
-    with open("Cleaned_Anthology_Of_English_Texts.txt", 'r') as file:
+    with open("Anthology_Of_English_Texts_Cleaned.txt", 'r') as file:
         expected_cleaned_anthology_of_English_texts = file.read()
 
     assert \
