@@ -3,6 +3,7 @@ Module logger, which has pytest fixture logger
 '''
 
 
+from typing import List
 import logging
 import pytest
 
@@ -73,7 +74,7 @@ def quote_from_The_Raven(request: pytest.FixtureRequest) -> str:
     ]
 )
 
-def list_of_paths_to_files_with_English_texts(request: pytest.FixtureRequest) -> list[str]:
+def list_of_paths_to_files_with_English_texts(request: pytest.FixtureRequest) -> List[str]:
     '''
     Provides a list of paths to files with English texts
 
@@ -81,7 +82,7 @@ def list_of_paths_to_files_with_English_texts(request: pytest.FixtureRequest) ->
         request: FixtureRequest -- a fixture request with a parameter specified in the above decorator
 
     Return values:
-        list_of_paths_to_files_with_English_texts: list[str] -- a list of paths to files with English texts
+        list_of_paths_to_files_with_English_texts: List[str] -- a list of paths to files with English texts
 
     Side effects:
         none
