@@ -28,6 +28,7 @@ jobs:
           make clean_texts
           make clean_The_Raven_by_command
           make create_cleaned_anthology_of_English_texts
+          make tokenize_texts
           source env/bin/activate
           #python -c "import site; print(site.getsitepackages())"
           export PYTHONPATH=$PYTHONPATH:/home/runner/work/wordprocessors/wordprocessors/env/lib/python3.7/site-packages

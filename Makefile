@@ -77,6 +77,10 @@ rename_text:
 	@mv pg$(text_ID).txt $$(tail -n 1 Temporary_File.txt)
 
 # public
+tokenize_texts:
+	@python wordprocessors/word_processors tokenize Anthology_Of_English_Texts.txt
+
+# public
 total_lines:
 	@find . -type f -name "*.txt" -exec wc --lines {} + | tail -n 1
 
