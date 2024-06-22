@@ -16,6 +16,7 @@ clean_The_Raven_by_command:
 # public
 count_words_in_texts:
 	@python wordprocessors/word_processors.py count_words Anthology_Of_English_Texts.txt
+	@python wordprocessors/word_processors.py count_words The_Raven.txt
 
 # public
 create_cleaned_anthology_of_English_texts:
