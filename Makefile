@@ -4,7 +4,7 @@ output_contents_of_Makefile:
 
 # public
 env:
-	python3 -m venv env; . env/bin/activate; pip install --upgrade pip
+	python3 -m venv env; . env/bin/activate; pip install --upgrade pip; pip install --editable .
 
 # private
 get_text:
