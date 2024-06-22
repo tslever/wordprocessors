@@ -10,6 +10,10 @@ clean_texts:
 	@python wordprocessors/word_processors.py clean_text The_Complete_Poetical_Works_of_Edgar_Allan_Poe.txt
 
 # public
+clean_The_Raven_by_command:
+	@cat The_Raven.txt | gawk '{print tolower($0)}' | tr -d "\!\"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~" > The_Raven_Cleaned_By_Command.txt
+
+# public
 create_cleaned_anthology_of_English_texts:
 	@cat The_Raven.txt > Anthology_Of_English_Texts.txt
 	@printf "\n" >> Anthology_Of_English_Texts.txt
