@@ -3,6 +3,10 @@ output_contents_of_Makefile:
 	@cat Makefile
 
 # public
+create_anthology_of_English_texts:
+	cat The_Raven.txt <(echo "") The_Fall_Of_The_House_Of_Usher.txt <(echo "") The_Cask_Of_Amontillado.txt <(echo "") The_Complete_Poetical_Works_Of_Edgar_Allan_Poe.txt > Anthology_Of_English_Texts.txt
+
+# public
 env:
 	python3 -m venv env; . env/bin/activate; pip install --upgrade pip; pip install --editable .
 
