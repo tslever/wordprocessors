@@ -5,6 +5,7 @@ Module word_processors, which has functions to clean, tokenize, and count words 
 
 import argparse
 from collections import Counter
+from typing import Dict
 import logging
 import os
 import pickle
@@ -80,7 +81,7 @@ def tokenize(text: str) -> List[str]:
     return list_of_words
 
 
-def count_words(text: str) -> dict[str, int]:
+def count_words(text: str) -> Dict[str, int]:
     '''
     Provides a dictionary of the words in specified text and the counts of those words
 
@@ -88,7 +89,7 @@ def count_words(text: str) -> dict[str, int]:
         text: str -- text
 
     Return values:
-        dictionary_of_words_and_counts: str -- dictionary of words in specified text and counts
+        dictionary_of_words_and_counts: Dict[str, int] -- dictionary of words in specified text and counts
 
     Side effects:
         none
