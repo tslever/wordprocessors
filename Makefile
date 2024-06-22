@@ -82,6 +82,7 @@ tokenize_texts:
 	@python wordprocessors/word_processors.py tokenize The_Raven.txt
 	@python wordprocessors/word_processors.py tokenize The_Fall_of_the_House_of_Usher.txt
 	@python wordprocessors/word_processors.py tokenize The_Cask_of_Amontillado.txt
+	@python wordprocessors/word_processors.py tokenize The_Complete_Poetical_Works_of_Edgar_Allan_Poe.txt
 
 # public
 total_lines:
