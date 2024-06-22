@@ -6,31 +6,30 @@ Module logger, which has pytest fixture logger
 from typing import List
 import logging
 import pytest
+import requests
 
 
-list_with_list_of_paths_to_files_with_English_texts = [
-    [
-        "The_Raven.txt",
-        "The_Fall_of_the_House_of_Usher.txt",
-        "The_Cask_of_Amontillado.txt",
-        "The_Complete_Poetical_Works_of_Edgar_Allan_Poe.txt"
-    ]
-]    
+dictionary_of_IDs_and_base_names_of_English_texts = {
+    17192: "The_Raven.txt",
+    932: "The_Fall_of_the_House_of_Usher.txt",
+    1063: "The_Cask_of_Amontillado.txt",
+    10031: "The_Complete_Poetical_Works_of_Edgar_Allan_Poe.txt"
+}
 
 
-@pytest.fixture(params = list_with_list_of_paths_to_files_with_English_texts)
-def list_of_paths_to_files_with_English_texts(request: pytest.FixtureRequest) -> List[str]:
+@pytest.fixture(params = [dictionary_of_IDs_and_base_names_of_English_texts])
+def list_of_paths_to_existing_files_with_English_texts(request: pytest.FixtureRequest, tmp_path) -> List[str]:
     '''
-    Provides a list of paths to files with English texts
+    Provides a list of paths to existing files with English texts
 
     Keyword arguments:
         request: FixtureRequest -- a fixture request with a parameter specified in the above decorator
 
     Return values:
-        list_of_paths_to_files_with_English_texts: List[str] -- a list of paths to files with English texts
+        list_of_paths_to_existing_files_with_English_texts: List[str] -- a list of paths to existing files with English texts
 
     Side effects:
-        none
+        Creates files if they don't already exist
 
     Exceptions raised:
         none
@@ -39,8 +38,16 @@ def list_of_paths_to_files_with_English_texts(request: pytest.FixtureRequest) ->
         pytest only should call this method to provide a list of file names of English texts.
     '''
 
-    list_of_paths_to_files_with_English_texts = request.param
-    return list_of_paths_to_files_with_English_texts
+    
+    dictionary_of_IDs_and_base_names_of_English_texts = request.param
+    list_of_paths_to_existing_files_with_English_texts = list(dictionary_of_IDs_and_base_names_of_English_texts.values())
+    for ID, base_name in dictionary_of_IDs_and_base_names_of_English_texts.items():
+        URL = f"https://www.gutenberg.org/cache/epub/{ID}/pg{ID}.txt"
+        response = requests.get(URL)
+        text = response.text
+        temporary_file = tmp_path / base_name
+        temporary_file.write_text(text)
+    return list_of_paths_to_existing_files_with_English_texts
 
 
 @pytest.fixture(scope = "session")

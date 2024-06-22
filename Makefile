@@ -35,7 +35,12 @@ create_cleaned_anthology_of_English_texts:
 
 # public
 env:
-	python3 -m venv env; . env/bin/activate; pip install --upgrade pip; pip install --editable .
+	@python3 -m venv env; \
+	. env/bin/activate; \
+	pip install --upgrade pip; \
+	pip install --editable .; \
+	pip install pytest; \
+	pip install requests
 
 # private
 get_text:
@@ -86,12 +91,12 @@ rename_text:
 
 # public
 run_tests:
-	@make get_texts
-	@make clean_texts
-	@make clean_The_Raven_by_command
-	@make create_cleaned_anthology_of_English_texts
-	@make tokenize_texts
-	@make count_words_in_texts
+	#@make get_texts
+	#@make clean_texts
+	#@make clean_The_Raven_by_command
+	#@make create_cleaned_anthology_of_English_texts
+	#@make tokenize_texts
+	#@make count_words_in_texts
 	@. env/bin/activate; \
 	export PYTHONPATH=$$PYTHONPATH:/home/runner/work/wordprocessors/wordprocessors/env/lib/python3.7/site-packages; \
 	pytest -vvx tests/

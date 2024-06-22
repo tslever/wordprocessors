@@ -6,7 +6,7 @@ Module test_word_counter, which has functions to test counting words in text
 from wordprocessors.word_processors import clean_text
 from wordprocessors.word_processors import count_words
 import json
-from fixtures import list_of_paths_to_files_with_English_texts
+from fixtures import list_of_paths_to_existing_files_with_English_texts
 from fixtures import logger
 import os
 import pickle
@@ -16,7 +16,7 @@ import subprocess
 from wordprocessors.word_processors import tokenize
 
 
-def test_counting_words_for_all_English_texts_together(logger, list_of_paths_to_files_with_English_texts):
+def test_counting_words_for_all_English_texts_together(logger, list_of_paths_to_existing_files_with_English_texts):
     '''
     Given a string text with words from English texts with paths in a specified list,
     when I pass a cleaned version of text to function count_words,
@@ -25,7 +25,7 @@ def test_counting_words_for_all_English_texts_together(logger, list_of_paths_to_
 
     Keyword arguments:
         logger: Logger -- a logger
-        list_of_paths_to_files_with_English_texts: list[str] -- a list of paths to files with English texts
+        list_of_paths_to_existing_files_with_English_texts: list[str] -- a list of paths to files with English texts
 
     Return values:
         none
@@ -41,7 +41,7 @@ def test_counting_words_for_all_English_texts_together(logger, list_of_paths_to_
     '''
 
     list_of_texts = []
-    for path in list_of_paths_to_files_with_English_texts:
+    for path in list_of_paths_to_existing_files_with_English_texts:
         with open(path, 'r') as file:
             text = file.read()
             list_of_texts.append(text)
@@ -59,7 +59,7 @@ def test_counting_words_for_all_English_texts_together(logger, list_of_paths_to_
         "Actual and expected dictionaries of words in cleaned version of anthology of English texts and their counts are not equal."
 
 
-def test_count_words_in_each_English_text(logger, list_of_paths_to_files_with_English_texts):
+def test_count_words_in_each_English_text(logger, list_of_paths_to_existing_files_with_English_texts):
     '''
     Given a string text with words from an English text with a path in a specified list,
     when I pass a cleaned version of the text to function count_words,
@@ -68,7 +68,7 @@ def test_count_words_in_each_English_text(logger, list_of_paths_to_files_with_En
 
     Keyword arguments:
         logger: Logger -- a logger
-        list_of_paths_to_files_with_English_texts: list[str] -- a list of paths to files with English texts
+        list_of_paths_to_existing_files_with_English_texts: list[str] -- a list of paths to files with English texts
 
     Return values:
         none
@@ -85,7 +85,7 @@ def test_count_words_in_each_English_text(logger, list_of_paths_to_files_with_En
 
     logger.info("Testing counting words in clean versions of texts")
 
-    for path in list_of_paths_to_files_with_English_texts:
+    for path in list_of_paths_to_existing_files_with_English_texts:
 
         logger.info(f"Testing counting words in cleaned version of text in file at {path}")
 

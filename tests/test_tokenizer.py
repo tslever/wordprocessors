@@ -5,7 +5,7 @@ Module test_tokenizer, which has functions to test tokenizing text
 
 from wordprocessors.word_processors import clean_text
 import json
-from fixtures import list_of_paths_to_files_with_English_texts
+from fixtures import list_of_paths_to_existing_files_with_English_texts
 from fixtures import logger
 import os
 import pickle
@@ -15,7 +15,7 @@ import subprocess
 from wordprocessors.word_processors import tokenize
 
 
-def test_tokenizing_all_English_texts_together(logger, list_of_paths_to_files_with_English_texts):
+def test_tokenizing_all_English_texts_together(logger, list_of_paths_to_existing_files_with_English_texts):
     '''
     Given a string text with words from English texts with paths in a specified list,
     when I pass a cleaned version of text to function tokenize,
@@ -24,7 +24,7 @@ def test_tokenizing_all_English_texts_together(logger, list_of_paths_to_files_wi
 
     Keyword arguments:
         logger: Logger -- a logger
-        list_of_paths_to_files_with_English_texts: list[str] -- a list of paths to files with English texts
+        list_of_paths_to_existing_files_with_English_texts: list[str] -- a list of paths to files with English texts
 
     Return values:
         none
@@ -40,7 +40,7 @@ def test_tokenizing_all_English_texts_together(logger, list_of_paths_to_files_wi
     '''
 
     list_of_texts = []
-    for path in list_of_paths_to_files_with_English_texts:
+    for path in list_of_paths_to_existing_files_with_English_texts:
         with open(path, 'r') as file:
             text = file.read()
             list_of_texts.append(text)
@@ -58,7 +58,7 @@ def test_tokenizing_all_English_texts_together(logger, list_of_paths_to_files_wi
         "Actual and expected lists of words in cleaned version of anthology of English texts are not equal."
 
 
-def test_tokenizing_each_English_text(logger, list_of_paths_to_files_with_English_texts):
+def test_tokenizing_each_English_text(logger, list_of_paths_to_existing_files_with_English_texts):
     '''
     Given a string text with words from an English text with a path in a specified list,
     when I pass a cleaned version of the text to function tokenize,
@@ -67,7 +67,7 @@ def test_tokenizing_each_English_text(logger, list_of_paths_to_files_with_Englis
 
     Keyword arguments:
         logger: Logger -- a logger
-        list_of_paths_to_files_with_English_texts: list[str] -- a list of paths to files with English texts
+        list_of_paths_to_existing_files_with_English_texts: list[str] -- a list of paths to files with English texts
 
     Return values:
         none
@@ -84,7 +84,7 @@ def test_tokenizing_each_English_text(logger, list_of_paths_to_files_with_Englis
 
     logger.info("Testing tokenizing clean versions of texts")
 
-    for path in list_of_paths_to_files_with_English_texts:
+    for path in list_of_paths_to_existing_files_with_English_texts:
 
         logger.info(f"Testing tokenizing cleaned version of text in file at {path}")
 

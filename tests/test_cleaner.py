@@ -4,7 +4,7 @@ Module test_cleaner, which has functions to test cleaning text
 
 
 from wordprocessors.word_processors import clean_text
-from fixtures import list_of_paths_to_files_with_English_texts
+from fixtures import list_of_paths_to_existing_files_with_English_texts
 from fixtures import logger
 import os
 import platform
@@ -14,7 +14,7 @@ import subprocess
 import sys
 
 
-def test_cleaning_all_English_texts_together(logger, list_of_paths_to_files_with_English_texts):
+def test_cleaning_all_English_texts_together(logger, list_of_paths_to_existing_files_with_English_texts):
     '''
     Given a string text with words from English texts with paths in a specified list,
     when I pass text to function clean_text,
@@ -24,7 +24,7 @@ def test_cleaning_all_English_texts_together(logger, list_of_paths_to_files_with
 
     Keyword arguments:
         logger: Logger -- a logger
-        list_of_paths_to_files_with_English_texts: list[str] -- a list of paths to files with English texts
+        list_of_paths_to_existing_files_with_English_texts: list[str] -- a list of paths to files with English texts
 
     Return values:
         none
@@ -40,7 +40,7 @@ def test_cleaning_all_English_texts_together(logger, list_of_paths_to_files_with
     '''
 
     list_of_texts = []
-    for path in list_of_paths_to_files_with_English_texts:
+    for path in list_of_paths_to_existing_files_with_English_texts:
         with open(path, 'r') as file:
             text = file.read()
             list_of_texts.append(text)
@@ -56,7 +56,7 @@ def test_cleaning_all_English_texts_together(logger, list_of_paths_to_files_with
         "Actual and cleaned anthologies of English texts are not equal."
     
 
-def test_cleaning_each_English_text(logger, list_of_paths_to_files_with_English_texts):
+def test_cleaning_each_English_text(logger, list_of_paths_to_existing_files_with_English_texts):
     '''
     Given a string text with words from an English text with a path in a specified list,
     when I pass text to function clean_text,
@@ -66,7 +66,7 @@ def test_cleaning_each_English_text(logger, list_of_paths_to_files_with_English_
 
     Keyword arguments:
         logger: Logger -- a logger
-        list_of_paths_to_files_with_English_texts: list[str] -- a list of paths to files with English texts
+        list_of_paths_to_existing_files_with_English_texts: list[str] -- a list of paths to files with English texts
 
     Return values:
         none
@@ -83,7 +83,7 @@ def test_cleaning_each_English_text(logger, list_of_paths_to_files_with_English_
 
     logger.info("Testing cleaning texts")
 
-    for path in list_of_paths_to_files_with_English_texts:
+    for path in list_of_paths_to_existing_files_with_English_texts:
 
         logger.info(f"Testing cleaning {path}")
 
