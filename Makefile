@@ -6,6 +6,7 @@ output_contents_of_Makefile:
 env:
 	@python3 -m venv env; \
 	. env/bin/activate; \
+	pip install --upgrade pip; \
 	deactivate
 
 # private
