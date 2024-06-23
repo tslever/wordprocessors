@@ -50,10 +50,16 @@ rename_text:
 	@mv pg$(text_ID).txt $$(tail -n 1 Temporary_File.txt)
 
 # public
-run_tests:
+run_non_integration_tests:
 	@. env/bin/activate; \
 	export PYTHONPATH=$$PYTHONPATH:/home/runner/work/wordprocessors/wordprocessors/env/lib/python3.7/site-packages; \
 	pytest -vvx tests/ -m "not integration"
+
+# public
+run_integration_tests:
+	@. env/bin/activate; \
+	export PYTHONPATH=$$PYTHONPATH:/home/runner/work/wordprocessors/wordprocessors/env/lib/python3.7/site-packages; \
+	pytest -vvx tests/ -m "integration"
 
 # public
 total_lines:

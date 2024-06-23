@@ -24,4 +24,5 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Test with pytest
         run: |
-          make run_tests
+          make run_non_integration_tests
+          make run_integration_tests
