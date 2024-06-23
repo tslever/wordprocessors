@@ -3,37 +3,6 @@ output_contents_of_Makefile:
 	@cat Makefile
 
 # public
-clean_texts:
-	@python wordprocessors/word_processors.py clean_text The_Raven.txt
-	@python wordprocessors/word_processors.py clean_text The_Fall_of_the_House_of_Usher.txt
-	@python wordprocessors/word_processors.py clean_text The_Cask_of_Amontillado.txt
-	@python wordprocessors/word_processors.py clean_text The_Complete_Poetical_Works_of_Edgar_Allan_Poe.txt
-
-# public
-clean_The_Raven_by_command:
-	@bash clean_text.sh The_Raven.txt > The_Raven_Cleaned_By_Command.txt
-
-# public
-count_words_in_texts:
-	@python wordprocessors/word_processors.py count_words Anthology_Of_English_Texts.txt
-	@python wordprocessors/word_processors.py count_words The_Raven.txt
-	@python wordprocessors/word_processors.py count_words The_Fall_of_the_House_of_Usher.txt
-	@python wordprocessors/word_processors.py count_words The_Cask_of_Amontillado.txt
-	@python wordprocessors/word_processors.py count_words The_Complete_Poetical_Works_of_Edgar_Allan_Poe.txt
-
-# public
-create_cleaned_anthology_of_English_texts:
-	@cat The_Raven.txt > Anthology_Of_English_Texts.txt
-	@printf "\n" >> Anthology_Of_English_Texts.txt
-	@cat The_Fall_of_the_House_of_Usher.txt >> Anthology_Of_English_Texts.txt
-	@printf "\n" >> Anthology_Of_English_Texts.txt
-	@cat The_Cask_of_Amontillado.txt >> Anthology_Of_English_Texts.txt
-	@printf "\n" >> Anthology_Of_English_Texts.txt
-	@cat The_Complete_Poetical_Works_of_Edgar_Allan_Poe.txt >> Anthology_Of_English_Texts.txt
-	#@python wordprocessors/word_processors.py clean_text Anthology_Of_English_Texts.txt
-	@bash clean_text.sh Anthology_Of_English_Texts.txt > Anthology_Of_English_Texts_Cleaned.txt
-
-# public
 env:
 	@python3 -m venv env; \
 	. env/bin/activate; \
@@ -62,15 +31,6 @@ get_title:
 	@sed -n '/^Title: /{s/^Title: //;s/\r.*//;p;q;}' pg$(text_ID).txt > Temporary_File.txt
 
 # public
-set_up_virtual_environment_env_upgrade_PIP_and_use_PIP_to_install_Python_packages_specified_in_text_file_requirements:
-	@sudo apt install python3.10-venv
-	@python3 -m venv env
-	@. env/bin/activate; \
-	pip install --upgrade pip; \
-	pip install -r requirements.txt; \
-	deactivate
-
-# public
 raven_counts:
 	@grep raven The_Raven.txt | wc --lines
 	@grep Raven The_Raven.txt | wc --lines
@@ -91,23 +51,9 @@ rename_text:
 
 # public
 run_tests:
-	#@make get_texts
-	#@make clean_texts
-	#@make clean_The_Raven_by_command
-	#@make create_cleaned_anthology_of_English_texts
-	#@make tokenize_texts
-	#@make count_words_in_texts
 	@. env/bin/activate; \
 	export PYTHONPATH=$$PYTHONPATH:/home/runner/work/wordprocessors/wordprocessors/env/lib/python3.7/site-packages; \
 	pytest -vvx tests/
-
-# public
-tokenize_texts:
-	@python wordprocessors/word_processors.py tokenize Anthology_Of_English_Texts.txt
-	@python wordprocessors/word_processors.py tokenize The_Raven.txt
-	@python wordprocessors/word_processors.py tokenize The_Fall_of_the_House_of_Usher.txt
-	@python wordprocessors/word_processors.py tokenize The_Cask_of_Amontillado.txt
-	@python wordprocessors/word_processors.py tokenize The_Complete_Poetical_Works_of_Edgar_Allan_Poe.txt
 
 # public
 total_lines:
