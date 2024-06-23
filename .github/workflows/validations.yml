@@ -25,7 +25,6 @@ jobs:
       - name: Install dependencies
         run: |
           make env
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           pip list
           . env/bin/activate; pip list; deactivate
       - name: Test with pytest
