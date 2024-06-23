@@ -13,6 +13,7 @@ from fixtures import temporary_directory_of_files_with_texts
 from wordprocessors.word_processors import tokenize
 
 
+@pytest.mark.integration
 def test_downloading_cleaning_tokenizing_and_counting_words_in_The_Raven(logger, temporary_directory_of_files_with_texts):
     '''
     Given a string text with words from The Raven,
@@ -54,6 +55,7 @@ def test_downloading_cleaning_tokenizing_and_counting_words_in_The_Raven(logger,
     assert actual_dictionary_of_words_and_counts == expected_dictionary_of_words_and_counts
 
 
+@pytest.mark.integration
 def test_downloading_cleaning_tokenizing_and_counting_words_in_anthology_of_English_texts(logger, temporary_directory_of_files_with_texts):
     '''
     Given a string text with words from an anthology of English texts,
