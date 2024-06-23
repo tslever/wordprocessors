@@ -38,7 +38,7 @@ def clean_text(text: str) -> str:
 
     assert isinstance(text, str)
 
-    translation_table = str.maketrans('', '', string.punctuation + "«»")
+    translation_table = str.maketrans('', '', string.punctuation + "\r«»")
     cleaned_text = text.lower().translate(translation_table)
 
     #logger.info("Cleaned text: %s", cleaned_text)

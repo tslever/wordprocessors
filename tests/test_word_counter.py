@@ -334,7 +334,7 @@ def test_counting_words_in_The_Raven_using_command_and_function(logger, temporar
     logger.info("Testing tokenizing text")
 
     file_name = temporary_directory_of_files_with_texts / "The_Raven.txt"
-    command = "cat " + str(file_name) + " | gawk '{print tolower($0)}' | tr -d \"!\\\"#$%&'()*+,-./:;<=>?@[\\\\]^_\\`{|}~\" | sed 's/«//g' | sed 's/»//g' | tr '\n\r' ' ' | sed 's/  */ /g' | sed 's/[[:space:]]*$//' | jq -R 'split(\" \")' | jq -c 'reduce .[] as $word ({}; .[$word] += 1)'"
+    command = "bash clean_text.sh " + str(file_name) + " | tr '\n' ' ' | sed 's/  */ /g' | sed 's/[[:space:]]*$//' | jq -R 'split(\" \")' | jq -c 'reduce .[] as $word ({}; .[$word] += 1)'"
 
     serialized_dictionary_of_words_and_counts = subprocess.run(command, shell = True, capture_output = True, text = True).stdout
     dictionary_of_words_and_counts_from_command = json.loads(serialized_dictionary_of_words_and_counts)

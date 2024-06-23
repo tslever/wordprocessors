@@ -353,7 +353,7 @@ def test_tokenizing_The_Raven_using_command_and_function(logger, temporary_direc
     logger.info("Testing tokenizing text")
 
     file_name = temporary_directory_of_files_with_texts / "The_Raven.txt"
-    command = "cat " + str(file_name) + " | gawk '{print tolower($0)}' | tr -d \"!\\\"#$%&'()*+,-./:;<=>?@[\\\\]^_\\`{|}~\" | sed 's/«//g' | sed 's/»//g' | tr '\n\r' ' ' | sed 's/  */ /g' | sed 's/[[:space:]]*$//' | jq -R 'split(\" \")'"
+    command = "bash clean_text.sh " + str(file_name) + " | tr '\n' ' ' | sed 's/  */ /g' | sed 's/[[:space:]]*$//' | jq -R 'split(\" \")'"
 
     serialized_list_of_words_from_command = subprocess.run(command, shell = True, capture_output = True, text = True).stdout
     list_of_words_from_command = json.loads(serialized_list_of_words_from_command)
