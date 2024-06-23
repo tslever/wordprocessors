@@ -53,7 +53,7 @@ rename_text:
 run_tests:
 	@. env/bin/activate; \
 	export PYTHONPATH=$$PYTHONPATH:/home/runner/work/wordprocessors/wordprocessors/env/lib/python3.7/site-packages; \
-	pytest -vvx tests/
+	pytest -vvx tests/ -m "not integration"
 
 # public
 total_lines:
