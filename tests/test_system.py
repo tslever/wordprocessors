@@ -7,6 +7,7 @@ from wordprocessors.word_processors import clean_text
 from wordprocessors.word_processors import count_words
 from fixtures import logger
 import pickle
+import pytest
 import requests
 from fixtures import temporary_directory
 from fixtures import temporary_directory_of_files_with_texts
