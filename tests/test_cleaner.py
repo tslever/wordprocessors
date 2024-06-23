@@ -4,17 +4,19 @@ Module test_cleaner, which has functions to test cleaning text
 
 
 from wordprocessors.word_processors import clean_text
-from fixtures import list_of_paths_to_existing_files_with_English_texts
+from fixtures import list_of_paths_to_files_with_English_texts
 from fixtures import logger
 import os
 import platform
 import pytest
 from fixtures import quote_from_The_Raven
+from fixtures import temporary_directory
+from fixtures import temporary_directory_of_files_with_texts
 import subprocess
 import sys
 
 
-def test_cleaning_all_English_texts_together(logger, list_of_paths_to_existing_files_with_English_texts):
+def test_cleaning_all_English_texts_together(list_of_paths_to_files_with_English_texts, logger, temporary_directory_of_files_with_texts):
     '''
     Given a string text with words from English texts with paths in a specified list,
     when I pass text to function clean_text,
@@ -24,7 +26,7 @@ def test_cleaning_all_English_texts_together(logger, list_of_paths_to_existing_f
 
     Keyword arguments:
         logger: Logger -- a logger
-        list_of_paths_to_existing_files_with_English_texts: list[str] -- a list of paths to files with English texts
+        list_of_paths_to_files_with_English_texts: list[str] -- a list of paths to files with English texts
 
     Return values:
         none
@@ -40,7 +42,7 @@ def test_cleaning_all_English_texts_together(logger, list_of_paths_to_existing_f
     '''
 
     list_of_texts = []
-    for path in list_of_paths_to_existing_files_with_English_texts:
+    for path in list_of_paths_to_files_with_English_texts:
         with open(path, 'r') as file:
             text = file.read()
             list_of_texts.append(text)
@@ -48,7 +50,7 @@ def test_cleaning_all_English_texts_together(logger, list_of_paths_to_existing_f
     actual_cleaned_anthology_of_English_texts = clean_text(anthology_of_English_texts)
 
     expected_cleaned_anthology_of_English_texts = None
-    with open("Anthology_Of_English_Texts_Cleaned.txt", 'r') as file:
+    with open(temporary_directory_of_files_with_texts / "Anthology_Of_English_Texts_Cleaned.txt", 'r') as file:
         expected_cleaned_anthology_of_English_texts = file.read()
 
     assert \
@@ -56,7 +58,7 @@ def test_cleaning_all_English_texts_together(logger, list_of_paths_to_existing_f
         "Actual and cleaned anthologies of English texts are not equal."
     
 
-def test_cleaning_each_English_text(logger, list_of_paths_to_existing_files_with_English_texts):
+def test_cleaning_each_English_text(list_of_paths_to_files_with_English_texts, logger, temporary_directory_of_files_with_texts):
     '''
     Given a string text with words from an English text with a path in a specified list,
     when I pass text to function clean_text,
@@ -66,7 +68,7 @@ def test_cleaning_each_English_text(logger, list_of_paths_to_existing_files_with
 
     Keyword arguments:
         logger: Logger -- a logger
-        list_of_paths_to_existing_files_with_English_texts: list[str] -- a list of paths to files with English texts
+        list_of_paths_to_files_with_English_texts: list[str] -- a list of paths to files with English texts
 
     Return values:
         none
@@ -83,13 +85,13 @@ def test_cleaning_each_English_text(logger, list_of_paths_to_existing_files_with
 
     logger.info("Testing cleaning texts")
 
-    for path in list_of_paths_to_existing_files_with_English_texts:
+    for path in list_of_paths_to_files_with_English_texts:
 
         logger.info(f"Testing cleaning {path}")
 
         base_name = os.path.basename(path)
         text = None
-        with open(base_name, 'r') as file:
+        with open(temporary_directory_of_files_with_texts / base_name, 'r') as file:
             text = file.read()
 
         actual_cleaned_text = clean_text(text)
@@ -97,7 +99,7 @@ def test_cleaning_each_English_text(logger, list_of_paths_to_existing_files_with
         file_name, extension = os.path.splitext(base_name)
 
         expected_cleaned_text = None
-        with open(f"{file_name}_Cleaned{extension}", 'r') as file:
+        with open(temporary_directory_of_files_with_texts / f"{file_name}_Cleaned{extension}", 'r') as file:
             expected_cleaned_text = file.read()
 
         assert \
@@ -229,7 +231,7 @@ def test_cleaning_quote_from_The_Raven(logger, quote_from_The_Raven):
         f"Actual cleaned quote from The Raven is not equal to expected cleaned quote from The Raven."
 
 
-def test_cleaning_The_Raven(logger):
+def test_cleaning_The_Raven(logger, temporary_directory_of_files_with_texts):
     '''
     Given a string text with words from The Raven,
     when I pass text to function clean_text,
@@ -256,13 +258,13 @@ def test_cleaning_The_Raven(logger):
     logger.info("Testing cleaning text")
 
     text = None
-    with open("The_Raven.txt", 'r') as file:
+    with open(temporary_directory_of_files_with_texts / "The_Raven.txt", 'r') as file:
         text = file.read()
 
     actual_cleaned_text = clean_text(text)
 
     expected_cleaned_text = None
-    with open("The_Raven_Cleaned.txt", 'r') as file:
+    with open(temporary_directory_of_files_with_texts / "The_Raven_Cleaned.txt", 'r') as file:
         expected_cleaned_text = file.read()
 
     assert \
@@ -270,7 +272,7 @@ def test_cleaning_The_Raven(logger):
         f"Actual cleaned text is not equal to expected cleaned text."
 
 
-def test_cleaning_The_Raven_only_on_Linux(logger):
+def test_cleaning_The_Raven_only_on_Linux(logger, temporary_directory_of_files_with_texts):
     '''
     Given a string text with words from The Raven,
     when I pass text to function clean_text,
@@ -302,13 +304,13 @@ def test_cleaning_The_Raven_only_on_Linux(logger):
         pytest.fail("You have not tested cleaning The Raven on {current_os}.")
 
     text = None
-    with open("The_Raven.txt", 'r') as file:
+    with open(temporary_directory_of_files_with_texts / "The_Raven.txt", 'r') as file:
         text = file.read()
 
     actual_cleaned_text = clean_text(text)
 
     expected_cleaned_text = None
-    with open("The_Raven_Cleaned.txt", 'r') as file:
+    with open(temporary_directory_of_files_with_texts / "The_Raven_Cleaned.txt", 'r') as file:
         expected_cleaned_text = file.read()
 
     assert \
@@ -316,7 +318,7 @@ def test_cleaning_The_Raven_only_on_Linux(logger):
         f"Actual cleaned text is not equal to expected cleaned text."
 
 
-def test_cleaning_The_Raven_only_for_Python_3_10_12(logger):
+def test_cleaning_The_Raven_only_for_Python_3_10_12(logger, temporary_directory_of_files_with_texts):
     '''
     Given a string text with words from The Raven,
     when I pass text to function clean_text,
@@ -350,13 +352,13 @@ def test_cleaning_The_Raven_only_for_Python_3_10_12(logger):
         pytest.fail("You have not tested cleaning The Raven for Python version {current_version_of_Python}.")
 
     text = None
-    with open("The_Raven.txt", 'r') as file:
+    with open(temporary_directory_of_files_with_texts / "The_Raven.txt", 'r') as file:
         text = file.read()
 
     actual_cleaned_text = clean_text(text)
 
     expected_cleaned_text = None
-    with open("The_Raven_Cleaned.txt", 'r') as file:
+    with open(temporary_directory_of_files_with_texts / "The_Raven_Cleaned.txt", 'r') as file:
         expected_cleaned_text = file.read()
 
     assert \
@@ -364,7 +366,7 @@ def test_cleaning_The_Raven_only_for_Python_3_10_12(logger):
         f"Actual cleaned text is not equal to expected cleaned text."
 
 
-def test_cleaning_The_Raven_using_command_and_function(logger):
+def test_cleaning_The_Raven_using_command_and_function(logger, temporary_directory_of_files_with_texts):
     '''
     Given a file with text or a string text with words from The Raven,
     when I pass text to a command or clean_text,
@@ -390,15 +392,12 @@ def test_cleaning_The_Raven_using_command_and_function(logger):
 
     logger.info("Testing cleaning text")
 
-    # Command to run in bash: cat The_Raven.txt | gawk '{print tolower($0)}' | tr -d "\!\"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~"
-    command = "cat The_Raven.txt | gawk '{print tolower($0)}' | tr -d \"!\\\"#$%&'()*+,-./:;<=>?@[\\\\]^_\\`{|}~\" | sed 's/«//g' | sed 's/»//g'"
-
+    temporary_file = temporary_directory_of_files_with_texts / "The_Raven.txt"
+    command = "cat " + str(temporary_file) + " | gawk '{print tolower($0)}' | tr -d \"!\\\"#$%&'()*+,-./:;<=>?@[\\\\]^_\\`{|}~\" | sed 's/[«»]//g'"
     actual_cleaned_text_from_command = subprocess.run(command, shell = True, capture_output = True, text = True).stdout
-    with open("The_Raven_Cleaned_By_Command.txt", 'r') as file:
-        actual_cleaned_text_from_command = file.read()
 
     text = None
-    with open("The_Raven.txt", 'r') as file:
+    with open(temporary_directory_of_files_with_texts / "The_Raven.txt", 'r') as file:
         text = file.read()
 
     actual_cleaned_text_from_function = clean_text(text)
