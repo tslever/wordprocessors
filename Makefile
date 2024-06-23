@@ -6,10 +6,7 @@ output_contents_of_Makefile:
 env:
 	@python3 -m venv env; \
 	. env/bin/activate; \
-	pip install --upgrade pip; \
-	pip install --editable .; \
-	pip install pytest; \
-	pip install requests
+	deactivate
 
 # private
 get_text:
@@ -53,13 +50,15 @@ rename_text:
 run_non_integration_tests:
 	@. env/bin/activate; \
 	export PYTHONPATH=$$PYTHONPATH:/home/runner/work/wordprocessors/wordprocessors/env/lib/python3.7/site-packages; \
-	pytest -vvx tests/ -m "not integration"
+	pytest -vvx tests/ -m "not integration"; \
+	deactivate
 
 # public
 run_integration_tests:
 	@. env/bin/activate; \
 	export PYTHONPATH=$$PYTHONPATH:/home/runner/work/wordprocessors/wordprocessors/env/lib/python3.7/site-packages; \
-	pytest -vvx tests/ -m "integration"
+	pytest -vvx tests/ -m "integration"; \
+	deactivate
 
 # public
 total_lines:
