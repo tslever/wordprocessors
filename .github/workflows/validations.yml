@@ -32,7 +32,7 @@ jobs:
         run: |
           make run_non_integration_tests
       - name: Run non-integration and integration tests
-        if: github.event.inputs.run_only_non_integration_tests == 'false'
+        if: github.event_name == 'push' || github.event.inputs.run_only_non_integration_tests == 'false'
         run: |
           make run_non_integration_tests
           make run_integration_tests
