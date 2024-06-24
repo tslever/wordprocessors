@@ -28,11 +28,11 @@ jobs:
           pip list
           . env/bin/activate; pip list; deactivate
       - name: Run non-integration and integration tests
-        if ${{ github.event.inputs.testing == 'true' }}
+        if: github.event.inputs.testing == 'true'
         run: |
           make run_non_integration_tests
           make run_integration_tests
       - name: Run non-integration tests
-        if ${{ github.event.inputs.testing == 'false'
+        if: github.event.inputs.testing == 'false'
         run: |
           make run_non_integration_tests
