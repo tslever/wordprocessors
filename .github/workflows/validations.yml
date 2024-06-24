@@ -28,10 +28,6 @@ jobs:
           pip list
           . env/bin/activate; pip list; deactivate
       - name: Test with pytest
-        id: pytest
         run: |
           make run_non_integration_tests
           make run_integration_tests
-      - name: Print pytest log if tests fail
-        if: failure()
-        run: cat pytest.log
