@@ -11,7 +11,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -28,11 +27,11 @@ jobs:
           make env
           pip list
           . env/bin/activate; pip list; deactivate
-      - name: Run non-integration and integration tests
+      - name: Run non-integration tests
         if: github.event.inputs.run_only_non_integration_tests == 'true'
         run: |
           make run_non_integration_tests
-      - name: Run non-integration tests
+      - name: Run non-integration and integration tests
         if: github.event.inputs.run_only_non_integration_tests == 'false'
         run: |
           make run_non_integration_tests
