@@ -4,8 +4,8 @@ on:
   push:
   workflow_dispatch:
     inputs:
-      run_non_integration_tests:
-        description: 'Run non-integration tests'
+      run_only_non_integration_tests:
+        description: 'Run only non-integration tests'
         required: true
         default: 'true'
 
@@ -29,11 +29,11 @@ jobs:
           pip list
           . env/bin/activate; pip list; deactivate
       - name: Run non-integration and integration tests
-        if: github.event.inputs.testing == 'true'
+        if: github.event.inputs.run_only_non_integration_tests == 'true'
+        run: |
+          make run_non_integration_tests
+      - name: Run non-integration tests
+        if: github.event.inputs.run_only_non_integration_tests == 'false'
         run: |
           make run_non_integration_tests
           make run_integration_tests
-      - name: Run non-integration tests
-        if: github.event.inputs.testing == 'false'
-        run: |
-          make run_non_integration_tests
