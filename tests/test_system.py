@@ -3,15 +3,15 @@ Module test_system, which has functions to test the word processing system
 '''
 
 
-from src.dpy8wq.word_processors import clean_text
-from src.dpy8wq.word_processors import count_words
+from src.pkg_dpy8wq.word_processors import clean_text
+from src.pkg_dpy8wq.word_processors import count_words
 from fixtures import logger
 import pickle
 import pytest
 import requests
 from fixtures import temporary_directory
 from fixtures import temporary_directory_of_files_with_texts
-from src.dpy8wq.word_processors import tokenize
+from src.pkg_dpy8wq.word_processors import tokenize
 
 
 @pytest.mark.integration

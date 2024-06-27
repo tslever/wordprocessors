@@ -3,8 +3,8 @@ Module logger, which has pytest fixture logger
 '''
 
 
-from src.dpy8wq.word_processors import clean_text
-from src.dpy8wq.word_processors import count_words
+from src.pkg_dpy8wq.word_processors import clean_text
+from src.pkg_dpy8wq.word_processors import count_words
 import copy
 from typing import List
 import logging
@@ -13,7 +13,7 @@ import pathlib
 import pickle
 import pytest
 import requests
-from src.dpy8wq.word_processors import tokenize
+from src.pkg_dpy8wq.word_processors import tokenize
  
 
 dictionary_of_IDs_and_base_names_of_English_texts = {

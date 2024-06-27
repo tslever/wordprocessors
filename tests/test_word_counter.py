@@ -3,8 +3,8 @@ Module test_word_counter, which has functions to test counting words in text
 '''
 
 
-from src.dpy8wq.word_processors import clean_text
-from src.dpy8wq.word_processors import count_words
+from src.pkg_dpy8wq.word_processors import clean_text
+from src.pkg_dpy8wq.word_processors import count_words
 import json
 from fixtures import list_of_paths_to_files_with_English_texts
 from fixtures import logger
@@ -15,7 +15,7 @@ from fixtures import quote_from_The_Raven
 import subprocess
 from fixtures import temporary_directory
 from fixtures import temporary_directory_of_files_with_texts
-from src.dpy8wq.word_processors import tokenize
+from src.pkg_dpy8wq.word_processors import tokenize
 
 
 def test_counting_words_for_all_English_texts_together(list_of_paths_to_files_with_English_texts, logger, temporary_directory_of_files_with_texts):
