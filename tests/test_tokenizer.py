@@ -3,7 +3,7 @@ Module test_tokenizer, which has functions to test tokenizing text
 '''
 
 
-from wordprocessors.word_processors import clean_text
+from src.dpy8wq.word_processors import clean_text
 import json
 from fixtures import list_of_paths_to_files_with_English_texts
 from fixtures import logger
@@ -14,7 +14,7 @@ from fixtures import quote_from_The_Raven
 import subprocess
 from fixtures import temporary_directory
 from fixtures import temporary_directory_of_files_with_texts
-from wordprocessors.word_processors import tokenize
+from src.dpy8wq.word_processors import tokenize
 
 
 def test_tokenizing_all_English_texts_together(list_of_paths_to_files_with_English_texts, temporary_directory_of_files_with_texts):
