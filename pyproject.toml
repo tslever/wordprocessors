@@ -1,2 +1,6 @@
+[build-system]
+requires = []
 
-
+[project]
+name = "wordprocessors"
+version = "0.0.0"
