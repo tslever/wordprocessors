@@ -2,12 +2,11 @@
 output_contents_of_Makefile:
 	@cat Makefile
 
-# public
+# private
 env:
 	@python3 -m venv env; \
 	. env/bin/activate; \
 	pip install --upgrade pip; \
-	if [ -f requirements.txt ]; then pip install -r requirements.txt; fi; \
 	deactivate
 
 # private
@@ -49,20 +48,23 @@ rename_text:
 	@mv pg$(text_ID).txt $$(tail -n 1 Temporary_File.txt)
 
 # public
-run_non_integration_tests:
+run_non_integration_tests:	
+	@. env/bin/activate; \
+	export PYTHONPATH=$$PYTHONPATH:/home/runner/work/wordprocessors/wordprocessors/env/lib/python3.7/site-packages; \
 	pytest -vv tests/ -m "not integration"
+	deactivate
 
 # public
 run_integration_tests:
+	@. env/bin/activate; \
+	export PYTHONPATH=$$PYTHONPATH:/home/runner/work/wordprocessors/wordprocessors/env/lib/python3.7/site-packages; \
 	pytest -vv tests/ -m "integration"
+	deactivate
 
 # public
 run_tests:
-	@. env/bin/activate; \
-	export PYTHONPATH=$$PYTHONPATH:/home/runner/work/wordprocessors/wordprocessors/env/lib/python3.7/site-packages; \
-	make run_non_integration_tests; \
-	make run_integration_tests; \
-	deactivate
+	@make run_non_integration_tests
+	@make run_integration_tests
 
 # public
 total_lines:
@@ -71,3 +73,9 @@ total_lines:
 # public
 total_words:
 	@find . -type f -name "*.txt" -exec wc --words {} + | tail -n 1
+
+# public
+update: env
+	. env/bin/activate; \
+	pip install -r requirements.txt
+	deactivate
