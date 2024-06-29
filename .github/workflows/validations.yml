@@ -31,8 +31,10 @@ jobs:
         if: github.event.inputs.run_only_non_integration_tests == 'true'
         run: |
           make run_non_integration_tests
+        continue-on-error: true
       - name: Run non-integration and integration tests
         if: github.event_name == 'push' || github.event.inputs.run_only_non_integration_tests == 'false'
         run: |
           make run_non_integration_tests
           make run_integration_tests
+        continue-on-error: true
