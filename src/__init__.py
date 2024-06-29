@@ -1,1 +1,2 @@
-from dpy8wq import *
+from pkg_dpy8wq import *
+	
