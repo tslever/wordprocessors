@@ -50,22 +50,19 @@ rename_text:
 
 # public
 run_non_integration_tests:
-	@. env/bin/activate; \
-	export PYTHONPATH=$$PYTHONPATH:/home/runner/work/wordprocessors/wordprocessors/env/lib/python3.7/site-packages; \
-	pytest -vv tests/ -m "not integration"; \
-	deactivate
+	pytest -vv tests/ -m "not integration"
 
 # public
 run_integration_tests:
-	@. env/bin/activate; \
-	export PYTHONPATH=$$PYTHONPATH:/home/runner/work/wordprocessors/wordprocessors/env/lib/python3.7/site-packages; \
-	pytest -vv tests/ -m "integration"; \
-	deactivate
+	pytest -vv tests/ -m "integration"
 
 # public
 run_tests:
-	@make run_non_integration_tests
-	@make run_integration_tests
+	@. env/bin/activate; \
+	export PYTHONPATH=$$PYTHONPATH:/home/runner/work/wordprocessors/wordprocessors/env/lib/python3.7/site-packages; \
+	make run_non_integration_tests; \
+	make run_integration_tests; \
+	deactivate
 
 # public
 total_lines:
