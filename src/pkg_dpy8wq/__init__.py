@@ -1,1 +1,1 @@
-from word_processors import *
+from .word_processors import *
