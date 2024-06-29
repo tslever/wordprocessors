@@ -2,7 +2,7 @@
 output_contents_of_Makefile:
 	@cat Makefile
 
-# private
+# public
 env:
 	@python3 -m venv env; \
 	. env/bin/activate; \
@@ -52,14 +52,14 @@ rename_text:
 run_non_integration_tests:	
 	@. env/bin/activate; \
 	export PYTHONPATH=$$PYTHONPATH:/home/runner/work/wordprocessors/wordprocessors/env/lib/python3.7/site-packages; \
-	pytest -vv tests/ -m "not integration"
+	pytest -vv tests/ -m "not integration"; \
 	deactivate
 
 # public
 run_integration_tests:
 	@. env/bin/activate; \
 	export PYTHONPATH=$$PYTHONPATH:/home/runner/work/wordprocessors/wordprocessors/env/lib/python3.7/site-packages; \
-	pytest -vv tests/ -m "integration"
+	pytest -vv tests/ -m "integration"; \
 	deactivate
 
 # public
@@ -78,5 +78,5 @@ total_words:
 # public
 update: env
 	. env/bin/activate; \
-	pip install -r requirements.txt
+	pip install -r requirements.txt; \
 	deactivate
