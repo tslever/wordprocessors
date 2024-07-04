@@ -23,6 +23,6 @@ jobs:
           python3 -m venv env; \
           source env/bin/activate; \
           pip install -r requirements.txt; \
-          python -c "from pkg_dpy8wq import clean_text; print(clean_text('This is text to clean.'))"; \
-          python -c "import pkg_dpy8wq as pkg; print(pkg.clean_text('This is text to clean.'))"; \
+          python -c "from pkg_tsl2b import clean_text; print(clean_text('This is text to clean.'))"; \
+          python -c "import pkg_tsl2b as pkg; print(pkg.clean_text('This is text to clean.'))"; \
           deactivate
