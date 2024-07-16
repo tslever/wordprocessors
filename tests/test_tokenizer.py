@@ -2,22 +2,24 @@
 Module test_tokenizer, which has functions to test tokenizing text
 '''
 
-
-from src.pkg_tsl2b.word_processors import clean_text
 import json
-from fixtures import list_of_paths_to_files_with_english_texts
-from fixtures import logger
 import os
 import pickle
-import pytest
-from fixtures import quote_from_the_raven
 import subprocess
-from fixtures import temporary_directory
-from fixtures import temporary_directory_of_files_with_texts
-from src.pkg_tsl2b.word_processors import tokenize
+import pytest
+from fixtures import \
+    list_of_paths_to_files_with_english_texts, \
+    logger, \
+    quote_from_the_raven, \
+    temporary_directory, \
+    temporary_directory_of_files_with_texts
+from pkg_tsl2b import clean_text, tokenize
 
 
-def test_tokenizing_all_English_texts_together(list_of_paths_to_files_with_english_texts, temporary_directory_of_files_with_texts):
+def test_tokenizing_all_english_texts_together(
+    list_of_paths_to_files_with_english_texts,
+    temporary_directory_of_files_with_texts
+):
     '''
     Given a string text with words from English texts with paths in a specified list,
     when I pass a cleaned version of text to function tokenize,
@@ -26,7 +28,8 @@ def test_tokenizing_all_English_texts_together(list_of_paths_to_files_with_engli
 
     Keyword arguments:
         logger: Logger -- a logger
-        list_of_paths_to_files_with_english_texts: list[str] -- a list of paths to files with English texts
+        list_of_paths_to_files_with_english_texts: list[str] --
+        a list of paths to files with English texts
 
     Return values:
         none
@@ -35,7 +38,8 @@ def test_tokenizing_all_English_texts_together(list_of_paths_to_files_with_engli
         Compares actual and expected lists of words in a cleaned version of text
 
     Exceptions raised:
-        AssertionError if actual and expected lists of words in a cleaned version of text are not equal
+        AssertionError
+        if actual and expected lists of words in a cleaned version of text are not equal
 
     Restrictions on when this method can be called:
         none
@@ -43,7 +47,7 @@ def test_tokenizing_all_English_texts_together(list_of_paths_to_files_with_engli
 
     list_of_texts = []
     for path in list_of_paths_to_files_with_english_texts:
-        with open(path, 'r') as file:
+        with open(path, 'r', encoding = "utf-8") as file:
             text = file.read()
             list_of_texts.append(text)
     anthology_of_english_texts = '\n'.join(list_of_texts)
@@ -52,15 +56,24 @@ def test_tokenizing_all_English_texts_together(list_of_paths_to_files_with_engli
     actual_list_of_words = tokenize(cleaned_anthology_of_english_texts)
 
     expected_list_of_words = None
-    with open(temporary_directory_of_files_with_texts / "List_Of_Words_In_Cleaned_Version_Of_Anthology_Of_English_Texts.pickle", 'rb') as file:
+    with open(
+        temporary_directory_of_files_with_texts / \
+        "List_Of_Words_In_Cleaned_Version_Of_Anthology_Of_English_Texts.pickle",
+        'rb'
+    ) as file:
         expected_list_of_words = pickle.load(file)
 
     assert \
         actual_list_of_words == expected_list_of_words, \
-        "Actual and expected lists of words in cleaned version of anthology of English texts are not equal."
+        "Actual and expected lists of words " + \
+        "in cleaned version of anthology of English texts are not equal."
 
 
-def test_tokenizing_each_English_text(list_of_paths_to_files_with_english_texts, logger, temporary_directory_of_files_with_texts):
+def test_tokenizing_each_english_text(
+    list_of_paths_to_files_with_english_texts,
+    logger,
+    temporary_directory_of_files_with_texts
+):
     '''
     Given a string text with words from an English text with a path in a specified list,
     when I pass a cleaned version of the text to function tokenize,
@@ -69,16 +82,19 @@ def test_tokenizing_each_English_text(list_of_paths_to_files_with_english_texts,
 
     Keyword arguments:
         logger: Logger -- a logger
-        list_of_paths_to_files_with_english_texts: list[str] -- a list of paths to files with English texts
+        list_of_paths_to_files_with_english_texts: list[str] --
+        a list of paths to files with English texts
 
     Return values:
         none
 
     Side effects:
-        Compares an actual list of words in a cleaned version of a text to an expected list of words in a cleaned version of a text
+        Compares an actual list of words in a cleaned version of a text
+        to an expected list of words in a cleaned version of a text
 
     Exceptions raised:
-        AssertionError if an actual list of words in a cleaned version of a text does not equal an expected list of words in a cleaned version of a text
+        AssertionError if an actual list of words in a cleaned version of a text
+        does not equal an expected list of words in a cleaned version of a text
 
     Restrictions on when this method can be called:
         none
@@ -92,25 +108,34 @@ def test_tokenizing_each_English_text(list_of_paths_to_files_with_english_texts,
 
         base_name = os.path.basename(path)
         text = None
-        with open(temporary_directory_of_files_with_texts / base_name, 'r') as file:
+        with open(
+            temporary_directory_of_files_with_texts / base_name,
+            'r',
+            encoding = "utf-8"
+        ) as file:
             text = file.read()
 
         cleaned_text = clean_text(text)
 
         actual_list_of_words = tokenize(cleaned_text)
 
-        file_name, extension = os.path.splitext(base_name)
+        file_name, _ = os.path.splitext(base_name)
 
         expected_list_of_words = None
-        with open(temporary_directory_of_files_with_texts / f"List_Of_Words_In_Cleaned_Version_Of_{file_name}.pickle", 'rb') as file:
+        with open(
+            temporary_directory_of_files_with_texts / \
+            f"List_Of_Words_In_Cleaned_Version_Of_{file_name}.pickle",
+            'rb'
+        ) as file:
             expected_list_of_words = pickle.load(file)
 
         assert \
             actual_list_of_words == expected_list_of_words, \
-            f"For {path}, actual list of words in cleaned version of text is not equal to expected list of words in cleaned version of text."
+            f"For {path}, actual list of words in cleaned version of text " + \
+            "is not equal to expected list of words in cleaned version of text."
 
 
-def test_tokenizing_quote_from_Le_Corbeau(logger):
+def test_tokenizing_quote_from_le_corbeau(logger):
     '''
     Given a string quote_from_Le_Corbeau of text with words from Le Corbeau,
     when I pass a cleaned version of quote_from_Le_Corbeau to function tokenize,
@@ -135,14 +160,14 @@ def test_tokenizing_quote_from_Le_Corbeau(logger):
 
     logger.info("Testing tokenizing cleaned version of quote from Le Corbeau")
 
-    quote_from_Le_Corbeau = """_Mais le Corbeau, perché solitairement sur ce buste placide, parla
+    quote_from_le_corbeau = """_Mais le Corbeau, perché solitairement sur ce buste placide, parla
     ce seul mot comme si, son âme, en ce seul mot, il la répandait. Je ne
     proférai donc rien de plus: il n'agita donc pas de plume--jusqu'à ce
     que je fis à peine davantage que marmotter «D'autres amis déjà ont
     pris leur vol--demain il me laissera comme mes Espérances déjà ont
     pris leur vol.» Alors l'oiseau dit: «Jamais plus.»_"""
 
-    cleaned_text = clean_text(quote_from_Le_Corbeau)
+    cleaned_text = clean_text(quote_from_le_corbeau)
 
     actual_list_of_words = tokenize(cleaned_text)
 
@@ -283,10 +308,11 @@ def test_tokenizing_quote_from_the_raven(logger, quote_from_the_raven):
 
     assert \
         actual_list_of_words == expected_list_of_words, \
-        f"Actual list of words in cleaned version of a quote from The Raven is not equal to expected list of words in a cleaned version of a quote from The Raven."
+        "Actual list of words in cleaned version of a quote from The Raven " + \
+        "is not equal to expected list of words in a cleaned version of a quote from The Raven."
 
 
-def test_tokenizing_The_Raven(logger, temporary_directory_of_files_with_texts):
+def test_tokenizing_the_raven(logger, temporary_directory_of_files_with_texts):
     '''
     Given a string of text with words from The Raven,
     when I pass a cleaned version of the text to tokenize,
@@ -303,7 +329,8 @@ def test_tokenizing_The_Raven(logger, temporary_directory_of_files_with_texts):
         Compares actual and expected lists of words from a cleaned version of The Raven
 
     Exceptions raised:
-        AssertionError if actual list of words from a cleaned version of The Raven does not equal expected list of words from a cleaned version of The Raven
+        AssertionError if actual list of words from a cleaned version of The Raven
+        does not equal expected list of words from a cleaned version of The Raven
 
     Restrictions on when this method can be called:
         none
@@ -312,22 +339,34 @@ def test_tokenizing_The_Raven(logger, temporary_directory_of_files_with_texts):
     logger.info("Testing tokenizing a cleaned version of The Raven")
 
     text = None
-    with open(temporary_directory_of_files_with_texts / "The_Raven.txt", 'r') as file:
+    with open(
+        temporary_directory_of_files_with_texts / "The_Raven.txt",
+        'r',
+        encoding = "utf-8"
+    ) as file:
         text = file.read()
 
     text_to_tokenize = clean_text(text)
 
     actual_list_of_words = tokenize(text_to_tokenize)
 
-    with open(temporary_directory_of_files_with_texts / "List_Of_Words_In_Cleaned_Version_Of_The_Raven.pickle", "rb") as file:
+    with open(
+        temporary_directory_of_files_with_texts / \
+        "List_Of_Words_In_Cleaned_Version_Of_The_Raven.pickle",
+        "rb"
+    ) as file:
         expected_list_of_words = pickle.load(file)
-    
+
     assert \
         actual_list_of_words == expected_list_of_words, \
-        f"Actual list of words from a cleaned version of The Raven is not equal to expected list of words from a cleaned version of The Raven."
+        "Actual list of words from a cleaned version of The Raven " + \
+        "is not equal to expected list of words from a cleaned version of The Raven."
 
 
-def test_tokenizing_The_Raven_using_command_and_function(logger, temporary_directory_of_files_with_texts):
+def test_tokenizing_the_raven_using_command_and_function(
+    logger,
+    temporary_directory_of_files_with_texts
+):
     '''
     Given a file with text or a string text with words from The Raven,
     when I pass a cleaned version of text to a command or tokenize,
@@ -353,23 +392,39 @@ def test_tokenizing_The_Raven_using_command_and_function(logger, temporary_direc
     logger.info("Testing tokenizing text")
 
     file_name = temporary_directory_of_files_with_texts / "The_Raven.txt"
-    command = "bash clean_text.sh " + str(file_name) + " | tr '\n' ' ' | sed 's/  */ /g' | sed 's/[[:space:]]*$//' | jq -R 'split(\" \")'"
+    command = \
+        "bash clean_text.sh " + \
+        str(file_name) + \
+        " | tr '\n' ' ' | sed 's/  */ /g' | sed 's/[[:space:]]*$//' | jq -R 'split(\" \")'"
 
-    serialized_list_of_words_from_command = subprocess.run(command, shell = True, capture_output = True, text = True).stdout
+    serialized_list_of_words_from_command = subprocess.run(
+        command,
+        shell = True,
+        capture_output = True,
+        text = True,
+        check = False
+    ).stdout
     list_of_words_from_command = json.loads(serialized_list_of_words_from_command)
 
     text = None
-    with open(temporary_directory_of_files_with_texts / "The_Raven_Cleaned.txt", 'r') as file:
+    with open(
+        temporary_directory_of_files_with_texts / "The_Raven_Cleaned.txt",
+        'r',
+        encoding = "utf-8"
+    ) as file:
         text = file.read()
     list_of_words_from_function = tokenize(text)
 
     assert \
         list_of_words_from_command == list_of_words_from_function, \
-        f"Actual cleaned texts are not equal."
+        "Actual cleaned texts are not equal."
 
 
 @pytest.mark.xfail
-def test_that_a_word_in_cleaned_version_of_quote_from_the_raven_has_a_hyphen(logger, quote_from_the_raven):
+def test_that_a_word_in_cleaned_version_of_quote_from_the_raven_has_a_hyphen(
+    logger,
+    quote_from_the_raven
+):
     '''
     Given a string quote_from_the_raven of text with words from The Raven,
     when I pass a cleaned version of quote_from_the_raven to tokenize,
@@ -407,10 +462,13 @@ def test_that_a_word_in_cleaned_version_of_quote_from_the_raven_has_a_hyphen(log
 
     assert \
         not there_are_no_hyphens, \
-        f"There are no hyphens in the words in a cleaned version of a quote from The Raven."
+        "There are no hyphens in the words in a cleaned version of a quote from The Raven."
 
 
-def test_that_there_are_no_hyphens_in_words_in_cleaned_version_of_quote_from_the_raven(logger, quote_from_the_raven):
+def test_that_there_are_no_hyphens_in_words_in_cleaned_version_of_quote_from_the_raven(
+    logger,
+    quote_from_the_raven
+):
     '''
     Given a string quote_from_the_raven of text with words from The Raven,
     when I pass a cleaned version of quote_from_the_raven to tokenize,
@@ -426,7 +484,8 @@ def test_that_there_are_no_hyphens_in_words_in_cleaned_version_of_quote_from_the
         none
 
     Side effects:
-        Determines whether there are no hyphens in words in a cleaned version of quote_from_the_raven
+        Determines whether there are no hyphens in words
+        in a cleaned version of quote_from_the_raven
 
     Exceptions raised:
         AssertionError if there is a hyphen in a word
@@ -435,7 +494,9 @@ def test_that_there_are_no_hyphens_in_words_in_cleaned_version_of_quote_from_the
         none
     '''
 
-    logger.info("Testing that there are no hyphens in words in cleaned version of quote from The Raven")
+    logger.info(
+        "Testing that there are no hyphens in words in cleaned version of quote from The Raven"
+    )
 
     text_to_tokenize = clean_text(quote_from_the_raven)
 
@@ -448,4 +509,4 @@ def test_that_there_are_no_hyphens_in_words_in_cleaned_version_of_quote_from_the
 
     assert \
         there_are_no_hyphens, \
-        f"There is a hyphen in a word in a cleaned version of a quote from The Raven."
+        "There is a hyphen in a word in a cleaned version of a quote from The Raven."
