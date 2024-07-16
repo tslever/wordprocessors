@@ -2,9 +2,6 @@
 Module logger, which has pytest fixture logger 
 '''
 
-
-from pkg_tsl2b import clean_text
-from pkg_tsl2b import count_words
 import copy
 from typing import List
 import logging
@@ -13,7 +10,7 @@ import pathlib
 import pickle
 import pytest
 import requests
-from pkg_tsl2b import tokenize
+from pkg_tsl2b import clean_text, count_words, tokenize
 
 
 dictionary_of_IDs_and_base_names_of_English_texts = {
@@ -52,8 +49,8 @@ def temporary_directory(tmp_path_factory) -> pathlib.PosixPath:
         This function is called automatically by pytest.
     '''
 
-    temporary_directory = tmp_path_factory.mktemp("temporary_directory")
-    return temporary_directory
+    temp_dir = tmp_path_factory.mktemp("temporary_directory")
+    return temp_dir
 
 
 @pytest.fixture(params = [dictionary_of_IDs_and_base_names_of_texts], scope = "session")
@@ -66,12 +63,10 @@ def temporary_directory_of_files_with_texts(
 
     Keyword arguments:
         request: pytest.FixtureRequest -- a request from which to get a specified parameter
-        temporary_directory: pathlib.PosixPath --
-        a pathlib.PosixPath object for a temporary directory of files with texts
+        temporary_directory
 
     Return values:
-        temporary_directory: pathlib.PosixPath --
-        a pathlib.PosixPath object for a temporary directory of files with texts
+        temporary_directory
 
     Side effects:
         Creates files with texts
@@ -158,12 +153,12 @@ def list_of_paths_to_files_with_english_texts(
         pytest only should call this method to provide a list of file names of English texts.
     '''
 
-    dictionary_of_IDs_and_base_names_of_English_texts = request.param
-    list_of_paths_to_files_with_english_texts = []
-    for base_name in dictionary_of_IDs_and_base_names_of_English_texts.values():
+    dictionary = request.param
+    list_of_paths = []
+    for base_name in dictionary.values():
         temporary_file = temporary_directory / base_name
-        list_of_paths_to_files_with_english_texts.append(temporary_file)
-    return list_of_paths_to_files_with_english_texts
+        list_of_paths.append(temporary_file)
+    return list_of_paths
 
 
 @pytest.fixture(scope = "session")
@@ -187,8 +182,8 @@ def logger():
         pytest only should call this method to set up logger.
     '''
 
-    logger = logging.getLogger(__name__)
-    return logger
+    lumberjack = logging.getLogger(__name__)
+    return lumberjack
 
 
 @pytest.fixture(
@@ -203,7 +198,7 @@ def logger():
         "as if his soul in that one word he did outpour."
     ]
 )
-def quote_from_The_Raven(request: pytest.FixtureRequest, scope = "session") -> str:
+def quote_from_the_raven(request: pytest.FixtureRequest, scope = "session") -> str:
     '''
     Provides a quote from The Raven
 
@@ -212,7 +207,7 @@ def quote_from_The_Raven(request: pytest.FixtureRequest, scope = "session") -> s
         a fixture request with a parameter specified in the above decorator
 
     Return values:
-        quote_from_The_Raven: str -- a quote from The Raven
+        quote_from_the_raven: str -- a quote from The Raven
 
     Side effects:
         none
@@ -224,5 +219,5 @@ def quote_from_The_Raven(request: pytest.FixtureRequest, scope = "session") -> s
         pytest only should call this method to provide a quote from The Raven.
     '''
 
-    quote_from_The_Raven = request.param
-    return quote_from_The_Raven
+    quote = request.param
+    return quote

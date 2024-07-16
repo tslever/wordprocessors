@@ -9,7 +9,7 @@ from fixtures import logger
 import os
 import platform
 import pytest
-from fixtures import quote_from_The_Raven
+from fixtures import quote_from_the_raven
 from fixtures import temporary_directory
 from fixtures import temporary_directory_of_files_with_texts
 import subprocess
@@ -195,17 +195,17 @@ def test_cleaning_quote_from_The_Great_Raven(logger):
         f"Actual cleaned text is not equal to expected cleaned text."
 
 
-def test_cleaning_quote_from_The_Raven(logger, quote_from_The_Raven):
+def test_cleaning_quote_from_the_raven(logger, quote_from_the_raven):
     '''
-    Given a string quote_from_The_Raven of text with words from The Raven,
-    when I pass quote_from_The_Raven to function clean_text,
+    Given a string quote_from_the_raven of text with words from The Raven,
+    when I pass quote_from_the_raven to function clean_text,
     I should get a string as return
     representing a cleaned version of that text.
     The string should consist of lowercase characters not in augmentation of string.punctuation.
 
     Keyword arguments:
         logger: Logger -- a logger
-        quote_from_The_Raven: str -- a quote from The Raven to clean
+        quote_from_the_raven: str -- a quote from The Raven to clean
 
     Return values:
         none
@@ -222,7 +222,7 @@ def test_cleaning_quote_from_The_Raven(logger, quote_from_The_Raven):
 
     logger.info("Testing cleaning quote from The Raven")
 
-    actual_cleaned_text = clean_text(quote_from_The_Raven)
+    actual_cleaned_text = clean_text(quote_from_the_raven)
 
     expected_cleaned_text = """but the raven sitting lonely on the placid bust spoke only that one word as if his soul in that one word he did outpour"""
 
@@ -407,17 +407,17 @@ def test_cleaning_The_Raven_using_command_and_function(logger, temporary_directo
         f"Actual cleaned texts are not equal."
 
 
-def test_that_characters_in_cleaned_quote_from_The_Raven_are_all_lowercase(logger, quote_from_The_Raven):
+def test_that_characters_in_cleaned_quote_from_the_raven_are_all_lowercase(logger, quote_from_the_raven):
     '''
-    Given a string quote_from_The_Raven of text with words from The Raven,
-    when I pass quote_from_The_Raven to function clean_text,
+    Given a string quote_from_the_raven of text with words from The Raven,
+    when I pass quote_from_the_raven to function clean_text,
     I should get a string as return
     representing a cleaned version of that quote.
     The string should consist of lowercase characters not in augmentation of string.punctuation.
 
     Keyword arguments:
         logger: Logger -- a logger
-        quote_from_The_Raven: str -- a quote from The Raven
+        quote_from_the_raven: str -- a quote from The Raven
 
     Return values:
         none
@@ -434,7 +434,7 @@ def test_that_characters_in_cleaned_quote_from_The_Raven_are_all_lowercase(logge
 
     logger.info("Testing that characters in cleaned version of quote from The Raven are all lowercase")
 
-    actual_cleaned_text = clean_text(quote_from_The_Raven)
+    actual_cleaned_text = clean_text(quote_from_the_raven)
 
     assert \
         actual_cleaned_text.islower(), \
@@ -442,10 +442,10 @@ def test_that_characters_in_cleaned_quote_from_The_Raven_are_all_lowercase(logge
 
 
 @pytest.mark.xfail
-def test_that_there_is_a_capital_letter_in_cleaned_quote_from_The_Raven(logger, quote_from_The_Raven):
+def test_that_there_is_a_capital_letter_in_cleaned_quote_from_the_raven(logger, quote_from_the_raven):
     '''
-    Given a string quote_from_The_Raven of text with words from The Raven,
-    when I pass quote_from_The_Raven to function clean_text,
+    Given a string quote_from_the_raven of text with words from The Raven,
+    when I pass quote_from_the_raven to function clean_text,
     I should get a string as return
     representing a cleaned version of that quote.
     The string should consist of lowercase characters not in augmentation of string.punctuation.
@@ -453,7 +453,7 @@ def test_that_there_is_a_capital_letter_in_cleaned_quote_from_The_Raven(logger, 
 
     Keyword arguments:
         logger: Logger -- a logger
-        quote_from_The_Raven: str -- a quote from The Raven
+        quote_from_the_raven: str -- a quote from The Raven
 
     Return values:
         none
@@ -470,7 +470,7 @@ def test_that_there_is_a_capital_letter_in_cleaned_quote_from_The_Raven(logger, 
 
     logger.info("Testing that there is a capital letter in cleaned quote from The Raven")
 
-    actual_cleaned_text = clean_text(quote_from_The_Raven)
+    actual_cleaned_text = clean_text(quote_from_the_raven)
 
     assert \
         not actual_cleaned_text.islower(), \

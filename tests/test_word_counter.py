@@ -11,7 +11,7 @@ from fixtures import logger
 import os
 import pickle
 import pytest
-from fixtures import quote_from_The_Raven
+from fixtures import quote_from_the_raven
 import subprocess
 from fixtures import temporary_directory
 from fixtures import temporary_directory_of_files_with_texts
@@ -111,16 +111,16 @@ def test_count_words_in_each_English_text(list_of_paths_to_files_with_english_te
             f"For {path}, actual and expected dictionaries of words in cleaned version of text are not equal."
 
 
-def test_counting_words_for_quote_from_The_Raven(logger, quote_from_The_Raven):
+def test_counting_words_for_quote_from_the_raven(logger, quote_from_the_raven):
     '''
-    Given a string quote_from_The_Raven of words from a quote from The Raven,
-    when I pass a cleaned version of quote_from_The_Raven to count_words,
+    Given a string quote_from_the_raven of words from a quote from The Raven,
+    when I pass a cleaned version of quote_from_the_raven to count_words,
     I should get a dictionary of the words in the version and their counts.
     The words should consist of lowercase characters not in augmentation of string.punctuation.
 
     Keyword arguments:
         logger: Logger -- a logger
-        quote_from_The_Raven: str -- a quote from The Raven
+        quote_from_the_raven: str -- a quote from The Raven
 
     Return values:
         none
@@ -137,7 +137,7 @@ def test_counting_words_for_quote_from_The_Raven(logger, quote_from_The_Raven):
 
     logger.info("Testing counting words in a cleaned version of a quote from The Raven")
 
-    text_of_which_to_count_words = clean_text(quote_from_The_Raven)
+    text_of_which_to_count_words = clean_text(quote_from_the_raven)
 
     actual_dictionary_of_words_and_counts = count_words(text_of_which_to_count_words)
 
@@ -350,10 +350,10 @@ def test_counting_words_in_The_Raven_using_command_and_function(logger, temporar
 
 
 @pytest.mark.xfail
-def test_that_number_of_unique_words_in_cleaned_version_of_quote_is_equal_to_number_of_words_in_version(logger, quote_from_The_Raven):
+def test_that_number_of_unique_words_in_cleaned_version_of_quote_is_equal_to_number_of_words_in_version(logger, quote_from_the_raven):
     '''
-    Given a string quote_from_The_Raven of words from a quote from The Raven,
-    when I pass a cleaned version of quote_from_The_Raven to count_words,
+    Given a string quote_from_the_raven of words from a quote from The Raven,
+    when I pass a cleaned version of quote_from_the_raven to count_words,
     I should get a dictionary of those words and their counts.
     There should be 21 unique words in the dictionary
     consisting of lowercase characters not in augmentation of string.punctuation.
@@ -361,7 +361,7 @@ def test_that_number_of_unique_words_in_cleaned_version_of_quote_is_equal_to_num
 
     Keyword arguments:
         logger: Logger -- a logger
-        quote_from_The_Raven: str -- a quote from The Raven
+        quote_from_the_raven: str -- a quote from The Raven
 
     Return values:
         none
@@ -381,24 +381,24 @@ def test_that_number_of_unique_words_in_cleaned_version_of_quote_is_equal_to_num
 
     logger.info("Testing that the number of unique words in a cleaned version of a quote from The Raven is equal to the number of instances of words")
 
-    text_of_which_to_count_words = clean_text(quote_from_The_Raven)
+    text_of_which_to_count_words = clean_text(quote_from_the_raven)
 
     actual_dictionary_of_words_and_counts = count_words(text_of_which_to_count_words)
 
     assert len(actual_dictionary_of_words_and_counts) == len(tokenize(text_of_which_to_count_words))
 
 
-def test_that_there_are_21_unique_words_in_cleaned_version_of_quote_from_The_Raven(logger, quote_from_The_Raven):
+def test_that_there_are_21_unique_words_in_cleaned_version_of_quote_from_the_raven(logger, quote_from_the_raven):
     '''
-    Given a string quote_from_The_Raven of words from a quote from The Raven,
-    when I pass a cleaned version of quote_from_The_Raven to count_words,
+    Given a string quote_from_the_raven of words from a quote from The Raven,
+    when I pass a cleaned version of quote_from_the_raven to count_words,
     I should get a dictionary of the words in the version and their counts.
     There should be 21 unique words in the dictionary
     consisting of lowercase characters not in augmentation of string.punctuation.
 
     Keyword arguments:
         logger: Logger -- a logger
-        quote_from_The_Raven: str -- a quote from The Raven
+        quote_from_the_raven: str -- a quote from The Raven
 
     Return values:
         none
@@ -417,7 +417,7 @@ def test_that_there_are_21_unique_words_in_cleaned_version_of_quote_from_The_Rav
 
     logger.info("Testing that there are 21 unique words in dictionary")
 
-    text_of_which_to_count_words = clean_text(quote_from_The_Raven)
+    text_of_which_to_count_words = clean_text(quote_from_the_raven)
 
     actual_dictionary_of_words_and_counts = count_words(text_of_which_to_count_words)
 

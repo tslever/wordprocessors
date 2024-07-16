@@ -10,7 +10,7 @@ from fixtures import logger
 import os
 import pickle
 import pytest
-from fixtures import quote_from_The_Raven
+from fixtures import quote_from_the_raven
 import subprocess
 from fixtures import temporary_directory
 from fixtures import temporary_directory_of_files_with_texts
@@ -223,16 +223,16 @@ def test_tokenizing_quote_from_Le_Corbeau(logger):
         "Actual and expected list of words in cleaned version of Le Corbeau are not equal."
 
 
-def test_tokenizing_quote_from_The_Raven(logger, quote_from_The_Raven):
+def test_tokenizing_quote_from_the_raven(logger, quote_from_the_raven):
     '''
-    Given a string quote_from_The_Raven of text with words from The Raven,
-    when I pass a cleaned version of quote_from_The_Raven to tokenize,
+    Given a string quote_from_the_raven of text with words from The Raven,
+    when I pass a cleaned version of quote_from_the_raven to tokenize,
     I should get a list of the words in the version as return.
     The words should consist of lowercase characters not in augmentation of string.punctuation.
 
     Keyword arguments:
         logger: Logger -- a logger
-        quote_from_The_Raven: str -- a quote from The Raven
+        quote_from_the_raven: str -- a quote from The Raven
 
     Return values:
         none
@@ -249,7 +249,7 @@ def test_tokenizing_quote_from_The_Raven(logger, quote_from_The_Raven):
 
     logger.info("Testing tokenizing cleaned version of a quote from The Raven")
 
-    text_to_tokenize = clean_text(quote_from_The_Raven)
+    text_to_tokenize = clean_text(quote_from_the_raven)
 
     actual_list_of_words = tokenize(text_to_tokenize)
 
@@ -369,17 +369,17 @@ def test_tokenizing_The_Raven_using_command_and_function(logger, temporary_direc
 
 
 @pytest.mark.xfail
-def test_that_a_word_in_cleaned_version_of_quote_from_The_Raven_has_a_hyphen(logger, quote_from_The_Raven):
+def test_that_a_word_in_cleaned_version_of_quote_from_the_raven_has_a_hyphen(logger, quote_from_the_raven):
     '''
-    Given a string quote_from_The_Raven of text with words from The Raven,
-    when I pass a cleaned version of quote_from_The_Raven to tokenize,
+    Given a string quote_from_the_raven of text with words from The Raven,
+    when I pass a cleaned version of quote_from_the_raven to tokenize,
     I should get a list of the words in the version as return.
     The words should consist of lowercase characters not in augmentation of string.punctuation.
     The words should not have hyphens; a test that a word has a hyphen should fail.
 
     Keyword arguments:
         logger: Logger -- a logger
-        quote_from_The_Raven: str -- a quote from The Raven
+        quote_from_the_raven: str -- a quote from The Raven
 
     Return values:
         none
@@ -396,7 +396,7 @@ def test_that_a_word_in_cleaned_version_of_quote_from_The_Raven_has_a_hyphen(log
 
     logger.info("Testing tokenizing text")
 
-    text_to_tokenize = clean_text(quote_from_The_Raven)
+    text_to_tokenize = clean_text(quote_from_the_raven)
 
     actual_list_of_words = tokenize(text_to_tokenize)
 
@@ -410,23 +410,23 @@ def test_that_a_word_in_cleaned_version_of_quote_from_The_Raven_has_a_hyphen(log
         f"There are no hyphens in the words in a cleaned version of a quote from The Raven."
 
 
-def test_that_there_are_no_hyphens_in_words_in_cleaned_version_of_quote_from_The_Raven(logger, quote_from_The_Raven):
+def test_that_there_are_no_hyphens_in_words_in_cleaned_version_of_quote_from_the_raven(logger, quote_from_the_raven):
     '''
-    Given a string quote_from_The_Raven of text with words from The Raven,
-    when I pass a cleaned version of quote_from_The_Raven to tokenize,
+    Given a string quote_from_the_raven of text with words from The Raven,
+    when I pass a cleaned version of quote_from_the_raven to tokenize,
     I should get a list of the words in the version as return.
     The words should consist of lowercase characters not in augmentation of string.punctuation.
     The words should not have hyphens.
 
     Keyword arguments:
         logger: Logger -- a logger
-        quote_from_The_Raven: str -- a quote from The Raven
+        quote_from_the_raven: str -- a quote from The Raven
 
     Return values:
         none
 
     Side effects:
-        Determines whether there are no hyphens in words in a cleaned version of quote_from_The_Raven
+        Determines whether there are no hyphens in words in a cleaned version of quote_from_the_raven
 
     Exceptions raised:
         AssertionError if there is a hyphen in a word
@@ -437,7 +437,7 @@ def test_that_there_are_no_hyphens_in_words_in_cleaned_version_of_quote_from_The
 
     logger.info("Testing that there are no hyphens in words in cleaned version of quote from The Raven")
 
-    text_to_tokenize = clean_text(quote_from_The_Raven)
+    text_to_tokenize = clean_text(quote_from_the_raven)
 
     actual_list_of_words = tokenize(text_to_tokenize)
 
