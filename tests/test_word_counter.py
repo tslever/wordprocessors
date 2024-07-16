@@ -3,22 +3,25 @@ Module test_word_counter, which has functions to test counting words in text
 '''
 
 
-from src.pkg_tsl2b.word_processors import clean_text
-from src.pkg_tsl2b.word_processors import count_words
+from pkg_tsl2b import clean_text, count_words, tokenize
 import json
-from fixtures import list_of_paths_to_files_with_english_texts
-from fixtures import logger
+from fixtures import \
+    list_of_paths_to_files_with_english_texts, \
+    logger, \
+    quote_from_the_raven, \
+    temporary_directory, \
+    temporary_directory_of_files_with_texts
 import os
 import pickle
 import pytest
-from fixtures import quote_from_the_raven
 import subprocess
-from fixtures import temporary_directory
-from fixtures import temporary_directory_of_files_with_texts
-from src.pkg_tsl2b.word_processors import tokenize
 
 
-def test_counting_words_for_all_English_texts_together(list_of_paths_to_files_with_english_texts, logger, temporary_directory_of_files_with_texts):
+def test_counting_words_for_all_English_texts_together(
+    list_of_paths_to_files_with_english_texts,
+    logger,
+    temporary_directory_of_files_with_texts
+):
     '''
     Given a string text with words from English texts with paths in a specified list,
     when I pass a cleaned version of text to function count_words,
@@ -27,13 +30,15 @@ def test_counting_words_for_all_English_texts_together(list_of_paths_to_files_wi
 
     Keyword arguments:
         logger: Logger -- a logger
-        list_of_paths_to_files_with_english_texts: list[str] -- a list of paths to files with English texts
+        list_of_paths_to_files_with_english_texts: list[str] --
+        a list of paths to files with English texts
 
     Return values:
         none
 
     Side effects:
-        Compares actual and expected dictionaries of words in a cleaned version of text and their counts
+        Compares actual and expected dictionaries of words
+        in a cleaned version of text and their counts
 
     Exceptions raised:
         AssertionError if actual and expected dictionaries are not equal
@@ -53,15 +58,24 @@ def test_counting_words_for_all_English_texts_together(list_of_paths_to_files_wi
     actual_dictionary_of_words_and_counts = count_words(cleaned_anthology_of_english_texts)
 
     expected_dictionary_of_words_and_counts = None
-    with open(temporary_directory_of_files_with_texts / "Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_Anthology_Of_English_Texts.pickle", 'rb') as file:
+    with open(
+        temporary_directory_of_files_with_texts / \
+        "Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_Anthology_Of_English_Texts.pickle",
+        "rb"
+    ) as file:
         expected_dictionary_of_words_and_counts = pickle.load(file)
 
     assert \
         actual_dictionary_of_words_and_counts == expected_dictionary_of_words_and_counts, \
-        "Actual and expected dictionaries of words in cleaned version of anthology of English texts and their counts are not equal."
+        "Actual and expected dictionaries of words " + \
+        "in cleaned version of anthology of English texts and their counts are not equal."
 
 
-def test_count_words_in_each_English_text(list_of_paths_to_files_with_english_texts, logger, temporary_directory_of_files_with_texts):
+def test_count_words_in_each_English_text(
+    list_of_paths_to_files_with_english_texts,
+    logger,
+    temporary_directory_of_files_with_texts
+):
     '''
     Given a string text with words from an English text with a path in a specified list,
     when I pass a cleaned version of the text to function count_words,
@@ -70,13 +84,15 @@ def test_count_words_in_each_English_text(list_of_paths_to_files_with_english_te
 
     Keyword arguments:
         logger: Logger -- a logger
-        list_of_paths_to_files_with_english_texts: list[str] -- a list of paths to files with English texts
+        list_of_paths_to_files_with_english_texts: list[str] --
+        a list of paths to files with English texts
 
     Return values:
         none
 
     Side effects:
-        Compares actual and expected dictionaries of the words in a cleaned version of a text and their counts
+        Compares actual and expected dictionaries of the words
+        in a cleaned version of a text and their counts
 
     Exceptions raised:
         AssertionError if actual and expected dictionaries are not equal
@@ -93,7 +109,7 @@ def test_count_words_in_each_English_text(list_of_paths_to_files_with_english_te
 
         base_name = os.path.basename(path)
         text = None
-        with open(temporary_directory_of_files_with_texts / base_name, 'r') as file:
+        with open(temporary_directory_of_files_with_texts / base_name, 'r', encoding = "utf-8") as file:
             text = file.read()
 
         cleaned_text = clean_text(text)
@@ -103,12 +119,17 @@ def test_count_words_in_each_English_text(list_of_paths_to_files_with_english_te
         file_name, extension = os.path.splitext(base_name)
 
         expected_dictionary_of_words_and_counts = None
-        with open(temporary_directory_of_files_with_texts / f"Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_{file_name}.pickle", 'rb') as file:
+        with open(
+            temporary_directory_of_files_with_texts / \
+            f"Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_{file_name}.pickle",
+            'rb'
+        ) as file:
             expected_dictionary_of_words_and_counts = pickle.load(file)
 
         assert \
             actual_dictionary_of_words_and_counts == expected_dictionary_of_words_and_counts, \
-            f"For {path}, actual and expected dictionaries of words in cleaned version of text are not equal."
+            f"For {path}, actual and expected dictionaries " + \
+            "of words in cleaned version of text are not equal."
 
 
 def test_counting_words_for_quote_from_the_raven(logger, quote_from_the_raven):
@@ -126,7 +147,8 @@ def test_counting_words_for_quote_from_the_raven(logger, quote_from_the_raven):
         none
 
     Side effects:
-        Compares actual and expected dictionaries of words in a cleaned version of a quote from The Raven and their counts
+        Compares actual and expected dictionaries of words
+        in a cleaned version of a quote from The Raven and their counts
 
     Exceptions raised:
         AssertionError if actual dictionary does not equal expected dictionary
@@ -167,7 +189,8 @@ def test_counting_words_for_quote_from_the_raven(logger, quote_from_the_raven):
 
     assert \
         actual_dictionary_of_words_and_counts == expected_dictionary_of_words_and_counts, \
-        f"Actual dictionary of words in a cleaned version of a quote from The Raven and their counts does not equal expected dictionary."
+        "Actual dictionary of words in a cleaned version " + \
+        "of a quote from The Raven and their counts does not equal expected dictionary."
 
 
 def test_counting_words_in_quote_from_Le_Corbeau(logger):
@@ -184,7 +207,8 @@ def test_counting_words_in_quote_from_Le_Corbeau(logger):
         none
 
     Side effects:
-        Compares actual and expected dictionaries of words in cleaned version of Le Corbeau and their counts
+        Compares actual and expected dictionaries of words
+        in cleaned version of Le Corbeau and their counts
 
     Exceptions raised:
         AssertionError if actual and expected dictionaries are not equal
@@ -263,7 +287,8 @@ def test_counting_words_in_quote_from_Le_Corbeau(logger):
 
     assert \
         actual_dictionary_of_words_and_counts == expected_dictionary_of_words_and_counts, \
-        "Actual and expected dictionaries of words and counts in cleaned version of Le Corbeau are not equal."
+        "Actual and expected dictionaries of words and counts " + \
+        "in cleaned version of Le Corbeau are not equal."
 
 
 def test_counting_words_in_The_Raven(logger, temporary_directory_of_files_with_texts):
@@ -280,7 +305,8 @@ def test_counting_words_in_The_Raven(logger, temporary_directory_of_files_with_t
         none
 
     Side effects:
-        Compares actual and expected dictionaries of words in a cleaned version of The Raven and their counts
+        Compares actual and expected dictionaries of words
+        in a cleaned version of The Raven and their counts
 
     Exceptions raised:
         AssertionError if actual dictionary does not equal expected dictionary
@@ -300,15 +326,23 @@ def test_counting_words_in_The_Raven(logger, temporary_directory_of_files_with_t
     actual_dictionary_of_words_and_counts = count_words(text_of_which_to_count_words)
 
     expected_dictionary_of_words_and_counts = None
-    with open(temporary_directory_of_files_with_texts / "Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_The_Raven.pickle", "rb") as file:
+    with open(
+        temporary_directory_of_files_with_texts / \
+        "Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_The_Raven.pickle",
+        "rb"
+    ) as file:
         expected_dictionary_of_words_and_counts = pickle.load(file)
 
     assert \
         actual_dictionary_of_words_and_counts == expected_dictionary_of_words_and_counts, \
-        f"Actual dictionary of words in cleaned version of The Raven and their counts does not equal expected dictionary."
+        f"Actual dictionary of words in cleaned version " + \
+        "of The Raven and their counts does not equal expected dictionary."
 
 
-def test_counting_words_in_The_Raven_using_command_and_function(logger, temporary_directory_of_files_with_texts):
+def test_counting_words_in_The_Raven_using_command_and_function(
+    logger,
+    temporary_directory_of_files_with_texts
+):
     '''
     Given a file with text or a string text with words from The Raven,
     when I pass a cleaned version of text to a command or count_words,
@@ -334,10 +368,24 @@ def test_counting_words_in_The_Raven_using_command_and_function(logger, temporar
     logger.info("Testing tokenizing text")
 
     file_name = temporary_directory_of_files_with_texts / "The_Raven.txt"
-    command = "bash clean_text.sh " + str(file_name) + " | tr '\n' ' ' | sed 's/  */ /g' | sed 's/[[:space:]]*$//' | jq -R 'split(\" \")' | jq -c 'reduce .[] as $word ({}; .[$word] += 1)'"
+    command = \
+        "bash clean_text.sh " + \
+        str(file_name) + \
+        " | tr '\n' ' ' " + \
+        "| sed 's/  */ /g' " + \
+        "| sed 's/[[:space:]]*$//' " + \
+        "| jq -R 'split(\" \")' " + \
+        "| jq -c 'reduce .[] as $word ({}; .[$word] += 1)'"
 
-    serialized_dictionary_of_words_and_counts = subprocess.run(command, shell = True, capture_output = True, text = True).stdout
-    dictionary_of_words_and_counts_from_command = json.loads(serialized_dictionary_of_words_and_counts)
+    serialized_dictionary_of_words_and_counts = subprocess.run(
+        command,
+        shell = True,
+        capture_output = True,
+        text = True
+    ).stdout
+    dictionary_of_words_and_counts_from_command = json.loads(
+        serialized_dictionary_of_words_and_counts
+    )
 
     text = None
     with open(temporary_directory_of_files_with_texts / "The_Raven_Cleaned.txt", 'r') as file:
@@ -345,12 +393,13 @@ def test_counting_words_in_The_Raven_using_command_and_function(logger, temporar
     dictionary_of_words_and_counts_from_function = count_words(text)
 
     assert \
-        dictionary_of_words_and_counts_from_command == dictionary_of_words_and_counts_from_command, \
+        dictionary_of_words_and_counts_from_command == \
+        dictionary_of_words_and_counts_from_command, \
         f"Dictionaries of words and counts are not equal."
 
 
 @pytest.mark.xfail
-def test_that_number_of_unique_words_in_cleaned_version_of_quote_is_equal_to_number_of_words_in_version(logger, quote_from_the_raven):
+def test_that_numbers_of_words_are_equal(logger, quote_from_the_raven):
     '''
     Given a string quote_from_the_raven of words from a quote from The Raven,
     when I pass a cleaned version of quote_from_the_raven to count_words,
