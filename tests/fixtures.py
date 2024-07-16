@@ -13,7 +13,7 @@ import requests
 from pkg_tsl2b import clean_text, count_words, tokenize
 
 
-dictionary_of_IDs_and_base_names_of_English_texts = {
+dictionary_of_ids_and_base_names_of_english_texts = {
     17192: "The_Raven.txt",
     932: "The_Fall_of_the_House_of_Usher.txt",
     1063: "The_Cask_of_Amontillado.txt",
@@ -22,7 +22,7 @@ dictionary_of_IDs_and_base_names_of_English_texts = {
 
 
 dictionary_of_IDs_and_base_names_of_texts = copy.deepcopy(
-    dictionary_of_IDs_and_base_names_of_English_texts
+    dictionary_of_ids_and_base_names_of_english_texts
 )
 dictionary_of_IDs_and_base_names_of_texts[14082] = "Le_Corbeau.txt"
 
@@ -126,7 +126,7 @@ def temporary_directory_of_files_with_texts(
     return temporary_directory
 
 
-@pytest.fixture(params = [dictionary_of_IDs_and_base_names_of_English_texts], scope = "session")
+@pytest.fixture(params = [dictionary_of_ids_and_base_names_of_english_texts], scope = "session")
 def list_of_paths_to_files_with_english_texts(
     request: pytest.FixtureRequest,
     temporary_directory

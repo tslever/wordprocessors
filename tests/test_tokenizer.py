@@ -46,10 +46,10 @@ def test_tokenizing_all_English_texts_together(list_of_paths_to_files_with_engli
         with open(path, 'r') as file:
             text = file.read()
             list_of_texts.append(text)
-    anthology_of_English_texts = '\n'.join(list_of_texts)
-    cleaned_anthology_of_English_texts = clean_text(anthology_of_English_texts)
+    anthology_of_english_texts = '\n'.join(list_of_texts)
+    cleaned_anthology_of_english_texts = clean_text(anthology_of_english_texts)
 
-    actual_list_of_words = tokenize(cleaned_anthology_of_English_texts)
+    actual_list_of_words = tokenize(cleaned_anthology_of_english_texts)
 
     expected_list_of_words = None
     with open(temporary_directory_of_files_with_texts / "List_Of_Words_In_Cleaned_Version_Of_Anthology_Of_English_Texts.pickle", 'rb') as file:
