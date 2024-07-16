@@ -2,21 +2,25 @@
 Module test_cleaner, which has functions to test cleaning text 
 '''
 
-
-from src.pkg_tsl2b.word_processors import clean_text
-from fixtures import list_of_paths_to_files_with_english_texts
-from fixtures import logger
 import os
 import platform
-import pytest
-from fixtures import quote_from_the_raven
-from fixtures import temporary_directory
-from fixtures import temporary_directory_of_files_with_texts
 import subprocess
 import sys
+import pytest
+from fixtures import \
+    list_of_paths_to_files_with_english_texts, \
+    logger, \
+    quote_from_the_raven, \
+    temporary_directory, \
+    temporary_directory_of_files_with_texts
+from pkg_tsl2b import clean_text
 
 
-def test_cleaning_all_English_texts_together(list_of_paths_to_files_with_english_texts, logger, temporary_directory_of_files_with_texts):
+def test_cleaning_all_english_texts_together(
+    list_of_paths_to_files_with_english_texts,
+    logger,
+    temporary_directory_of_files_with_texts
+):
     '''
     Given a string text with words from English texts with paths in a specified list,
     when I pass text to function clean_text,
@@ -26,7 +30,8 @@ def test_cleaning_all_English_texts_together(list_of_paths_to_files_with_english
 
     Keyword arguments:
         logger: Logger -- a logger
-        list_of_paths_to_files_with_english_texts: list[str] -- a list of paths to files with English texts
+        list_of_paths_to_files_with_english_texts: list[str] --
+        a list of paths to files with English texts
 
     Return values:
         none
@@ -43,22 +48,30 @@ def test_cleaning_all_English_texts_together(list_of_paths_to_files_with_english
 
     list_of_texts = []
     for path in list_of_paths_to_files_with_english_texts:
-        with open(path, 'r') as file:
+        with open(path, 'r', encoding = "utf-8") as file:
             text = file.read()
             list_of_texts.append(text)
-    anthology_of_English_texts = '\n'.join(list_of_texts)
-    actual_cleaned_anthology_of_English_texts = clean_text(anthology_of_English_texts)
+    anthology_of_english_texts = '\n'.join(list_of_texts)
+    actual_cleaned_anthology_of_english_texts = clean_text(anthology_of_english_texts)
 
-    expected_cleaned_anthology_of_English_texts = None
-    with open(temporary_directory_of_files_with_texts / "Anthology_Of_English_Texts_Cleaned.txt", 'r') as file:
-        expected_cleaned_anthology_of_English_texts = file.read()
+    expected_cleaned_anthology_of_english_texts = None
+    with open(
+        temporary_directory_of_files_with_texts / "Anthology_Of_English_Texts_Cleaned.txt",
+        'r',
+        encoding = "utf-8"
+    ) as file:
+        expected_cleaned_anthology_of_english_texts = file.read()
 
     assert \
-        actual_cleaned_anthology_of_English_texts == expected_cleaned_anthology_of_English_texts, \
+        actual_cleaned_anthology_of_english_texts == expected_cleaned_anthology_of_english_texts, \
         "Actual and cleaned anthologies of English texts are not equal."
-    
 
-def test_cleaning_each_English_text(list_of_paths_to_files_with_english_texts, logger, temporary_directory_of_files_with_texts):
+
+def test_cleaning_each_english_text(
+    list_of_paths_to_files_with_english_texts,
+    logger,
+    temporary_directory_of_files_with_texts
+):
     '''
     Given a string text with words from an English text with a path in a specified list,
     when I pass text to function clean_text,
@@ -68,7 +81,8 @@ def test_cleaning_each_English_text(list_of_paths_to_files_with_english_texts, l
 
     Keyword arguments:
         logger: Logger -- a logger
-        list_of_paths_to_files_with_english_texts: list[str] -- a list of paths to files with English texts
+        list_of_paths_to_files_with_english_texts: list[str] --
+        a list of paths to files with English texts
 
     Return values:
         none
@@ -91,7 +105,11 @@ def test_cleaning_each_English_text(list_of_paths_to_files_with_english_texts, l
 
         base_name = os.path.basename(path)
         text = None
-        with open(temporary_directory_of_files_with_texts / base_name, 'r') as file:
+        with open(
+            temporary_directory_of_files_with_texts / base_name,
+            'r',
+            encoding = "utf-8"
+        ) as file:
             text = file.read()
 
         actual_cleaned_text = clean_text(text)
@@ -99,7 +117,11 @@ def test_cleaning_each_English_text(list_of_paths_to_files_with_english_texts, l
         file_name, extension = os.path.splitext(base_name)
 
         expected_cleaned_text = None
-        with open(temporary_directory_of_files_with_texts / f"{file_name}_Cleaned{extension}", 'r') as file:
+        with open(
+            temporary_directory_of_files_with_texts / f"{file_name}_Cleaned{extension}",
+            'r',
+            encoding = "utf-8"
+        ) as file:
             expected_cleaned_text = file.read()
 
         assert \
@@ -107,7 +129,7 @@ def test_cleaning_each_English_text(list_of_paths_to_files_with_english_texts, l
             f"For {path}, actual cleaned text is not equal to expected cleaned text."
 
 
-def test_cleaning_quote_from_Le_Corbeau(logger):
+def test_cleaning_quote_from_le_corbeau(logger):
     '''
     Given a string quote_from_Le_Corbeau of text with words from Le Corbeau,
     when I pass quote_from_Le_Corbeau to function clean_text,
@@ -133,14 +155,14 @@ def test_cleaning_quote_from_Le_Corbeau(logger):
 
     logger.info("Testing cleaning quote from Le Corbeau")
 
-    quote_from_Le_Corbeau = """_Mais le Corbeau, perché solitairement sur ce buste placide, parla
+    quote_from_le_corbeau = """_Mais le Corbeau, perché solitairement sur ce buste placide, parla
     ce seul mot comme si, son âme, en ce seul mot, il la répandait. Je ne
     proférai donc rien de plus: il n'agita donc pas de plume--jusqu'à ce
     que je fis à peine davantage que marmotter «D'autres amis déjà ont
     pris leur vol--demain il me laissera comme mes Espérances déjà ont
     pris leur vol.» Alors l'oiseau dit: «Jamais plus.»_"""
 
-    actual_cleaned_text = clean_text(quote_from_Le_Corbeau)
+    actual_cleaned_text = clean_text(quote_from_le_corbeau)
 
     print(actual_cleaned_text)
 
@@ -153,12 +175,12 @@ def test_cleaning_quote_from_Le_Corbeau(logger):
 
     assert \
         actual_cleaned_text == expected_cleaned_text, \
-        f"Actual cleaned quote from Le Corbeau is not equal to expected cleaned quote from Le Corbeau."
-
+        "Actual cleaned quote from Le Corbeau " + \
+        "is not equal to expected cleaned quote from Le Corbeau."
 
 
 @pytest.mark.skip(reason = "clean_text does not clean Japanese characters.")
-def test_cleaning_quote_from_The_Great_Raven(logger):
+def test_cleaning_quote_from_the_great_raven(logger):
     '''
     Given a string quote_from_The_Great_Raven with words from 「大鴉」(Japanese for The Great Raven),
     when I pass quote_from_The_Great_Raven to function clean_text,
@@ -192,7 +214,7 @@ def test_cleaning_quote_from_The_Great_Raven(logger):
 
     assert \
         actual_cleaned_text == expected_cleaned_text, \
-        f"Actual cleaned text is not equal to expected cleaned text."
+        "Actual cleaned text is not equal to expected cleaned text."
 
 
 def test_cleaning_quote_from_the_raven(logger, quote_from_the_raven):
@@ -224,14 +246,20 @@ def test_cleaning_quote_from_the_raven(logger, quote_from_the_raven):
 
     actual_cleaned_text = clean_text(quote_from_the_raven)
 
-    expected_cleaned_text = """but the raven sitting lonely on the placid bust spoke only that one word as if his soul in that one word he did outpour"""
+    expected_cleaned_text = \
+        "but the raven " + \
+        "sitting lonely on the placid bust " + \
+        "spoke only " + \
+        "that one word " + \
+        "as if his soul in that one word he did outpour"
 
     assert \
         actual_cleaned_text == expected_cleaned_text, \
-        f"Actual cleaned quote from The Raven is not equal to expected cleaned quote from The Raven."
+        "Actual cleaned quote from The Raven " + \
+        "is not equal to expected cleaned quote from The Raven."
 
 
-def test_cleaning_The_Raven(logger, temporary_directory_of_files_with_texts):
+def test_cleaning_the_raven(logger, temporary_directory_of_files_with_texts):
     '''
     Given a string text with words from The Raven,
     when I pass text to function clean_text,
@@ -258,21 +286,29 @@ def test_cleaning_The_Raven(logger, temporary_directory_of_files_with_texts):
     logger.info("Testing cleaning text")
 
     text = None
-    with open(temporary_directory_of_files_with_texts / "The_Raven.txt", 'r') as file:
+    with open(
+        temporary_directory_of_files_with_texts / "The_Raven.txt",
+        'r',
+        encoding = "utf-8"
+    ) as file:
         text = file.read()
 
     actual_cleaned_text = clean_text(text)
 
     expected_cleaned_text = None
-    with open(temporary_directory_of_files_with_texts / "The_Raven_Cleaned.txt", 'r') as file:
+    with open(
+        temporary_directory_of_files_with_texts / "The_Raven_Cleaned.txt",
+        'r',
+        encoding = "utf-8"
+    ) as file:
         expected_cleaned_text = file.read()
 
     assert \
         actual_cleaned_text == expected_cleaned_text, \
-        f"Actual cleaned text is not equal to expected cleaned text."
+        "Actual cleaned text is not equal to expected cleaned text."
 
 
-def test_cleaning_The_Raven_only_on_Linux(logger, temporary_directory_of_files_with_texts):
+def test_cleaning_the_raven_only_on_linux(logger, temporary_directory_of_files_with_texts):
     '''
     Given a string text with words from The Raven,
     when I pass text to function clean_text,
@@ -304,21 +340,32 @@ def test_cleaning_The_Raven_only_on_Linux(logger, temporary_directory_of_files_w
         pytest.fail("You have not tested cleaning The Raven on {current_os}.")
 
     text = None
-    with open(temporary_directory_of_files_with_texts / "The_Raven.txt", 'r') as file:
+    with open(
+        temporary_directory_of_files_with_texts / "The_Raven.txt",
+        'r',
+        encoding = "utf-8"
+    ) as file:
         text = file.read()
 
     actual_cleaned_text = clean_text(text)
 
     expected_cleaned_text = None
-    with open(temporary_directory_of_files_with_texts / "The_Raven_Cleaned.txt", 'r') as file:
+    with open(
+        temporary_directory_of_files_with_texts / "The_Raven_Cleaned.txt",
+        'r',
+        encoding = "utf-8"
+    ) as file:
         expected_cleaned_text = file.read()
 
     assert \
         actual_cleaned_text == expected_cleaned_text, \
-        f"Actual cleaned text is not equal to expected cleaned text."
+        "Actual cleaned text is not equal to expected cleaned text."
 
 
-def test_cleaning_The_Raven_only_for_Python_3_10_12(logger, temporary_directory_of_files_with_texts):
+def test_cleaning_the_raven_only_for_python_3_10_12(
+    logger,
+    temporary_directory_of_files_with_texts
+):
     '''
     Given a string text with words from The Raven,
     when I pass text to function clean_text,
@@ -346,27 +393,45 @@ def test_cleaning_The_Raven_only_for_Python_3_10_12(logger, temporary_directory_
     logger.info("Testing cleaning text")
 
     version_tuple = sys.version_info[:3]
-    current_version_of_Python = str(version_tuple[0]) + "." + str(version_tuple[1]) + "." + str(version_tuple[2])
-    print(current_version_of_Python)
-    if current_version_of_Python != "3.10.12":
-        pytest.fail("You have not tested cleaning The Raven for Python version {current_version_of_Python}.")
+    current_version_of_python = \
+        str(version_tuple[0]) + \
+        "." + \
+        str(version_tuple[1]) + \
+        "." + \
+        str(version_tuple[2])
+    print(current_version_of_python)
+    if current_version_of_python != "3.10.12":
+        pytest.fail(
+            "You have not tested cleaning The Raven for Python version {current_version_of_Python}."
+        )
 
     text = None
-    with open(temporary_directory_of_files_with_texts / "The_Raven.txt", 'r') as file:
+    with open(
+        temporary_directory_of_files_with_texts / "The_Raven.txt",
+        'r',
+        encoding = "utf-8"
+    ) as file:
         text = file.read()
 
     actual_cleaned_text = clean_text(text)
 
     expected_cleaned_text = None
-    with open(temporary_directory_of_files_with_texts / "The_Raven_Cleaned.txt", 'r') as file:
+    with open(
+        temporary_directory_of_files_with_texts / "The_Raven_Cleaned.txt",
+        'r',
+        encoding = "utf-8"
+    ) as file:
         expected_cleaned_text = file.read()
 
     assert \
         actual_cleaned_text == expected_cleaned_text, \
-        f"Actual cleaned text is not equal to expected cleaned text."
+        "Actual cleaned text is not equal to expected cleaned text."
 
 
-def test_cleaning_The_Raven_using_command_and_function(logger, temporary_directory_of_files_with_texts):
+def test_cleaning_the_raven_using_command_and_function(
+    logger,
+    temporary_directory_of_files_with_texts
+):
     '''
     Given a file with text or a string text with words from The Raven,
     when I pass text to a command or clean_text,
@@ -394,20 +459,33 @@ def test_cleaning_The_Raven_using_command_and_function(logger, temporary_directo
 
     temporary_file = temporary_directory_of_files_with_texts / "The_Raven.txt"
     command = "bash clean_text.sh " + str(temporary_file)
-    actual_cleaned_text_from_command = subprocess.run(command, shell = True, capture_output = True, text = True).stdout
+    actual_cleaned_text_from_command = subprocess.run(
+        command,
+        shell = True,
+        capture_output = True,
+        text = True,
+        check = False
+    ).stdout
 
     text = None
-    with open(temporary_directory_of_files_with_texts / "The_Raven.txt", 'r') as file:
+    with open(
+        temporary_directory_of_files_with_texts / "The_Raven.txt",
+        'r',
+        encoding = "utf-8"
+    ) as file:
         text = file.read()
 
     actual_cleaned_text_from_function = clean_text(text)
 
     assert \
         actual_cleaned_text_from_command == actual_cleaned_text_from_function, \
-        f"Actual cleaned texts are not equal."
+        "Actual cleaned texts are not equal."
 
 
-def test_that_characters_in_cleaned_quote_from_the_raven_are_all_lowercase(logger, quote_from_the_raven):
+def test_that_characters_in_cleaned_quote_from_the_raven_are_all_lowercase(
+    logger,
+    quote_from_the_raven
+):
     '''
     Given a string quote_from_the_raven of text with words from The Raven,
     when I pass quote_from_the_raven to function clean_text,
@@ -426,23 +504,29 @@ def test_that_characters_in_cleaned_quote_from_the_raven_are_all_lowercase(logge
         Determines whether characters in cleaned version of quote from The Raven are all lowercase
 
     Exceptions raised:
-        AssertionError if characters in cleaned version of quote from The Raven are not all lowercase
+        AssertionError
+        if characters in cleaned version of quote from The Raven are not all lowercase
 
     Restrictions on when this method can be called:
         none
     '''
 
-    logger.info("Testing that characters in cleaned version of quote from The Raven are all lowercase")
+    logger.info(
+        "Testing that characters in cleaned version of quote from The Raven are all lowercase"
+    )
 
     actual_cleaned_text = clean_text(quote_from_the_raven)
 
     assert \
         actual_cleaned_text.islower(), \
-        f"Characters in cleaned version of quote from The Raven are not all lowercase."
+        "Characters in cleaned version of quote from The Raven are not all lowercase."
 
 
 @pytest.mark.xfail
-def test_that_there_is_a_capital_letter_in_cleaned_quote_from_the_raven(logger, quote_from_the_raven):
+def test_that_there_is_a_capital_letter_in_cleaned_quote_from_the_raven(
+    logger,
+    quote_from_the_raven
+):
     '''
     Given a string quote_from_the_raven of text with words from The Raven,
     when I pass quote_from_the_raven to function clean_text,
@@ -474,4 +558,4 @@ def test_that_there_is_a_capital_letter_in_cleaned_quote_from_the_raven(logger, 
 
     assert \
         not actual_cleaned_text.islower(), \
-        f"Characters in cleaned version of quote from The Raven are all lowercase."
+        "Characters in cleaned version of quote from The Raven are all lowercase."
