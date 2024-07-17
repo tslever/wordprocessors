@@ -402,6 +402,7 @@ def test_tokenizing_the_raven_using_command_and_function(
     ).stdout
     list_of_words_from_command = json.loads(serialized_list_of_words_from_command)
 
+    '''
     text = None
     with open(
         temporary_directory_of_files_with_texts / "The_Raven_Cleaned.txt",
@@ -409,6 +410,9 @@ def test_tokenizing_the_raven_using_command_and_function(
         encoding = "utf-8"
     ) as file:
         text = file.read()
+    '''
+    text = text_from_file("The_Raven_Cleaned.txt", temporary_directory_of_files_with_texts)
+ 
     list_of_words_from_function = tokenize(text)
 
     assert \

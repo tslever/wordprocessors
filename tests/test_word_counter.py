@@ -405,7 +405,8 @@ def test_counting_words_in_the_raven_using_command_and_function(
     dictionary_of_words_and_counts_from_command = json.loads(
         serialized_dictionary_of_words_and_counts
     )
-
+    
+    '''
     text = None
     with open(
         temporary_directory_of_files_with_texts / "The_Raven_Cleaned.txt",
@@ -413,6 +414,9 @@ def test_counting_words_in_the_raven_using_command_and_function(
         encoding = "utf-8"
     ) as file:
         text = file.read()
+    '''
+    text = text_from_file("The_Raven_Cleaned.txt", temporary_directory_of_files_with_texts)
+    
     dictionary_of_words_and_counts_from_function = count_words(text)
 
     assert \
