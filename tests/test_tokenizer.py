@@ -13,6 +13,7 @@ from fixtures import \
     quote_from_the_raven, \
     temporary_directory, \
     temporary_directory_of_files_with_texts
+from utilities import text_from_file
 from pkg_tsl2b import clean_text, tokenize
 
 
@@ -105,15 +106,10 @@ def test_tokenizing_each_english_text(
     for path in list_of_paths_to_files_with_english_texts:
 
         logger.info(f"Testing tokenizing cleaned version of text in file at {path}")
-
+        
         base_name = os.path.basename(path)
-        text = None
-        with open(
-            temporary_directory_of_files_with_texts / base_name,
-            'r',
-            encoding = "utf-8"
-        ) as file:
-            text = file.read()
+        
+        text = text_from_file(base_name, temporary_directory_of_files_with_texts)
 
         cleaned_text = clean_text(text)
 
