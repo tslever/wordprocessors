@@ -63,6 +63,8 @@ def test_tokenizing_all_english_texts_together(
     cleaned_anthology_of_english_texts = clean_text(anthology_of_english_texts)
 
     actual_list_of_words = tokenize(cleaned_anthology_of_english_texts)
+    
+    '''
     expected_list_of_words = None
     with open(
         temporary_directory_of_files_with_texts / \
@@ -70,6 +72,11 @@ def test_tokenizing_all_english_texts_together(
         'rb'
     ) as file:
         expected_list_of_words = pickle.load(file)
+    '''
+    expected_list_of_words = object_from_pickle(
+        "List_Of_Words_In_Cleaned_Version_Of_Anthology_Of_English_Texts.pickle",
+        temporary_directory_of_files_with_texts
+    )
 
     assert \
         actual_list_of_words == expected_list_of_words, \
