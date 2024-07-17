@@ -8,8 +8,7 @@ import requests
 from fixtures import logger, temporary_directory, temporary_directory_of_files_with_texts
 from utilities import \
     dictionary_of_ids_and_base_names_of_english_texts, \
-    dictionary_of_words_and_counts_from_pickle, \
-    list_of_words_from_pickle
+    object_from_pickle
 from pkg_tsl2b import clean_text, count_words, tokenize
 
 
@@ -63,7 +62,7 @@ def test_downloading_cleaning_tokenizing_and_counting_words_in_the_raven(
     ) as file:
         expected_list_of_words = pickle.load(file)
     '''
-    expected_list_of_words = list_of_words_from_pickle(
+    expected_list_of_words = object_from_pickle(
         "List_Of_Words_In_Cleaned_Version_Of_The_Raven.pickle",
         temporary_directory_of_files_with_texts
     )
@@ -80,7 +79,7 @@ def test_downloading_cleaning_tokenizing_and_counting_words_in_the_raven(
     ) as file:
         expected_dictionary_of_words_and_counts = pickle.load(file)
     '''
-    expected_dictionary_of_words_and_counts = dictionary_of_words_and_counts_from_pickle(
+    expected_dictionary_of_words_and_counts = object_from_pickle(
         "Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_The_Raven.pickle",
         temporary_directory_of_files_with_texts
     )
@@ -152,7 +151,7 @@ def test_downloading_cleaning_tokenizing_and_counting_words_in_anthology_of_engl
     ) as file:
         expected_dictionary_of_words_and_counts = pickle.load(file)
     '''
-    expected_dictionary_of_words_and_counts = dictionary_of_words_and_counts_from_pickle(
+    expected_dictionary_of_words_and_counts = object_from_pickle(
         "Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_Anthology_Of_English_Texts.pickle",
         temporary_directory_of_files_with_texts
     )

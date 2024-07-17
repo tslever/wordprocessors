@@ -16,7 +16,7 @@ from fixtures import \
     temporary_directory_of_files_with_texts
 from utilities import \
     anthology, \
-    dictionary_of_words_and_counts_from_pickle, \
+    object_from_pickle, \
     quote_from_le_corbeau, \
     text_from_file
 from pkg_tsl2b import clean_text, count_words, tokenize
@@ -75,7 +75,7 @@ def test_counting_words_for_all_english_texts_together(
     ) as file:
         expected_dictionary_of_words_and_counts = pickle.load(file)
     '''
-    expected_dictionary_of_words_and_counts = dictionary_of_words_and_counts_from_pickle(
+    expected_dictionary_of_words_and_counts = object_from_pickle(
         "Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_Anthology_Of_English_Texts.pickle",
         temporary_directory_of_files_with_texts
     )
@@ -348,7 +348,7 @@ def test_counting_words_in_the_raven(logger, temporary_directory_of_files_with_t
     ) as file:
         expected_dictionary_of_words_and_counts = pickle.load(file)
     '''
-    expected_dictionary_of_words_and_counts = dictionary_of_words_and_counts_from_pickle(
+    expected_dictionary_of_words_and_counts = object_from_pickle(
         "Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_The_Raven.pickle",
         temporary_directory_of_files_with_texts
     )

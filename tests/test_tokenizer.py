@@ -15,7 +15,7 @@ from fixtures import \
     temporary_directory_of_files_with_texts
 from utilities import \
     anthology, \
-    list_of_words_from_pickle, \
+    object_from_pickle, \
     quote_from_le_corbeau, \
     text_from_file
 from pkg_tsl2b import clean_text, tokenize
@@ -357,7 +357,7 @@ def test_tokenizing_the_raven(logger, temporary_directory_of_files_with_texts):
     ) as file:
         expected_list_of_words = pickle.load(file)
     '''
-    expected_list_of_words = list_of_words_from_pickle(
+    expected_list_of_words = object_from_pickle(
         "List_Of_Words_In_Cleaned_Version_Of_The_Raven.pickle",
         temporary_directory_of_files_with_texts
     )

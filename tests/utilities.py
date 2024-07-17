@@ -19,17 +19,12 @@ dictionary_of_ids_and_base_names_of_english_texts = {
     10031: "The_Complete_Poetical_Works_of_Edgar_Allan_Poe.txt"
 }
 
-def dictionary_of_words_and_counts_from_pickle(base_name: str, temporary_directory_of_files_with_texts) -> dict[str, int]:
-    expected_dictionary_of_words_and_counts = None
-    with open(temporary_directory_of_files_with_texts / base_name, "rb") as file:
-        expected_dictionary_of_words_and_counts = pickle.load(file)
-    return expected_dictionary_of_words_and_counts
 
-def list_of_words_from_pickle(base_name, temporary_directory_of_files_with_texts):
-    expected_list_of_words = None
+def object_from_pickle(base_name, temporary_directory_of_files_with_texts):
+    the_object = None
     with open(temporary_directory_of_files_with_texts / base_name, "rb") as file:
-        expected_list_of_words = pickle.load(file)
-    return expected_list_of_words
+        the_object = pickle.load(file)
+    return the_object
 
 quote_from_le_corbeau = """_Mais le Corbeau, perché solitairement sur ce buste placide, parla
     ce seul mot comme si, son âme, en ce seul mot, il la répandait. Je ne
