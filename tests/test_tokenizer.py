@@ -16,7 +16,7 @@ from fixtures import \
 from utilities import \
     anthology, \
     object_from_pickle, \
-    quote_from_le_corbeau, \
+    QUOTE_FROM_LE_CORBEAU, \
     text_from_file
 from pkg_tsl2b import clean_text, tokenize
 
@@ -49,30 +49,13 @@ def test_tokenizing_all_english_texts_together(
     Restrictions on when this method can be called:
         none
     '''
-    
-    '''
-    list_of_texts = []
-    for path in list_of_paths_to_files_with_english_texts:
-        with open(path, 'r', encoding = "utf-8") as file:
-            text = file.read()
-            list_of_texts.append(text)
-    anthology_of_english_texts = '\n'.join(list_of_texts)
-    '''
+
     anthology_of_english_texts = anthology(list_of_paths_to_files_with_english_texts)
 
     cleaned_anthology_of_english_texts = clean_text(anthology_of_english_texts)
 
     actual_list_of_words = tokenize(cleaned_anthology_of_english_texts)
-    
-    '''
-    expected_list_of_words = None
-    with open(
-        temporary_directory_of_files_with_texts / \
-        "List_Of_Words_In_Cleaned_Version_Of_Anthology_Of_English_Texts.pickle",
-        'rb'
-    ) as file:
-        expected_list_of_words = pickle.load(file)
-    '''
+
     expected_list_of_words = object_from_pickle(
         "List_Of_Words_In_Cleaned_Version_Of_Anthology_Of_English_Texts.pickle",
         temporary_directory_of_files_with_texts
@@ -170,7 +153,7 @@ def test_tokenizing_quote_from_le_corbeau(logger):
 
     logger.info("Testing tokenizing cleaned version of quote from Le Corbeau")
 
-    cleaned_text = clean_text(quote_from_le_corbeau)
+    cleaned_text = clean_text(QUOTE_FROM_LE_CORBEAU)
 
     actual_list_of_words = tokenize(cleaned_text)
 
@@ -341,29 +324,12 @@ def test_tokenizing_the_raven(logger, temporary_directory_of_files_with_texts):
 
     logger.info("Testing tokenizing a cleaned version of The Raven")
 
-    '''
-    text = None
-    with open(
-        temporary_directory_of_files_with_texts / "The_Raven.txt",
-        'r',
-        encoding = "utf-8"
-    ) as file:
-        text = file.read()
-    '''
     text = text_from_file("The_Raven.txt", temporary_directory_of_files_with_texts)
 
     text_to_tokenize = clean_text(text)
 
     actual_list_of_words = tokenize(text_to_tokenize)
 
-    '''
-    with open(
-        temporary_directory_of_files_with_texts / \
-        "List_Of_Words_In_Cleaned_Version_Of_The_Raven.pickle",
-        "rb"
-    ) as file:
-        expected_list_of_words = pickle.load(file)
-    '''
     expected_list_of_words = object_from_pickle(
         "List_Of_Words_In_Cleaned_Version_Of_The_Raven.pickle",
         temporary_directory_of_files_with_texts
@@ -414,17 +380,8 @@ def test_tokenizing_the_raven_using_command_and_function(
     ).stdout
     list_of_words_from_command = json.loads(serialized_list_of_words_from_command)
 
-    '''
-    text = None
-    with open(
-        temporary_directory_of_files_with_texts / "The_Raven_Cleaned.txt",
-        'r',
-        encoding = "utf-8"
-    ) as file:
-        text = file.read()
-    '''
     text = text_from_file("The_Raven_Cleaned.txt", temporary_directory_of_files_with_texts)
- 
+
     list_of_words_from_function = tokenize(text)
 
     assert \

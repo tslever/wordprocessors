@@ -17,7 +17,7 @@ from fixtures import \
 from utilities import \
     anthology, \
     object_from_pickle, \
-    quote_from_le_corbeau, \
+    QUOTE_FROM_LE_CORBEAU, \
     text_from_file
 from pkg_tsl2b import clean_text, count_words, tokenize
 
@@ -52,29 +52,12 @@ def test_counting_words_for_all_english_texts_together(
         none
     '''
 
-    '''
-    list_of_texts = []
-    for path in list_of_paths_to_files_with_english_texts:
-        with open(path, 'r', encoding = "utf-8") as file:
-            text = file.read()
-            list_of_texts.append(text)
-    anthology_of_english_texts = '\n'.join(list_of_texts)
-    '''
     anthology_of_english_texts = anthology(list_of_paths_to_files_with_english_texts)
 
     cleaned_anthology_of_english_texts = clean_text(anthology_of_english_texts)
 
     actual_dictionary_of_words_and_counts = count_words(cleaned_anthology_of_english_texts)
 
-    '''
-    expected_dictionary_of_words_and_counts = None
-    with open(
-        temporary_directory_of_files_with_texts / \
-        "Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_Anthology_Of_English_Texts.pickle",
-        "rb"
-    ) as file:
-        expected_dictionary_of_words_and_counts = pickle.load(file)
-    '''
     expected_dictionary_of_words_and_counts = object_from_pickle(
         "Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_Anthology_Of_English_Texts.pickle",
         temporary_directory_of_files_with_texts
@@ -131,7 +114,7 @@ def test_count_words_in_each_english_text(
         actual_dictionary_of_words_and_counts = count_words(cleaned_text)
 
         file_name, _ = os.path.splitext(base_name)
-        
+
         expected_dictionary_of_words_and_counts = None
         with open(
             temporary_directory_of_files_with_texts / \
@@ -233,7 +216,7 @@ def test_counting_words_in_quote_from_le_corbeau(logger):
 
     logger.info("Testing counting words in cleaned version of quote from Le Corbeau")
 
-    cleaned_text = clean_text(quote_from_le_corbeau)
+    cleaned_text = clean_text(QUOTE_FROM_LE_CORBEAU)
 
     actual_dictionary_of_words_and_counts = count_words(cleaned_text)
 
@@ -324,30 +307,12 @@ def test_counting_words_in_the_raven(logger, temporary_directory_of_files_with_t
 
     logger.info("Testing counting words in a cleaned version of The Raven")
 
-    '''
-    text = None
-    with open(
-        temporary_directory_of_files_with_texts / "The_Raven.txt",
-        'r',
-        encoding = "utf-8"
-    ) as file:
-        text = file.read()
-    '''
     text = text_from_file("The_Raven.txt", temporary_directory_of_files_with_texts)
 
     text_of_which_to_count_words = clean_text(text)
 
     actual_dictionary_of_words_and_counts = count_words(text_of_which_to_count_words)
 
-    '''
-    expected_dictionary_of_words_and_counts = None
-    with open(
-        temporary_directory_of_files_with_texts / \
-        "Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_The_Raven.pickle",
-        "rb"
-    ) as file:
-        expected_dictionary_of_words_and_counts = pickle.load(file)
-    '''
     expected_dictionary_of_words_and_counts = object_from_pickle(
         "Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_The_Raven.pickle",
         temporary_directory_of_files_with_texts
@@ -403,18 +368,9 @@ def test_counting_words_in_the_raven_using_command_and_function(
     dictionary_of_words_and_counts_from_command = json.loads(
         serialized_dictionary_of_words_and_counts
     )
-    
-    '''
-    text = None
-    with open(
-        temporary_directory_of_files_with_texts / "The_Raven_Cleaned.txt",
-        'r',
-        encoding = "utf-8"
-    ) as file:
-        text = file.read()
-    '''
+
     text = text_from_file("The_Raven_Cleaned.txt", temporary_directory_of_files_with_texts)
-    
+
     dictionary_of_words_and_counts_from_function = count_words(text)
 
     assert \

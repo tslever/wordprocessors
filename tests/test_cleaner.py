@@ -13,7 +13,7 @@ from fixtures import \
     quote_from_the_raven, \
     temporary_directory, \
     temporary_directory_of_files_with_texts
-from utilities import anthology, text_from_file, quote_from_le_corbeau
+from utilities import anthology, text_from_file, QUOTE_FROM_LE_CORBEAU
 from pkg_tsl2b import clean_text
 
 
@@ -46,15 +46,7 @@ def test_cleaning_all_english_texts_together(
     Restrictions on when this method can be called:
         none
     '''
-    
-    '''
-    list_of_texts = []
-    for path in list_of_paths_to_files_with_english_texts:
-        with open(path, 'r', encoding = "utf-8") as file:
-            text = file.read()
-            list_of_texts.append(text)
-    anthology_of_english_texts = '\n'.join(list_of_texts)
-    '''
+
     anthology_of_english_texts = anthology(list_of_paths_to_files_with_english_texts)
     actual_cleaned_anthology_of_english_texts = clean_text(anthology_of_english_texts)
 
@@ -108,7 +100,7 @@ def test_cleaning_each_english_text(
         logger.info(f"Testing cleaning {path}")
 
         base_name = os.path.basename(path)
-        
+
         text = text_from_file(base_name, temporary_directory_of_files_with_texts)
 
         actual_cleaned_text = clean_text(text)
@@ -154,7 +146,7 @@ def test_cleaning_quote_from_le_corbeau(logger):
 
     logger.info("Testing cleaning quote from Le Corbeau")
 
-    actual_cleaned_text = clean_text(quote_from_le_corbeau)
+    actual_cleaned_text = clean_text(QUOTE_FROM_LE_CORBEAU)
 
     print(actual_cleaned_text)
 

@@ -2,7 +2,6 @@
 Module test_system, which has functions to test the word processing system 
 '''
 
-import pickle
 import pytest
 import requests
 from fixtures import logger, temporary_directory, temporary_directory_of_files_with_texts
@@ -52,7 +51,7 @@ def test_downloading_cleaning_tokenizing_and_counting_words_in_the_raven(
     assert cleaned_text == \
         (temporary_directory_of_files_with_texts / "The_Raven_Cleaned.txt").read_text()
     actual_list_of_words = tokenize(cleaned_text)
-    
+
     expected_list_of_words = object_from_pickle(
         "List_Of_Words_In_Cleaned_Version_Of_The_Raven.pickle",
         temporary_directory_of_files_with_texts
@@ -60,7 +59,7 @@ def test_downloading_cleaning_tokenizing_and_counting_words_in_the_raven(
 
     assert actual_list_of_words == expected_list_of_words
     actual_dictionary_of_words_and_counts = count_words(cleaned_text)
-   
+
     expected_dictionary_of_words_and_counts = object_from_pickle(
         "Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_The_Raven.pickle",
         temporary_directory_of_files_with_texts
@@ -112,9 +111,9 @@ def test_downloading_cleaning_tokenizing_and_counting_words_in_anthology_of_engl
     assert cleaned_anthology_of_english_texts == \
         (temporary_directory_of_files_with_texts / \
         "Anthology_Of_English_Texts_Cleaned.txt").read_text()
-    
+
     actual_list_of_words = tokenize(cleaned_anthology_of_english_texts)
-    
+
     expected_list_of_words = object_from_pickle(
         "List_Of_Words_In_Cleaned_Version_Of_Anthology_Of_English_Texts.pickle",
         temporary_directory_of_files_with_texts

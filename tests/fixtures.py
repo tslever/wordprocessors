@@ -10,8 +10,8 @@ import pathlib
 import pickle
 import pytest
 import requests
-from pkg_tsl2b import clean_text, count_words, tokenize
 from utilities import dictionary_of_ids_and_base_names_of_english_texts
+from pkg_tsl2b import clean_text, count_words, tokenize
 
 
 dictionary_of_IDs_and_base_names_of_texts = copy.deepcopy(
