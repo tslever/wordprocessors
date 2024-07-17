@@ -25,4 +25,8 @@ To allow GitHub to run tests automatically,
 
 2. See Actions at `https://github.com/tslever/wordprocessors` or the following badge.
 
-![Status Of Tests On Branch WEEK-05/github_automation](https://github.com/tslever/wordprocessors/actions/workflows/validations.yml/badge.svg?branch=WEEK-05/github_automation)
+![Status Of Tests On Branch WEEK-08/github_automation](https://github.com/tslever/wordprocessors/actions/workflows/validations.yml/badge.svg?branch=WEEK-08/github_automation)
+
+To use pylint on all appropriate files in this repository while suppressing pytest-related false positives, run
+
+`find . -path ./env -prune -o -name "*.py" -exec pylint --load_plugins pylint_pytest {} +`
