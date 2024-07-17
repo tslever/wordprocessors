@@ -13,7 +13,7 @@ from fixtures import \
     quote_from_the_raven, \
     temporary_directory, \
     temporary_directory_of_files_with_texts
-from utilities import text_from_file
+from utilities import text_from_file, quote_from_le_corbeau
 from pkg_tsl2b import clean_text
 
 
@@ -150,13 +150,6 @@ def test_cleaning_quote_from_le_corbeau(logger):
     '''
 
     logger.info("Testing cleaning quote from Le Corbeau")
-
-    quote_from_le_corbeau = """_Mais le Corbeau, perché solitairement sur ce buste placide, parla
-    ce seul mot comme si, son âme, en ce seul mot, il la répandait. Je ne
-    proférai donc rien de plus: il n'agita donc pas de plume--jusqu'à ce
-    que je fis à peine davantage que marmotter «D'autres amis déjà ont
-    pris leur vol--demain il me laissera comme mes Espérances déjà ont
-    pris leur vol.» Alors l'oiseau dit: «Jamais plus.»_"""
 
     actual_cleaned_text = clean_text(quote_from_le_corbeau)
 
