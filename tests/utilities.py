@@ -2,23 +2,9 @@ import os
 import pathlib
 import pickle
 
-def dictionary_for_anthology(temporary_directory_of_files_with_texts) -> dict[str, int]:
+def dictionary_of_words_and_counts_from_pickle(base_name: str, temporary_directory_of_files_with_texts) -> dict[str, int]:
     expected_dictionary_of_words_and_counts = None
-    with open(
-        temporary_directory_of_files_with_texts / \
-        "Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_Anthology_Of_English_Texts.pickle",
-        "rb"
-    ) as file:
-        expected_dictionary_of_words_and_counts = pickle.load(file)
-    return expected_dictionary_of_words_and_counts
-
-def dictionary_for_the_raven(temporary_directory_of_files_with_texts) -> dict[str, int]:
-    expected_dictionary_of_words_and_counts = None
-    with open(
-        temporary_directory_of_files_with_texts / \
-        "Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_The_Raven.pickle",
-        "rb"
-    ) as file:
+    with open(temporary_directory_of_files_with_texts / base_name, "rb") as file:
         expected_dictionary_of_words_and_counts = pickle.load(file)
     return expected_dictionary_of_words_and_counts
 
