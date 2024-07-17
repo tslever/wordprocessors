@@ -325,6 +325,7 @@ def test_counting_words_in_the_raven(logger, temporary_directory_of_files_with_t
 
     logger.info("Testing counting words in a cleaned version of The Raven")
 
+    '''
     text = None
     with open(
         temporary_directory_of_files_with_texts / "The_Raven.txt",
@@ -332,6 +333,8 @@ def test_counting_words_in_the_raven(logger, temporary_directory_of_files_with_t
         encoding = "utf-8"
     ) as file:
         text = file.read()
+    '''
+    text = text_from_file("The_Raven.txt", temporary_directory_of_files_with_texts)
 
     text_of_which_to_count_words = clean_text(text)
 

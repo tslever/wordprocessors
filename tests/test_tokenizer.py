@@ -334,6 +334,7 @@ def test_tokenizing_the_raven(logger, temporary_directory_of_files_with_texts):
 
     logger.info("Testing tokenizing a cleaned version of The Raven")
 
+    '''
     text = None
     with open(
         temporary_directory_of_files_with_texts / "The_Raven.txt",
@@ -341,6 +342,8 @@ def test_tokenizing_the_raven(logger, temporary_directory_of_files_with_texts):
         encoding = "utf-8"
     ) as file:
         text = file.read()
+    '''
+    text = text_from_file("The_Raven.txt", temporary_directory_of_files_with_texts)
 
     text_to_tokenize = clean_text(text)
 
