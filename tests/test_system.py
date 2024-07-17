@@ -7,6 +7,7 @@ import pytest
 import requests
 from fixtures import logger, temporary_directory, temporary_directory_of_files_with_texts
 from utilities import \
+    dictionary_of_ids_and_base_names_of_english_texts, \
     dictionary_of_words_and_counts_from_pickle, \
     list_of_words_from_pickle
 from pkg_tsl2b import clean_text, count_words, tokenize
@@ -116,12 +117,6 @@ def test_downloading_cleaning_tokenizing_and_counting_words_in_anthology_of_engl
         none
     '''
 
-    dictionary_of_ids_and_base_names_of_english_texts = {
-        17192: "The_Raven.txt",
-        932: "The_Fall_of_the_House_of_Usher.txt",
-        1063: "The_Cask_of_Amontillado.txt",
-        10031: "The_Complete_Poetical_Works_of_Edgar_Allan_Poe.txt"
-    }
     list_of_texts = []
     for id_of_text in dictionary_of_ids_and_base_names_of_english_texts:
         url = f"https://www.gutenberg.org/cache/epub/{id_of_text}/pg{id_of_text}.txt"

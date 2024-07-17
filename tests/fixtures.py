@@ -11,14 +11,7 @@ import pickle
 import pytest
 import requests
 from pkg_tsl2b import clean_text, count_words, tokenize
-
-
-dictionary_of_ids_and_base_names_of_english_texts = {
-    17192: "The_Raven.txt",
-    932: "The_Fall_of_the_House_of_Usher.txt",
-    1063: "The_Cask_of_Amontillado.txt",
-    10031: "The_Complete_Poetical_Works_of_Edgar_Allan_Poe.txt"
-}
+from utilities import dictionary_of_ids_and_base_names_of_english_texts
 
 
 dictionary_of_IDs_and_base_names_of_texts = copy.deepcopy(
