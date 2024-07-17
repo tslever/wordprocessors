@@ -452,11 +452,7 @@ def test_cleaning_the_raven_using_command_and_function(
     temporary_file = temporary_directory_of_files_with_texts / "The_Raven.txt"
     command = "bash clean_text.sh " + str(temporary_file)
     actual_cleaned_text_from_command = subprocess.run(
-        command,
-        shell = True,
-        capture_output = True,
-        text = True,
-        check = False
+        command, shell = True, capture_output = True, text = True, check = False
     ).stdout
 
     text = None

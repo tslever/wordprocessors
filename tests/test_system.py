@@ -63,7 +63,10 @@ def test_downloading_cleaning_tokenizing_and_counting_words_in_the_raven(
     ) as file:
         expected_list_of_words = pickle.load(file)
     '''
-    expected_list_of_words = list_of_words_from_pickle(temporary_directory_of_files_with_texts)
+    expected_list_of_words = list_of_words_from_pickle(
+        "List_Of_Words_In_Cleaned_Version_Of_The_Raven.pickle",
+        temporary_directory_of_files_with_texts
+    )
 
     assert actual_list_of_words == expected_list_of_words
     actual_dictionary_of_words_and_counts = count_words(cleaned_text)
@@ -128,6 +131,7 @@ def test_downloading_cleaning_tokenizing_and_counting_words_in_anthology_of_engl
     assert cleaned_anthology_of_english_texts == \
         (temporary_directory_of_files_with_texts / \
         "Anthology_Of_English_Texts_Cleaned.txt").read_text()
+    
     actual_list_of_words = tokenize(cleaned_anthology_of_english_texts)
     expected_list_of_words = None
     with open(
@@ -136,6 +140,7 @@ def test_downloading_cleaning_tokenizing_and_counting_words_in_anthology_of_engl
         "rb"
     ) as file:
         expected_list_of_words = pickle.load(file)
+    
     assert actual_list_of_words == expected_list_of_words
     actual_dictionary_of_words_and_counts = count_words(cleaned_anthology_of_english_texts)
     '''

@@ -25,16 +25,11 @@ def dictionary_of_words_and_counts_from_pickle(base_name: str, temporary_directo
         expected_dictionary_of_words_and_counts = pickle.load(file)
     return expected_dictionary_of_words_and_counts
 
-def list_of_words_from_pickle(temporary_directory_of_files_with_texts):
+def list_of_words_from_pickle(base_name, temporary_directory_of_files_with_texts):
     expected_list_of_words = None
-    with open(
-        temporary_directory_of_files_with_texts / \
-        "List_Of_Words_In_Cleaned_Version_Of_The_Raven.pickle",
-        "rb"
-    ) as file:
+    with open(temporary_directory_of_files_with_texts / base_name, "rb") as file:
         expected_list_of_words = pickle.load(file)
     return expected_list_of_words
-
 
 quote_from_le_corbeau = """_Mais le Corbeau, perché solitairement sur ce buste placide, parla
     ce seul mot comme si, son âme, en ce seul mot, il la répandait. Je ne

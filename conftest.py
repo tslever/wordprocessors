@@ -59,11 +59,7 @@ def run_command():
 
     command = "cat pytest.log"
     result = subprocess.run(
-        command,
-        shell = True,
-        capture_output = True,
-        text = True,
-        check = False
+        command, shell = True, capture_output = True, text = True, check = False
     )
     print(f"Command output: {result.stdout}")
     print(f"Command errors: {result.stderr}")

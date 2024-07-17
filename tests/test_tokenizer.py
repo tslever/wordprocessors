@@ -63,7 +63,6 @@ def test_tokenizing_all_english_texts_together(
     cleaned_anthology_of_english_texts = clean_text(anthology_of_english_texts)
 
     actual_list_of_words = tokenize(cleaned_anthology_of_english_texts)
-
     expected_list_of_words = None
     with open(
         temporary_directory_of_files_with_texts / \
@@ -358,7 +357,10 @@ def test_tokenizing_the_raven(logger, temporary_directory_of_files_with_texts):
     ) as file:
         expected_list_of_words = pickle.load(file)
     '''
-    expected_list_of_words = list_of_words_from_pickle(temporary_directory_of_files_with_texts)
+    expected_list_of_words = list_of_words_from_pickle(
+        "List_Of_Words_In_Cleaned_Version_Of_The_Raven.pickle",
+        temporary_directory_of_files_with_texts
+    )
 
     assert \
         actual_list_of_words == expected_list_of_words, \
@@ -401,11 +403,7 @@ def test_tokenizing_the_raven_using_command_and_function(
         " | tr '\n' ' ' | sed 's/  */ /g' | sed 's/[[:space:]]*$//' | jq -R 'split(\" \")'"
 
     serialized_list_of_words_from_command = subprocess.run(
-        command,
-        shell = True,
-        capture_output = True,
-        text = True,
-        check = False
+        command, shell = True, capture_output = True, text = True, check = False
     ).stdout
     list_of_words_from_command = json.loads(serialized_list_of_words_from_command)
 

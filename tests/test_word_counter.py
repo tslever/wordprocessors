@@ -385,7 +385,7 @@ def test_counting_words_in_the_raven_using_command_and_function(
         none
     '''
 
-    logger.info("Testing tokenizing text")
+    logger.info("Testing counting words in The Raven using command and function")
 
     file_name = temporary_directory_of_files_with_texts / "The_Raven.txt"
     command = \
@@ -398,11 +398,7 @@ def test_counting_words_in_the_raven_using_command_and_function(
         "| jq -c 'reduce .[] as $word ({}; .[$word] += 1)'"
 
     serialized_dictionary_of_words_and_counts = subprocess.run(
-        command,
-        shell = True,
-        capture_output = True,
-        text = True,
-        check = False
+        command, shell = True, capture_output = True, text = True, check = False
     ).stdout
     dictionary_of_words_and_counts_from_command = json.loads(
         serialized_dictionary_of_words_and_counts
