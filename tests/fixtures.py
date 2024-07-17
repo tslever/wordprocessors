@@ -196,9 +196,10 @@ def logger():
         "sitting lonely on the placid bust --" +
         "spoke only That one word, " +
         "as if his soul in that one word he did outpour."
-    ]
+    ],
+    scope = "session"
 )
-def quote_from_the_raven(request: pytest.FixtureRequest, scope = "session") -> str:
+def quote_from_the_raven(request: pytest.FixtureRequest) -> str:
     '''
     Provides a quote from The Raven
 
