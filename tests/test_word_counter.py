@@ -14,7 +14,9 @@ from fixtures import \
     quote_from_the_raven, \
     temporary_directory, \
     temporary_directory_of_files_with_texts
-from utilities import text_from_file
+from utilities import \
+    dictionary_of_words_and_counts_from_pickle, \
+    text_from_file
 from pkg_tsl2b import clean_text, count_words, tokenize
 
 
@@ -58,6 +60,7 @@ def test_counting_words_for_all_english_texts_together(
 
     actual_dictionary_of_words_and_counts = count_words(cleaned_anthology_of_english_texts)
 
+    '''
     expected_dictionary_of_words_and_counts = None
     with open(
         temporary_directory_of_files_with_texts / \
@@ -65,6 +68,9 @@ def test_counting_words_for_all_english_texts_together(
         "rb"
     ) as file:
         expected_dictionary_of_words_and_counts = pickle.load(file)
+    '''
+    expected_dictionary_of_words_and_counts = \
+        dictionary_of_words_and_counts_from_pickle(temporary_directory_of_files_with_texts)
 
     assert \
         actual_dictionary_of_words_and_counts == expected_dictionary_of_words_and_counts, \
@@ -109,7 +115,7 @@ def test_count_words_in_each_english_text(
         logger.info(f"Testing counting words in cleaned version of text in file at {path}")
 
         base_name = os.path.basename(path)
-        
+
         text = text_from_file(base_name, temporary_directory_of_files_with_texts)
 
         cleaned_text = clean_text(text)
@@ -117,7 +123,7 @@ def test_count_words_in_each_english_text(
         actual_dictionary_of_words_and_counts = count_words(cleaned_text)
 
         file_name, _ = os.path.splitext(base_name)
-
+        
         expected_dictionary_of_words_and_counts = None
         with open(
             temporary_directory_of_files_with_texts / \

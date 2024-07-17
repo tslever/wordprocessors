@@ -6,6 +6,7 @@ import pickle
 import pytest
 import requests
 from fixtures import logger, temporary_directory, temporary_directory_of_files_with_texts
+from utilities import dictionary_of_words_and_counts_from_pickle
 from pkg_tsl2b import clean_text, count_words, tokenize
 
 
@@ -58,6 +59,7 @@ def test_downloading_cleaning_tokenizing_and_counting_words_in_the_raven(
         expected_list_of_words = pickle.load(file)
     assert actual_list_of_words == expected_list_of_words
     actual_dictionary_of_words_and_counts = count_words(cleaned_text)
+    
     expected_dictionary_of_words_and_counts = None
     with open(
         temporary_directory_of_files_with_texts / \
@@ -65,6 +67,7 @@ def test_downloading_cleaning_tokenizing_and_counting_words_in_the_raven(
         "rb"
     ) as file:
         expected_dictionary_of_words_and_counts = pickle.load(file)
+    
     assert actual_dictionary_of_words_and_counts == expected_dictionary_of_words_and_counts
 
 
@@ -127,6 +130,7 @@ def test_downloading_cleaning_tokenizing_and_counting_words_in_anthology_of_engl
         expected_list_of_words = pickle.load(file)
     assert actual_list_of_words == expected_list_of_words
     actual_dictionary_of_words_and_counts = count_words(cleaned_anthology_of_english_texts)
+    '''
     expected_dictionary_of_words_and_counts = None
     with open(
         temporary_directory_of_files_with_texts / \
@@ -134,4 +138,6 @@ def test_downloading_cleaning_tokenizing_and_counting_words_in_anthology_of_engl
         "rb"
     ) as file:
         expected_dictionary_of_words_and_counts = pickle.load(file)
+    '''
+    expected_dictionary_of_words_and_counts = dictionary_of_words_and_counts_from_pickle(temporary_directory_of_files_with_texts)
     assert actual_dictionary_of_words_and_counts == expected_dictionary_of_words_and_counts

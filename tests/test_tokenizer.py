@@ -106,9 +106,9 @@ def test_tokenizing_each_english_text(
     for path in list_of_paths_to_files_with_english_texts:
 
         logger.info(f"Testing tokenizing cleaned version of text in file at {path}")
-        
+
         base_name = os.path.basename(path)
-        
+
         text = text_from_file(base_name, temporary_directory_of_files_with_texts)
 
         cleaned_text = clean_text(text)
