@@ -15,6 +15,7 @@ from fixtures import \
     temporary_directory, \
     temporary_directory_of_files_with_texts
 from utilities import \
+    anthology, \
     dictionary_of_words_and_counts_from_pickle, \
     quote_from_le_corbeau, \
     text_from_file
@@ -51,12 +52,16 @@ def test_counting_words_for_all_english_texts_together(
         none
     '''
 
+    '''
     list_of_texts = []
     for path in list_of_paths_to_files_with_english_texts:
         with open(path, 'r', encoding = "utf-8") as file:
             text = file.read()
             list_of_texts.append(text)
     anthology_of_english_texts = '\n'.join(list_of_texts)
+    '''
+    anthology_of_english_texts = anthology(list_of_paths_to_files_with_english_texts)
+
     cleaned_anthology_of_english_texts = clean_text(anthology_of_english_texts)
 
     actual_dictionary_of_words_and_counts = count_words(cleaned_anthology_of_english_texts)

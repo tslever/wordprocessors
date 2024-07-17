@@ -8,6 +8,15 @@ def dictionary_of_words_and_counts_from_pickle(base_name: str, temporary_directo
         expected_dictionary_of_words_and_counts = pickle.load(file)
     return expected_dictionary_of_words_and_counts
 
+def anthology(list_of_paths_to_files_with_english_texts) -> str:
+    list_of_texts = []
+    for path in list_of_paths_to_files_with_english_texts:
+        with open(path, 'r', encoding = "utf-8") as file:
+            text = file.read()
+            list_of_texts.append(text)
+    anthology_of_english_texts = '\n'.join(list_of_texts)
+    return anthology_of_english_texts
+
 def text_from_file(base_name: str, temporary_directory_of_files_with_texts) -> str:
     text = None
     with open(
