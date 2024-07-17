@@ -2,11 +2,6 @@ import os
 import pathlib
 import pickle
 
-def dictionary_of_words_and_counts_from_pickle(base_name: str, temporary_directory_of_files_with_texts) -> dict[str, int]:
-    expected_dictionary_of_words_and_counts = None
-    with open(temporary_directory_of_files_with_texts / base_name, "rb") as file:
-        expected_dictionary_of_words_and_counts = pickle.load(file)
-    return expected_dictionary_of_words_and_counts
 
 def anthology(list_of_paths_to_files_with_english_texts) -> str:
     list_of_texts = []
@@ -16,6 +11,22 @@ def anthology(list_of_paths_to_files_with_english_texts) -> str:
             list_of_texts.append(text)
     anthology_of_english_texts = '\n'.join(list_of_texts)
     return anthology_of_english_texts
+
+def dictionary_of_words_and_counts_from_pickle(base_name: str, temporary_directory_of_files_with_texts) -> dict[str, int]:
+    expected_dictionary_of_words_and_counts = None
+    with open(temporary_directory_of_files_with_texts / base_name, "rb") as file:
+        expected_dictionary_of_words_and_counts = pickle.load(file)
+    return expected_dictionary_of_words_and_counts
+
+def list_of_words_from_pickle(temporary_directory_of_files_with_texts):
+    expected_list_of_words = None
+    with open(
+        temporary_directory_of_files_with_texts / \
+        "List_Of_Words_In_Cleaned_Version_Of_The_Raven.pickle",
+        "rb"
+    ) as file:
+        expected_list_of_words = pickle.load(file)
+    return expected_list_of_words
 
 def text_from_file(base_name: str, temporary_directory_of_files_with_texts) -> str:
     text = None

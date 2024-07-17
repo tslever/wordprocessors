@@ -13,7 +13,11 @@ from fixtures import \
     quote_from_the_raven, \
     temporary_directory, \
     temporary_directory_of_files_with_texts
-from utilities import anthology, quote_from_le_corbeau, text_from_file
+from utilities import \
+    anthology, \
+    list_of_words_from_pickle, \
+    quote_from_le_corbeau, \
+    text_from_file
 from pkg_tsl2b import clean_text, tokenize
 
 
@@ -346,12 +350,15 @@ def test_tokenizing_the_raven(logger, temporary_directory_of_files_with_texts):
 
     actual_list_of_words = tokenize(text_to_tokenize)
 
+    '''
     with open(
         temporary_directory_of_files_with_texts / \
         "List_Of_Words_In_Cleaned_Version_Of_The_Raven.pickle",
         "rb"
     ) as file:
         expected_list_of_words = pickle.load(file)
+    '''
+    expected_list_of_words = list_of_words_from_pickle(temporary_directory_of_files_with_texts)
 
     assert \
         actual_list_of_words == expected_list_of_words, \
