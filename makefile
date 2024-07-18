@@ -31,7 +31,7 @@ get_title:
 
 # public
 lint:
-	@. env/bin/activate; find . -path ./env -prune -o -name "*.py" -exec pylint {} +; deactivate
+	@. env/bin/activate; find . -path ./env -prune -o -name "*.py" -exec pylint --load_plugins pylint_pytest {} +; deactivate
 
 # public
 raven_counts:
