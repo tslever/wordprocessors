@@ -386,8 +386,8 @@ def test_cleaning_the_raven_only_for_python_3_10_12(
     print(current_version_of_python)
     if current_version_of_python != "3.10.12":
         pytest.fail(
-            f"You have not tested cleaning The Raven " +
-            "for Python version {current_version_of_python}."
+            "You have not tested cleaning The Raven " +
+            f"for Python version {current_version_of_python}."
         )
 
     text = None
