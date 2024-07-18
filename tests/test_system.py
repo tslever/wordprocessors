@@ -4,7 +4,8 @@ Module test_system, which has functions to test the word processing system
 
 import pytest
 import requests
-from fixtures import logger, temporary_directory, temporary_directory_of_files_with_texts
+from fixtures import temporary_directory #pylint: disable=unused-import
+from fixtures import logger, temporary_directory_of_files_with_texts
 from utilities import \
     dictionary_of_ids_and_base_names_of_english_texts, \
     object_from_pickle

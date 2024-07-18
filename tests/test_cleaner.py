@@ -7,11 +7,11 @@ import platform
 import subprocess
 import sys
 import pytest
+from fixtures import temporary_directory #pylint: disable=unused-import
 from fixtures import \
     list_of_paths_to_files_with_english_texts, \
     logger, \
     quote_from_the_raven, \
-    temporary_directory, \
     temporary_directory_of_files_with_texts
 from utilities import anthology, text_from_file, QUOTE_FROM_LE_CORBEAU
 from pkg_tsl2b import clean_text
