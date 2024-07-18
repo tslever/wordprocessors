@@ -31,7 +31,7 @@ get_title:
 
 # public
 lint:
-	@. env/bin/activate; pylint src/pkg_tsl2b/word_processors.py; deactivate
+	@. env/bin/activate; find . -path ./env -prune -o -name "*.py" -exec pylint {} +; deactivate
 
 # public
 raven_counts:
