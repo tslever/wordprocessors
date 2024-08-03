@@ -26,6 +26,10 @@ def anthology(list_of_paths_to_files_with_english_texts) -> str:
     '''
 
     list_of_texts = []
+    assert \
+        isinstance(list_of_paths_to_files_with_english_texts, list), \
+        "Expected list argument but got " + \
+        type(list_of_paths_to_files_with_english_texts)
     for path in list_of_paths_to_files_with_english_texts:
         with open(path, 'r', encoding = "utf-8") as file:
             text = file.read()
