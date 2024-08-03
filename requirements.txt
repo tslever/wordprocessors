@@ -1,4 +1,4 @@
---editable .
+git+http://github.com/tslever/wordprocessors@WEEK-06/installable_package
 pylint==3.2.3
 pytest==8.2.2
 requests==2.32.3

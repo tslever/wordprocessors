@@ -7,7 +7,7 @@ env:
 	@python3 -m venv env; \
 	. env/bin/activate; \
 	pip install --upgrade pip; \
-	if [ -f requirements.txt ]; then pip install -r requirements.txt; fi; \
+	pip install -r requirements.txt; \
 	deactivate
 
 # private
@@ -74,3 +74,9 @@ total_lines:
 # public
 total_words:
 	@find . -type f -name "*.txt" -exec wc --words {} + | tail -n 1
+
+# public
+update: env
+	. env/bin/activate; \
+	pip install -r requirements.txt; \
+	deactivate

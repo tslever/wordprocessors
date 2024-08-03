@@ -1,0 +1,6 @@
+[build-system]
+requires = ["setuptools==70.1.1"]
+
+[project]
+name = "wordprocessors"
+version = "0.0.0"
