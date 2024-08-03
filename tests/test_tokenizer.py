@@ -3,7 +3,7 @@ Module test_tokenizer, which has functions to test tokenizing text
 '''
 
 
-from tsl2b_DS5111su24_lab_01.word_processors import clean_text
+from wordprocessors.word_processors import clean_text
 import json
 from fixtures import list_of_paths_to_files_with_English_texts
 from fixtures import logger
@@ -12,10 +12,12 @@ import pickle
 import pytest
 from fixtures import quote_from_The_Raven
 import subprocess
-from tsl2b_DS5111su24_lab_01.word_processors import tokenize
+from fixtures import temporary_directory
+from fixtures import temporary_directory_of_files_with_texts
+from wordprocessors.word_processors import tokenize
 
 
-def test_tokenizing_all_English_texts_together(logger, list_of_paths_to_files_with_English_texts):
+def test_tokenizing_all_English_texts_together(list_of_paths_to_files_with_English_texts, temporary_directory_of_files_with_texts):
     '''
     Given a string text with words from English texts with paths in a specified list,
     when I pass a cleaned version of text to function tokenize,
@@ -50,7 +52,7 @@ def test_tokenizing_all_English_texts_together(logger, list_of_paths_to_files_wi
     actual_list_of_words = tokenize(cleaned_anthology_of_English_texts)
 
     expected_list_of_words = None
-    with open("List_Of_Words_In_Cleaned_Version_Of_Anthology_Of_English_Texts.pickle", 'rb') as file:
+    with open(temporary_directory_of_files_with_texts / "List_Of_Words_In_Cleaned_Version_Of_Anthology_Of_English_Texts.pickle", 'rb') as file:
         expected_list_of_words = pickle.load(file)
 
     assert \
@@ -58,7 +60,7 @@ def test_tokenizing_all_English_texts_together(logger, list_of_paths_to_files_wi
         "Actual and expected lists of words in cleaned version of anthology of English texts are not equal."
 
 
-def test_tokenizing_each_English_text(logger, list_of_paths_to_files_with_English_texts):
+def test_tokenizing_each_English_text(list_of_paths_to_files_with_English_texts, logger, temporary_directory_of_files_with_texts):
     '''
     Given a string text with words from an English text with a path in a specified list,
     when I pass a cleaned version of the text to function tokenize,
@@ -90,7 +92,7 @@ def test_tokenizing_each_English_text(logger, list_of_paths_to_files_with_Englis
 
         base_name = os.path.basename(path)
         text = None
-        with open(base_name, 'r') as file:
+        with open(temporary_directory_of_files_with_texts / base_name, 'r') as file:
             text = file.read()
 
         cleaned_text = clean_text(text)
@@ -100,7 +102,7 @@ def test_tokenizing_each_English_text(logger, list_of_paths_to_files_with_Englis
         file_name, extension = os.path.splitext(base_name)
 
         expected_list_of_words = None
-        with open(f"List_Of_Words_In_Cleaned_Version_Of_{file_name}.pickle", 'rb') as file:
+        with open(temporary_directory_of_files_with_texts / f"List_Of_Words_In_Cleaned_Version_Of_{file_name}.pickle", 'rb') as file:
             expected_list_of_words = pickle.load(file)
 
         assert \
@@ -284,7 +286,7 @@ def test_tokenizing_quote_from_The_Raven(logger, quote_from_The_Raven):
         f"Actual list of words in cleaned version of a quote from The Raven is not equal to expected list of words in a cleaned version of a quote from The Raven."
 
 
-def test_tokenizing_The_Raven(logger):
+def test_tokenizing_The_Raven(logger, temporary_directory_of_files_with_texts):
     '''
     Given a string of text with words from The Raven,
     when I pass a cleaned version of the text to tokenize,
@@ -310,14 +312,14 @@ def test_tokenizing_The_Raven(logger):
     logger.info("Testing tokenizing a cleaned version of The Raven")
 
     text = None
-    with open("The_Raven.txt", 'r') as file:
+    with open(temporary_directory_of_files_with_texts / "The_Raven.txt", 'r') as file:
         text = file.read()
 
     text_to_tokenize = clean_text(text)
 
     actual_list_of_words = tokenize(text_to_tokenize)
 
-    with open("List_Of_Words_In_Cleaned_Version_Of_The_Raven.pickle", "rb") as file:
+    with open(temporary_directory_of_files_with_texts / "List_Of_Words_In_Cleaned_Version_Of_The_Raven.pickle", "rb") as file:
         expected_list_of_words = pickle.load(file)
     
     assert \
@@ -325,7 +327,7 @@ def test_tokenizing_The_Raven(logger):
         f"Actual list of words from a cleaned version of The Raven is not equal to expected list of words from a cleaned version of The Raven."
 
 
-def test_tokenizing_The_Raven_using_command_and_function(logger):
+def test_tokenizing_The_Raven_using_command_and_function(logger, temporary_directory_of_files_with_texts):
     '''
     Given a file with text or a string text with words from The Raven,
     when I pass a cleaned version of text to a command or tokenize,
@@ -350,13 +352,14 @@ def test_tokenizing_The_Raven_using_command_and_function(logger):
 
     logger.info("Testing tokenizing text")
 
-    command = "cat The_Raven.txt | gawk '{print tolower($0)}' | tr -d \"!\\\"#$%&'()*+,-./:;<=>?@[\\\\]^_\\`{|}~\" | sed 's/«//g' | sed 's/»//g' | tr '\n\r' ' ' | sed 's/  */ /g' | sed 's/[[:space:]]*$//' | jq -R 'split(\" \")'"
+    file_name = temporary_directory_of_files_with_texts / "The_Raven.txt"
+    command = "bash clean_text.sh " + str(file_name) + " | tr '\n' ' ' | sed 's/  */ /g' | sed 's/[[:space:]]*$//' | jq -R 'split(\" \")'"
 
     serialized_list_of_words_from_command = subprocess.run(command, shell = True, capture_output = True, text = True).stdout
     list_of_words_from_command = json.loads(serialized_list_of_words_from_command)
 
     text = None
-    with open("The_Raven_Cleaned.txt", 'r') as file:
+    with open(temporary_directory_of_files_with_texts / "The_Raven_Cleaned.txt", 'r') as file:
         text = file.read()
     list_of_words_from_function = tokenize(text)
 

@@ -2,6 +2,14 @@
 output_contents_of_Makefile:
 	@cat Makefile
 
+# public
+env:
+	@python3 -m venv env; \
+	. env/bin/activate; \
+	pip install --upgrade pip; \
+	if [ -f requirements.txt ]; then pip install -r requirements.txt; fi; \
+	deactivate
+
 # private
 get_text:
 	@wget https://www.gutenberg.org/cache/epub/$(text_ID)/pg$(text_ID).txt
@@ -22,15 +30,6 @@ get_title:
 	@sed -n '/^Title: /{s/^Title: //;s/\r.*//;p;q;}' pg$(text_ID).txt > Temporary_File.txt
 
 # public
-set_up_virtual_environment_env_upgrade_PIP_and_use_PIP_to_install_Python_packages_specified_in_text_file_requirements:
-	@sudo apt install python3.10-venv
-	@python3 -m venv env
-	@. env/bin/activate; \
-	pip install --upgrade pip; \
-	pip install -r requirements.txt; \
-	deactivate
-
-# public
 raven_counts:
 	@grep raven The_Raven.txt | wc --lines
 	@grep Raven The_Raven.txt | wc --lines
@@ -48,6 +47,25 @@ raven_word_count:
 rename_text:
 	@echo "$$(head -n 1 Temporary_File.txt | tr ' ' '_').txt" >> Temporary_File.txt
 	@mv pg$(text_ID).txt $$(tail -n 1 Temporary_File.txt)
+
+# public
+run_non_integration_tests:
+	@. env/bin/activate; \
+	export PYTHONPATH=$$PYTHONPATH:/home/runner/work/wordprocessors/wordprocessors/env/lib/python3.7/site-packages; \
+	pytest -vv tests/ -m "not integration"; \
+	deactivate
+
+# public
+run_integration_tests:
+	@. env/bin/activate; \
+	export PYTHONPATH=$$PYTHONPATH:/home/runner/work/wordprocessors/wordprocessors/env/lib/python3.7/site-packages; \
+	pytest -vv tests/ -m "integration"; \
+	deactivate
+
+# public
+run_tests:
+	@make run_non_integration_tests
+	@make run_integration_tests
 
 # public
 total_lines:

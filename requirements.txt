@@ -1,2 +1,4 @@
-pytest
-pylint
+--editable .
+pylint==3.2.3
+pytest==8.2.2
+requests==2.32.3

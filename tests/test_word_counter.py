@@ -3,8 +3,8 @@ Module test_word_counter, which has functions to test counting words in text
 '''
 
 
-from tsl2b_DS5111su24_lab_01.word_processors import clean_text
-from tsl2b_DS5111su24_lab_01.word_processors import count_words
+from wordprocessors.word_processors import clean_text
+from wordprocessors.word_processors import count_words
 import json
 from fixtures import list_of_paths_to_files_with_English_texts
 from fixtures import logger
@@ -13,10 +13,12 @@ import pickle
 import pytest
 from fixtures import quote_from_The_Raven
 import subprocess
-from tsl2b_DS5111su24_lab_01.word_processors import tokenize
+from fixtures import temporary_directory
+from fixtures import temporary_directory_of_files_with_texts
+from wordprocessors.word_processors import tokenize
 
 
-def test_counting_words_for_all_English_texts_together(logger, list_of_paths_to_files_with_English_texts):
+def test_counting_words_for_all_English_texts_together(list_of_paths_to_files_with_English_texts, logger, temporary_directory_of_files_with_texts):
     '''
     Given a string text with words from English texts with paths in a specified list,
     when I pass a cleaned version of text to function count_words,
@@ -51,7 +53,7 @@ def test_counting_words_for_all_English_texts_together(logger, list_of_paths_to_
     actual_dictionary_of_words_and_counts = count_words(cleaned_anthology_of_English_texts)
 
     expected_dictionary_of_words_and_counts = None
-    with open("Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_Anthology_Of_English_Texts.pickle", 'rb') as file:
+    with open(temporary_directory_of_files_with_texts / "Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_Anthology_Of_English_Texts.pickle", 'rb') as file:
         expected_dictionary_of_words_and_counts = pickle.load(file)
 
     assert \
@@ -59,7 +61,7 @@ def test_counting_words_for_all_English_texts_together(logger, list_of_paths_to_
         "Actual and expected dictionaries of words in cleaned version of anthology of English texts and their counts are not equal."
 
 
-def test_count_words_in_each_English_text(logger, list_of_paths_to_files_with_English_texts):
+def test_count_words_in_each_English_text(list_of_paths_to_files_with_English_texts, logger, temporary_directory_of_files_with_texts):
     '''
     Given a string text with words from an English text with a path in a specified list,
     when I pass a cleaned version of the text to function count_words,
@@ -91,7 +93,7 @@ def test_count_words_in_each_English_text(logger, list_of_paths_to_files_with_En
 
         base_name = os.path.basename(path)
         text = None
-        with open(base_name, 'r') as file:
+        with open(temporary_directory_of_files_with_texts / base_name, 'r') as file:
             text = file.read()
 
         cleaned_text = clean_text(text)
@@ -101,7 +103,7 @@ def test_count_words_in_each_English_text(logger, list_of_paths_to_files_with_En
         file_name, extension = os.path.splitext(base_name)
 
         expected_dictionary_of_words_and_counts = None
-        with open(f"Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_{file_name}.pickle", 'rb') as file:
+        with open(temporary_directory_of_files_with_texts / f"Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_{file_name}.pickle", 'rb') as file:
             expected_dictionary_of_words_and_counts = pickle.load(file)
 
         assert \
@@ -264,7 +266,7 @@ def test_counting_words_in_quote_from_Le_Corbeau(logger):
         "Actual and expected dictionaries of words and counts in cleaned version of Le Corbeau are not equal."
 
 
-def test_counting_words_in_The_Raven(logger):
+def test_counting_words_in_The_Raven(logger, temporary_directory_of_files_with_texts):
     '''
     Given a string text of words in The Raven,
     when I pass a cleaned version of text to count_words,
@@ -290,7 +292,7 @@ def test_counting_words_in_The_Raven(logger):
     logger.info("Testing counting words in a cleaned version of The Raven")
 
     text = None
-    with open("The_Raven.txt", 'r') as file:
+    with open(temporary_directory_of_files_with_texts / "The_Raven.txt", 'r') as file:
         text = file.read()
 
     text_of_which_to_count_words = clean_text(text)
@@ -298,7 +300,7 @@ def test_counting_words_in_The_Raven(logger):
     actual_dictionary_of_words_and_counts = count_words(text_of_which_to_count_words)
 
     expected_dictionary_of_words_and_counts = None
-    with open("Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_The_Raven.pickle", "rb") as file:
+    with open(temporary_directory_of_files_with_texts / "Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_The_Raven.pickle", "rb") as file:
         expected_dictionary_of_words_and_counts = pickle.load(file)
 
     assert \
@@ -306,7 +308,7 @@ def test_counting_words_in_The_Raven(logger):
         f"Actual dictionary of words in cleaned version of The Raven and their counts does not equal expected dictionary."
 
 
-def test_counting_words_in_The_Raven_using_command_and_function(logger):
+def test_counting_words_in_The_Raven_using_command_and_function(logger, temporary_directory_of_files_with_texts):
     '''
     Given a file with text or a string text with words from The Raven,
     when I pass a cleaned version of text to a command or count_words,
@@ -331,13 +333,14 @@ def test_counting_words_in_The_Raven_using_command_and_function(logger):
 
     logger.info("Testing tokenizing text")
 
-    command = "cat The_Raven.txt | gawk '{print tolower($0)}' | tr -d \"!\\\"#$%&'()*+,-./:;<=>?@[\\\\]^_\\`{|}~\" | sed 's/«//g' | sed 's/»//g' | tr '\n\r' ' ' | sed 's/  */ /g' | sed 's/[[:space:]]*$//' | jq -R 'split(\" \")' | jq -c 'reduce .[] as $word ({}; .[$word] += 1)'"
+    file_name = temporary_directory_of_files_with_texts / "The_Raven.txt"
+    command = "bash clean_text.sh " + str(file_name) + " | tr '\n' ' ' | sed 's/  */ /g' | sed 's/[[:space:]]*$//' | jq -R 'split(\" \")' | jq -c 'reduce .[] as $word ({}; .[$word] += 1)'"
 
     serialized_dictionary_of_words_and_counts = subprocess.run(command, shell = True, capture_output = True, text = True).stdout
     dictionary_of_words_and_counts_from_command = json.loads(serialized_dictionary_of_words_and_counts)
 
     text = None
-    with open("The_Raven_Cleaned.txt", 'r') as file:
+    with open(temporary_directory_of_files_with_texts / "The_Raven_Cleaned.txt", 'r') as file:
         text = file.read()
     dictionary_of_words_and_counts_from_function = count_words(text)
 

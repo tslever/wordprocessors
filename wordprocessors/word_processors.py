@@ -5,10 +5,12 @@ Module word_processors, which has functions to clean, tokenize, and count words 
 
 import argparse
 from collections import Counter
+from typing import Dict
 import logging
 import os
 import pickle
 import string
+from typing import List
 
 
 logger = logging.getLogger(__name__)
@@ -36,7 +38,7 @@ def clean_text(text: str) -> str:
 
     assert isinstance(text, str)
 
-    translation_table = str.maketrans('', '', string.punctuation + "«»")
+    translation_table = str.maketrans('', '', string.punctuation + "\r«»")
     cleaned_text = text.lower().translate(translation_table)
 
     #logger.info("Cleaned text: %s", cleaned_text)
@@ -47,7 +49,7 @@ def clean_text(text: str) -> str:
     return cleaned_text
 
 
-def tokenize(text: str) -> list[str]:
+def tokenize(text: str) -> List[str]:
     '''
     Tokenizes text of words separated by spaces into a list of those words
 
@@ -55,7 +57,7 @@ def tokenize(text: str) -> list[str]:
         text: str -- text
 
     Return values:
-        list_of_words: list[str] -- list of words
+        list_of_words: List[str] -- list of words
 
     Side effects:
         none
@@ -79,7 +81,7 @@ def tokenize(text: str) -> list[str]:
     return list_of_words
 
 
-def count_words(text: str) -> dict[str, int]:
+def count_words(text: str) -> Dict[str, int]:
     '''
     Provides a dictionary of the words in specified text and the counts of those words
 
@@ -87,7 +89,7 @@ def count_words(text: str) -> dict[str, int]:
         text: str -- text
 
     Return values:
-        dictionary_of_words_and_counts: str -- dictionary of words in specified text and counts
+        dictionary_of_words_and_counts: Dict[str, int] -- dictionary of words in specified text and counts
 
     Side effects:
         none
