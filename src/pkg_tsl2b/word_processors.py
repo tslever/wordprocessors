@@ -134,7 +134,6 @@ def parse_arguments():
         first when this script is executed
     '''
 
-    dictionary = {}
     parser = argparse.ArgumentParser(
         prog = "Word Processors",
         description = "This program processes text."
@@ -142,13 +141,18 @@ def parse_arguments():
     parser.add_argument("name_of_function", help = "name of function")
     parser.add_argument("path_to_file_of_text", help = "path to file of text")
     args = parser.parse_args()
+
     function_name = args.name_of_function
     path_to_text_file = args.path_to_file_of_text
     print(f"name of function: {function_name}")
     print(f"path to file of text: {path_to_text_file}")
+
+    dictionary = {}
     dictionary["name_of_function"] = function_name
     dictionary["path_to_file_of_text"] = path_to_text_file
+
     return dictionary
+
 
 if __name__ == "__main__":
     dictionary_of_arguments = parse_arguments()
