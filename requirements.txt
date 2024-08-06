@@ -1,4 +1,4 @@
-git+http://github.com/tslever/wordprocessors@WEEK-08/refactoring_and_linting
+git+https://github.com/tslever/tsl2b_DS5111su24_lab_01@final_review
 pylint==3.2.3
 pylint-pytest==1.1.8
 pytest==8.2.0
