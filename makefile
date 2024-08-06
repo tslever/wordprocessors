@@ -30,6 +30,10 @@ get_title:
 	@sed -n '/^Title: /{s/^Title: //;s/\r.*//;p;q;}' pg$(text_ID).txt > Temporary_File.txt
 
 # public
+lint:
+	@. env/bin/activate; find . -path ./env -prune -o -name "*.py" -exec pylint --load_plugins pylint_pytest {} +; deactivate
+
+# public
 raven_counts:
 	@grep raven The_Raven.txt | wc --lines
 	@grep Raven The_Raven.txt | wc --lines
@@ -54,6 +58,7 @@ run_non_integration_tests:
 	export PYTHONPATH=$$PYTHONPATH:/home/runner/work/wordprocessors/wordprocessors/env/lib/python3.7/site-packages; \
 	pytest -vv tests/ -m "not integration"; \
 	deactivate
+	@make lint
 
 # public
 run_integration_tests:
@@ -61,6 +66,7 @@ run_integration_tests:
 	export PYTHONPATH=$$PYTHONPATH:/home/runner/work/wordprocessors/wordprocessors/env/lib/python3.7/site-packages; \
 	pytest -vv tests/ -m "integration"; \
 	deactivate
+	@make lint
 
 # public
 run_tests:

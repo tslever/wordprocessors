@@ -2,9 +2,6 @@
 Module logger, which has pytest fixture logger 
 '''
 
-
-from src.pkg_tsl2b.word_processors import clean_text
-from src.pkg_tsl2b.word_processors import count_words
 import copy
 from typing import List
 import logging
@@ -13,74 +10,131 @@ import pathlib
 import pickle
 import pytest
 import requests
-from src.pkg_tsl2b.word_processors import tokenize
- 
-
-dictionary_of_IDs_and_base_names_of_English_texts = {
-    17192: "The_Raven.txt",
-    932: "The_Fall_of_the_House_of_Usher.txt",
-    1063: "The_Cask_of_Amontillado.txt",
-    10031: "The_Complete_Poetical_Works_of_Edgar_Allan_Poe.txt"
-}
+from utilities import dictionary_of_ids_and_base_names_of_english_texts
+from pkg_tsl2b import clean_text, count_words, tokenize
 
 
-dictionary_of_IDs_and_base_names_of_texts = copy.deepcopy(dictionary_of_IDs_and_base_names_of_English_texts)
+dictionary_of_IDs_and_base_names_of_texts = copy.deepcopy(
+    dictionary_of_ids_and_base_names_of_english_texts
+)
 dictionary_of_IDs_and_base_names_of_texts[14082] = "Le_Corbeau.txt"
 
 
 @pytest.fixture(scope = "session")
 def temporary_directory(tmp_path_factory) -> pathlib.PosixPath:
-    temporary_directory = tmp_path_factory.mktemp("temporary_directory")
-    return temporary_directory
+    '''
+    Provides a pathlib.PosixPath object for a temporary directory
+
+    Keyword arguments:
+        tmp_path_factory
+
+    Return values:
+        temporary_directory: pathlib.PosixPath --
+        a pathlib.PosixPath object for a temporary directory
+
+    Side effects:
+        none
+
+    Exceptions raised:
+        none
+
+    Restrictions of when this is called:
+        This function is called automatically by pytest.
+    '''
+
+    temp_dir = tmp_path_factory.mktemp("temporary_directory")
+    return temp_dir
 
 
 @pytest.fixture(params = [dictionary_of_IDs_and_base_names_of_texts], scope = "session")
-def temporary_directory_of_files_with_texts(request: pytest.FixtureRequest, temporary_directory) -> pathlib.PosixPath:
-    dictionary_of_IDs_and_base_names_of_texts = request.param
-    list_of_English_texts = []
-    for ID, base_name in dictionary_of_IDs_and_base_names_of_texts.items():
-        URL = f"https://www.gutenberg.org/cache/epub/{ID}/pg{ID}.txt"
-        response = requests.get(URL)
-        text = response.text
+def temporary_directory_of_files_with_texts(
+    request: pytest.FixtureRequest,
+    temporary_directory
+) -> pathlib.PosixPath:
+    '''
+    Provides a pathlib.PosixPath object for a temporary directory of files with texts
+
+    Keyword arguments:
+        request: pytest.FixtureRequest -- a request from which to get a specified parameter
+        temporary_directory
+
+    Return values:
+        temporary_directory
+
+    Side effects:
+        Creates files with texts
+
+    Exceptions raised:
+        none
+
+    Restrictions on when this is called:
+        This function is called automatically by pytest
+    '''
+
+    dictionary = request.param
+    list_of_english_texts = []
+    for text_id, base_name in dictionary.items():
+        text = requests.get(
+            f"https://www.gutenberg.org/cache/epub/{text_id}/pg{text_id}.txt", timeout = 10
+        ).text
         if base_name != "Le_Corbeau.txt":
-            list_of_English_texts.append(text)
-        temporary_file = temporary_directory / base_name
-        temporary_file.write_text(text)
+            list_of_english_texts.append(text)
+        (temporary_directory / base_name).write_text(text)
         cleaned_text = clean_text(text)
         file_name, extension = os.path.splitext(base_name)
-        temporary_file =  temporary_directory / f"{file_name}_Cleaned{extension}"
-        temporary_file.write_text(cleaned_text)
+        (temporary_directory / f"{file_name}_Cleaned{extension}").write_text(cleaned_text)
         list_of_words = tokenize(cleaned_text)
-        with open(temporary_directory / f"List_Of_Words_In_Cleaned_Version_Of_{file_name}.pickle", "wb") as file:
+        with open(
+            temporary_directory / f"List_Of_Words_In_Cleaned_Version_Of_{file_name}.pickle",
+            "wb"
+        ) as file:
             pickle.dump(list_of_words, file)
-        dictionary_of_words_and_counts = count_words(cleaned_text)
-        with open(temporary_directory / f"Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_{file_name}.pickle", "wb") as file:
-            pickle.dump(dictionary_of_words_and_counts, file)
-    anthology_of_English_texts = '\n'.join(list_of_English_texts)
-    temporary_file = temporary_directory / "Anthology_Of_English_Texts.txt"
-    temporary_file.write_text(anthology_of_English_texts)
-    anthology_of_English_texts_cleaned = clean_text(anthology_of_English_texts)
-    temporary_file = temporary_directory / "Anthology_Of_English_Texts_Cleaned.txt"
-    temporary_file.write_text(anthology_of_English_texts_cleaned)
-    list_of_words = tokenize(anthology_of_English_texts_cleaned)
-    with open(temporary_directory / "List_Of_Words_In_Cleaned_Version_Of_Anthology_Of_English_Texts.pickle", "wb") as file:
+        dictionary = count_words(cleaned_text)
+        with open(
+            temporary_directory / \
+            f"Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_{file_name}.pickle",
+        "wb"
+        ) as file:
+            pickle.dump(dictionary, file)
+    anthology_of_english_texts = '\n'.join(list_of_english_texts)
+    (temporary_directory / "Anthology_Of_English_Texts.txt").write_text(anthology_of_english_texts)
+    anthology_of_english_texts_cleaned = clean_text(anthology_of_english_texts)
+    (temporary_directory / "Anthology_Of_English_Texts_Cleaned.txt").write_text(
+        anthology_of_english_texts_cleaned
+    )
+    list_of_words = tokenize(anthology_of_english_texts_cleaned)
+    with open(
+        temporary_directory /
+        "List_Of_Words_In_Cleaned_Version_Of_Anthology_Of_English_Texts.pickle",
+        "wb"
+    ) as file:
         pickle.dump(list_of_words, file)
-    dictionary_of_words_and_counts = count_words(anthology_of_English_texts_cleaned)
-    with open(temporary_directory / "Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_Anthology_Of_English_Texts.pickle", "wb") as file:
-        pickle.dump(dictionary_of_words_and_counts, file)
+    dictionary = count_words(anthology_of_english_texts_cleaned)
+    with open(
+        temporary_directory /
+        "Dictionary_Of_Words_And_Counts_For_Cleaned_Version_Of_Anthology_Of_English_Texts.pickle",
+        "wb"
+    ) as file:
+        pickle.dump(dictionary, file)
     return temporary_directory
 
 
-@pytest.fixture(params = [dictionary_of_IDs_and_base_names_of_English_texts], scope = "session")
-def list_of_paths_to_files_with_English_texts(request: pytest.FixtureRequest, temporary_directory) -> List[str]:
+@pytest.fixture(params = [dictionary_of_ids_and_base_names_of_english_texts], scope = "session")
+def list_of_paths_to_files_with_english_texts(
+    request: pytest.FixtureRequest,
+    temporary_directory
+) -> List[str]:
     '''
     Provides a list of paths to existing files with English texts
 
     Keyword arguments:
-        request: FixtureRequest -- a fixture request with a parameter specified in the above decorator
+        request: FixtureRequest --
+        a fixture request with a parameter specified in the above decorator
+        temporary_directory
 
     Return values:
-        list_of_paths_to_files_with_English_texts: List[str] -- a list of paths to existing files with English texts
+        list_of_paths_to_files_with_english_texts: List[str] --
+        a list of paths to existing files with English texts
 
     Side effects:
         Creates files if they don't already exist
@@ -91,13 +145,13 @@ def list_of_paths_to_files_with_English_texts(request: pytest.FixtureRequest, te
     Restrictions on when this method can be called:
         pytest only should call this method to provide a list of file names of English texts.
     '''
-    
-    dictionary_of_IDs_and_base_names_of_English_texts = request.param
-    list_of_paths_to_files_with_English_texts = []
-    for base_name in dictionary_of_IDs_and_base_names_of_English_texts.values():
+
+    dictionary = request.param
+    list_of_paths = []
+    for base_name in dictionary.values():
         temporary_file = temporary_directory / base_name
-        list_of_paths_to_files_with_English_texts.append(temporary_file)
-    return list_of_paths_to_files_with_English_texts
+        list_of_paths.append(temporary_file)
+    return list_of_paths
 
 
 @pytest.fixture(scope = "session")
@@ -121,25 +175,33 @@ def logger():
         pytest only should call this method to set up logger.
     '''
 
-    logger = logging.getLogger(__name__)
-    return logger
+    lumberjack = logging.getLogger(__name__)
+    return lumberjack
 
 
 @pytest.fixture(
     params = [
-        "But the Raven, sitting lonely on the placid bust, spoke only That one word, as if his soul in that one word he did outpour.",
-        "But the Raven-- sitting lonely on the placid bust --spoke only That one word, as if his soul in that one word he did outpour."
-    ]
+        "But the Raven, " +
+        "sitting lonely on the placid bust, " +
+        "spoke only That one word, " +
+        "as if his soul in that one word he did outpour.",
+        "But the Raven-- " +
+        "sitting lonely on the placid bust --" +
+        "spoke only That one word, " +
+        "as if his soul in that one word he did outpour."
+    ],
+    scope = "session"
 )
-def quote_from_The_Raven(request: pytest.FixtureRequest, scope = "session") -> str:
+def quote_from_the_raven(request: pytest.FixtureRequest) -> str:
     '''
     Provides a quote from The Raven
 
     Keyword arguments:
-        request: FixtureRequest -- a fixture request with a parameter specified in the above decorator
+        request: FixtureRequest --
+        a fixture request with a parameter specified in the above decorator
 
     Return values:
-        quote_from_The_Raven: str -- a quote from The Raven
+        quote_from_the_raven: str -- a quote from The Raven
 
     Side effects:
         none
@@ -151,5 +213,5 @@ def quote_from_The_Raven(request: pytest.FixtureRequest, scope = "session") -> s
         pytest only should call this method to provide a quote from The Raven.
     '''
 
-    quote_from_The_Raven = request.param
-    return quote_from_The_Raven
+    quote = request.param
+    return quote

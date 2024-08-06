@@ -2,5 +2,5 @@
 requires = ["setuptools==70.1.1"]
 
 [project]
-name = "wordprocessors"
+name = "pkg_tsl2b"
 version = "0.0.0"
